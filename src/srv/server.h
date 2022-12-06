@@ -6,7 +6,7 @@
 #include <string>
 #include <vector>
 #include <mutex>
-
+#include "../lib/sqlite/connection.h"
 
 namespace server
 {
@@ -14,13 +14,15 @@ namespace server
     {
     public:
         static Server *get();
-
+        Server() = delete;
         void listen();
 
     private:
+        bool AuthClient(SOCKET clientSocket);
         std::vector<SOCKET> m_vActiveConnections;
 
         void client_handler(SOCKET clientSocket);
+        sql::Connection m_dataBaseConn;
 
         bool m_bAllowListen;
 
@@ -30,6 +32,7 @@ namespace server
 
         static void recv(SOCKET soc, void *pBuff, int buffSize);
         static int recv_packet_size(SOCKET soc);
+
 
     };
 }

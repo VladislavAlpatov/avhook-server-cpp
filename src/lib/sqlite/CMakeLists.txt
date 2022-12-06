@@ -1,1 +1,1 @@
-target_sources(server PRIVATE Connection.cpp)
+target_sources(server PRIVATE connection.cpp)

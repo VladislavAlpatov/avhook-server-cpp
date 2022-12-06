@@ -1,7 +1,7 @@
 //
 // Created by nullifiedvlad on 06.12.2022.
 //
-#include "Connection.h"
+#include "connection.h"
 #include "exceptions.h"
 namespace sql
 {
@@ -16,6 +16,9 @@ namespace sql
         std::vector<std::vector<std::string>> out;
 
         sqlite3_stmt* pSqliteStatement;
+
+        std::lock_guard lock(m_lock);
+
         sqlite3_prepare_v2(m_pDataBase, str.c_str(), -1, &pSqliteStatement, nullptr);
 
         while (sqlite3_step(pSqliteStatement) != SQLITE_DONE)
@@ -24,7 +27,7 @@ namespace sql
             std::vector<std::string> rowData;
             rowData.reserve(rowLength);
 
-            for (size_t i =0; i < rowLength; ++i)
+            for (int i =0; i < rowLength; ++i)
             {
                 const auto pText = sqlite3_column_text(pSqliteStatement, i);
 

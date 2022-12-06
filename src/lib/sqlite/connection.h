@@ -5,7 +5,7 @@
 #include <sqlite3.h>
 #include <string>
 #include <vector>
-
+#include <mutex>
 
 namespace sql
 {
@@ -13,11 +13,15 @@ namespace sql
     class Connection
     {
     public:
-        Connection(const std::string& path);
+        explicit Connection(const std::string& path);
+        Connection() = default;
 
         std::vector<std::vector<std::string>> query(const std::string& str);
+
     private:
-        sqlite3* m_pDataBase;
+        std::mutex m_lock;
+
+        sqlite3* m_pDataBase = nullptr;
 
     };
 
