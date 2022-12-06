@@ -31,10 +31,9 @@ namespace sql
                 if (sqlite3_column_type(pSqliteStatement, i) != SQLITE_BLOB or !pText)
                     rowData.emplace_back((pText) ? (const char*)pText : "");
             }
-
             out.emplace_back(rowData);
         }
-
+        sqlite3_finalize(pSqliteStatement);
         return out;
     }
 } // sqlite3
