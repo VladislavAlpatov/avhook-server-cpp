@@ -7,7 +7,7 @@ namespace sql
 {
     Connection::Connection(const std::string &path)
     {
-        if (sqlite3_open(R"(C:\Users\Vlad\Desktop\db.db)", &m_pDataBase) != SQLITE_OK)
+        if (sqlite3_open(path.c_str(), &m_pDataBase) != SQLITE_OK)
             throw exception::FailedConnectToDataBase();
     }
 
