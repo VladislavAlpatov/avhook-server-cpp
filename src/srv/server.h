@@ -7,6 +7,7 @@
 #include <vector>
 #include <mutex>
 #include "../lib/sqlite/connection.h"
+#include "packets/Base.h"
 
 namespace server
 {
@@ -18,9 +19,9 @@ namespace server
         void listen();
 
     private:
-        bool AuthClient(SOCKET clientSocket);
+        bool auth_client(SOCKET clientSocket);
         std::vector<SOCKET> m_vActiveConnections;
-
+        std::shared_ptr<packet::Base> recv_packet(SOCKET soc);
         void client_handler(SOCKET clientSocket);
         sql::Connection m_dataBaseConn;
 

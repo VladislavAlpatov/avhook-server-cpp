@@ -6,4 +6,8 @@
 namespace server::packet
 {
 
+    Base::Base(const nlohmann::json&data)
+    {
+        m_Data = data;
+    }
 }// packet

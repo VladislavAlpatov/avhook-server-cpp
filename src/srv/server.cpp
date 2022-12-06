@@ -8,6 +8,8 @@
 #include <thread>
 #include "../consts.h"
 #include "exceptions.h"
+#include "PacketFactory.h"
+
 
 namespace server
 {
@@ -65,11 +67,7 @@ namespace server
         {
             while (true)
             {
-                int nextPacketSize = recv_packet_size(clientSocket);
-
-                if (nextPacketSize > MAX_ACCEPTABLE_PACKET_SIZE or nextPacketSize <= 0)
-                    throw exception::InvalidPacketSize();
-
+                recv_packet(clientSocket)->execute_payload();
             }
         }
         catch (const std::exception& ex)
@@ -101,8 +99,20 @@ namespace server
         return packetSize;
     }
 
-    bool Server::AuthClient(SOCKET clientSocket)
+    bool Server::auth_client(SOCKET clientSocket)
     {
         return false;
+    }
+
+    std::shared_ptr<packet::Base> Server::recv_packet(SOCKET soc)
+    {
+        const auto size = recv_packet_size(soc);
+
+        const auto data = std::unique_ptr<char>(new char[size+1]);
+        ZeroMemory(data.get(), size+1);
+
+        recv(soc, data.get(), size);
+
+        return server::PacketFactory::create(nlohmann::json::parse(data.get()), &m_dataBaseConn);
     }
 }

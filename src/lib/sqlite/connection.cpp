@@ -15,11 +15,11 @@ namespace sql
     {
         std::vector<std::vector<std::string>> out;
 
-        sqlite3_stmt* pSqliteStatement;
+        sqlite3_stmt* pSqliteStatement = nullptr;
 
         std::lock_guard lock(m_lock);
 
-        sqlite3_prepare_v2(m_pDataBase, str.c_str(), -1, &pSqliteStatement, nullptr);
+        sqlite3_prepare_v2(m_pDataBase, str.c_str(), str.size(), &pSqliteStatement, nullptr);
 
         while (sqlite3_step(pSqliteStatement) != SQLITE_DONE)
         {
@@ -50,7 +50,7 @@ namespace sql
         if (&other == this)
             return *this;
 
-        m_pDataBase = other.m_pDataBase;
+        std::swap(m_pDataBase, other.m_pDataBase);
 
         return *this;
     }
@@ -60,4 +60,5 @@ namespace sql
         if (m_pDataBase)
             sqlite3_close(m_pDataBase);
     }
+
 } // sqlite3

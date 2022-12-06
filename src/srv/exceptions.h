@@ -23,4 +23,12 @@ namespace server::exception
                 return "The size of the packet to be received is invalid";
             }
         };
+    class InvalidPacketType : public std::exception
+    {
+    public:
+        [[nodiscard]] const char *what() const override
+        {
+            return "The type of packet is invalid";
+        }
+    };
     }
