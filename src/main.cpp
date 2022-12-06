@@ -4,7 +4,7 @@
 #include <cstdio>
 #include <Windows.h>
 #include "srv/server.h"
-#include "lib/sqlite/connection.h"
+
 
 int main()
 {
