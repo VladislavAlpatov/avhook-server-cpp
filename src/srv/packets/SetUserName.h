@@ -10,7 +10,7 @@ namespace server::packet
         class SetUserName
         {
         public:
-            SetUserName()
+            SetUserName(const );
         };
 
     } // packet

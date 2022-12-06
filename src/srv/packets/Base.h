@@ -11,7 +11,7 @@ namespace server::packet
     class Base
     {
     public:
-        virtual std::string execute_payload();
+        virtual std::string execute_payload() = 0;
     };
 
 } // packet

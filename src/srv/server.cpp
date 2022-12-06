@@ -28,7 +28,7 @@ namespace server
             throw std::runtime_error("Failed to create listen socket");
         bind(m_sListen, (SOCKADDR *) &addr, sizeof(addr));
 
-        m_dataBaseConn = sql::Connection(R"(C:\Users\Vlad\Desktop\db.db)");
+        m_dataBaseConn = std::move(sql::Connection(R"(C:\Users\Vlad\Desktop\db.db)"));
     }
 
     Server *Server::get()

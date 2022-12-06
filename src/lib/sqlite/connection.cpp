@@ -39,4 +39,25 @@ namespace sql
         sqlite3_finalize(pSqliteStatement);
         return out;
     }
+
+    Connection::Connection(Connection && other) noexcept
+    {
+        std::swap(m_pDataBase, other.m_pDataBase);
+    }
+
+    Connection &Connection::operator=(Connection &&other) noexcept
+    {
+        if (&other == this)
+            return *this;
+
+        m_pDataBase = other.m_pDataBase;
+
+        return *this;
+    }
+
+    Connection::~Connection()
+    {
+        if (m_pDataBase)
+            sqlite3_close(m_pDataBase);
+    }
 } // sqlite3

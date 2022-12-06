@@ -24,7 +24,7 @@ namespace server
         void client_handler(SOCKET clientSocket);
         sql::Connection m_dataBaseConn;
 
-        bool m_bAllowListen;
+        bool m_bAllowListen = true;
 
         Server(const std::string &ip, int port);
 

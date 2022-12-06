@@ -17,10 +17,11 @@ namespace sql
         Connection() = default;
 
         std::vector<std::vector<std::string>> query(const std::string& str);
-
+        Connection (Connection && other ) noexcept ;
+        Connection& operator=(Connection&& other) noexcept ;
+        ~Connection();
     private:
         std::mutex m_lock;
-
         sqlite3* m_pDataBase = nullptr;
 
     };
