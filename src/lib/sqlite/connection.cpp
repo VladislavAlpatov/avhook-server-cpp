@@ -20,6 +20,8 @@ namespace sql
         std::lock_guard lock(m_lock);
 
         sqlite3_prepare_v2(m_pDataBase, str.c_str(), str.size(), &pSqliteStatement, nullptr);
+        if (!pSqliteStatement)
+            throw exception::SyntaxError();
 
         while (sqlite3_step(pSqliteStatement) != SQLITE_DONE)
         {
@@ -40,25 +42,19 @@ namespace sql
         return out;
     }
 
-    Connection::Connection(Connection && other) noexcept
-    {
-        std::swap(m_pDataBase, other.m_pDataBase);
-    }
-
-    Connection &Connection::operator=(Connection &&other) noexcept
-    {
-        if (&other == this)
-            return *this;
-
-        std::swap(m_pDataBase, other.m_pDataBase);
-
-        return *this;
-    }
-
     Connection::~Connection()
     {
         if (m_pDataBase)
             sqlite3_close(m_pDataBase);
+    }
+
+    Connection *Connection::get()
+    {
+        static std::unique_ptr<Connection> pConn;
+        if (!pConn)
+            pConn = std::unique_ptr<Connection>(new Connection(R"(C:\Users\Vlad\Desktop\db.db)"));
+
+        return pConn.get();
     }
 
 } // sqlite3

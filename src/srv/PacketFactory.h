@@ -4,14 +4,14 @@
 #pragma once
 #include "packets/Base.h"
 #include <memory>
-#include "../lib/sqlite/connection.h"
+#include <WinSock2.h>
 namespace server
 {
-
-    class PacketFactory
+    class PacketFactory final
     {
-    public:
-        static std::shared_ptr<packet::Base> create(const nlohmann::json& data, sql::Connection* pConn);
+        friend class Server;
+    private:
+        static std::shared_ptr<packet::Base> create(const nlohmann::json& data);
     };
 
 } // server

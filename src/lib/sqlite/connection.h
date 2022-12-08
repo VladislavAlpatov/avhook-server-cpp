@@ -13,14 +13,12 @@ namespace sql
     class Connection
     {
     public:
-        explicit Connection(const std::string& path);
+        static Connection* get();
         Connection() = default;
-        Connection& operator=(const Connection& other);
         std::vector<std::vector<std::string>> query(const std::string& str);
-        Connection (Connection && other ) noexcept ;
-        Connection& operator=(Connection&& other) noexcept ;
         ~Connection();
     private:
+        explicit Connection(const std::string& path);
         std::mutex m_lock;
         sqlite3* m_pDataBase = nullptr;
 

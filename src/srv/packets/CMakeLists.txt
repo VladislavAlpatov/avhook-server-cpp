@@ -1,1 +1,1 @@
-target_sources(server PRIVATE Base.cpp SetUserName.cpp)
+target_sources(server PRIVATE Base.cpp SetUserName.cpp Auth.cpp)

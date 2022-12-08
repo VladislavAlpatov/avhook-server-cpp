@@ -3,7 +3,6 @@
 //
 #pragma once
 #include "Base.h"
-#include "../../lib/sqlite/connection.h"
 
 #define PACKET_SETUSERNAME 0
 
@@ -12,10 +11,7 @@ namespace server::packet
     class SetUserName : public Base
     {
     public:
-        explicit SetUserName(const nlohmann::json& data, sql::Connection* pConn);
-        sql::Connection* m_pConn;
-        std::string execute_payload() override;
-
-    public:
+        explicit SetUserName(const nlohmann::json& data);
+        std::string execute_payload(int userId) override;
     };
 } // packet

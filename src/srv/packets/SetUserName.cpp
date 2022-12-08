@@ -3,18 +3,19 @@
 //
 #include "SetUserName.h"
 #include <fmt/format.h>
+#include "../../lib/sqlite/connection.h"
+
 namespace server::packet
 {
 
-    SetUserName::SetUserName(const nlohmann::json &data, sql::Connection* pConn) : Base(data)
+    SetUserName::SetUserName(const nlohmann::json &data) : Base(data)
     {
-        m_pConn = pConn;
 
     }
 
-    std::string SetUserName::execute_payload()
+    std::string SetUserName::execute_payload(int userId)
     {
-        m_pConn->query(fmt::format("UPDATE `users` SET `name`= \"{}\" WHERE `id` = 1", m_Data["name"].get<std::string>()));
+        sql::Connection::get()->query(fmt::format("UPDATE `users` SET `name`= \"{}\" WHERE `id` = {}", m_Data["name"].get<std::string>(), userId));
 
         return "";
     }

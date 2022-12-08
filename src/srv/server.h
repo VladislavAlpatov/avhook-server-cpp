@@ -8,6 +8,7 @@
 #include <mutex>
 #include "../lib/sqlite/connection.h"
 #include "packets/Base.h"
+#include <map>
 
 namespace server
 {
@@ -19,15 +20,17 @@ namespace server
         void listen();
 
     private:
-        bool auth_client(SOCKET clientSocket);
-        std::vector<SOCKET> m_vActiveConnections;
+        void link_user_with_socket(SOCKET soc, int id);
+        void unlink_user_with_socket(SOCKET soc);
+        int get_user_id_by_socket(SOCKET soc);
         std::shared_ptr<packet::Base> recv_packet(SOCKET soc);
         void client_handler(SOCKET clientSocket);
-        sql::Connection m_dataBaseConn;
+        std::map<SOCKET, int> m_mLinkedUsers;
 
         bool m_bAllowListen = true;
 
         Server(const std::string &ip, int port);
+        std::mutex m_LinkedMapMutex;
 
         SOCKET m_sListen;
 

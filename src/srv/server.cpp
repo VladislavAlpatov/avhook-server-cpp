@@ -9,7 +9,8 @@
 #include "../consts.h"
 #include "exceptions.h"
 #include "PacketFactory.h"
-
+#include <map>
+#include "packets/Auth.h"
 
 namespace server
 {
@@ -29,8 +30,6 @@ namespace server
         if (!m_sListen)
             throw std::runtime_error("Failed to create listen socket");
         bind(m_sListen, (SOCKADDR *) &addr, sizeof(addr));
-
-        m_dataBaseConn = std::move(sql::Connection(R"(C:\Users\Vlad\Desktop\db.db)"));
     }
 
     Server *Server::get()
@@ -54,25 +53,32 @@ namespace server
 
             if (!connectionSocket) continue;
 
-            m_vActiveConnections.push_back(connectionSocket);
             std::thread([this, connectionSocket]
                         { client_handler(connectionSocket); }).detach();
-            printf("[LOG] Connected new user\n");
         }
     }
 
     void Server::client_handler(SOCKET clientSocket)
     {
+        printf("[LOG] Connected new user\n");
+
         try
         {
+            auto authPacket = recv_packet(clientSocket);
+
+            if (!dynamic_cast<packet::Auth*>(authPacket.get()))
+                throw std::runtime_error("Expected Auth packet");
+
+            link_user_with_socket(clientSocket, std::stoi(authPacket->execute_payload(0)));
+
+            printf("[LOG] New client passed auth, client id: \"%d\"\n", get_user_id_by_socket(clientSocket));
+
             while (true)
-            {
-                recv_packet(clientSocket)->execute_payload();
-            }
+                recv_packet(clientSocket)->execute_payload(get_user_id_by_socket(clientSocket));
         }
         catch (const std::exception& ex)
         {
-            printf("[LOG] caught client exception: \"%s\", disconnecting client...\n", ex.what());
+            printf("[LOG] Caught client exception: \"%s\", disconnecting client...\n", ex.what());
             closesocket(clientSocket);
         }
     }
@@ -99,10 +105,6 @@ namespace server
         return packetSize;
     }
 
-    bool Server::auth_client(SOCKET clientSocket)
-    {
-        return false;
-    }
 
     std::shared_ptr<packet::Base> Server::recv_packet(SOCKET soc)
     {
@@ -112,7 +114,28 @@ namespace server
         ZeroMemory(data.get(), size+1);
 
         recv(soc, data.get(), size);
+        return PacketFactory::create(nlohmann::json::parse(data.get()));
+    }
 
-        return server::PacketFactory::create(nlohmann::json::parse(data.get()), &m_dataBaseConn);
+    void Server::link_user_with_socket(SOCKET soc, int id)
+    {
+        std::lock_guard guard(m_LinkedMapMutex);
+
+        m_mLinkedUsers[soc] = id;
+    }
+
+    void Server::unlink_user_with_socket(SOCKET soc)
+    {
+        std::lock_guard guard(m_LinkedMapMutex);
+        m_mLinkedUsers.erase(soc);
+    }
+
+    int Server::get_user_id_by_socket(SOCKET soc)
+    {
+        std::lock_guard guard(m_LinkedMapMutex);
+        if (!m_mLinkedUsers.contains(soc))
+            throw exception::ClientNotRegistered();
+
+        return m_mLinkedUsers[soc];
     }
 }

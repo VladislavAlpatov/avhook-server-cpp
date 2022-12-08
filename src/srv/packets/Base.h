@@ -16,7 +16,7 @@ namespace server::packet
     {
         friend class server::PacketFacory;
     public:
-        virtual std::string execute_payload() = 0;
+        virtual std::string execute_payload(int userId) = 0;
 
     protected:
         nlohmann::json m_Data;

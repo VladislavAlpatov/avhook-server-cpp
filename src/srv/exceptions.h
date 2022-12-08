@@ -1,13 +1,14 @@
 //
 // Created by nullifiedvlad on 06.12.2022.
 //
+#pragma once
 #include <exception>
 
 
 
 namespace server::exception
     {
-        class RecvFailed : public std::exception
+        class RecvFailed  final : public std::exception
         {
         public:
             [[nodiscard]] const char *what() const override
@@ -15,7 +16,7 @@ namespace server::exception
                 return "server::recv function failed to get data from connection";
             }
         };
-        class InvalidPacketSize : public std::exception
+        class InvalidPacketSize final : public std::exception
         {
         public:
             [[nodiscard]] const char *what() const override
@@ -23,7 +24,7 @@ namespace server::exception
                 return "The size of the packet to be received is invalid";
             }
         };
-    class InvalidPacketType : public std::exception
+    class InvalidPacketType final : public std::exception
     {
     public:
         [[nodiscard]] const char *what() const override
@@ -31,4 +32,20 @@ namespace server::exception
             return "The type of packet is invalid";
         }
     };
-    }
+    class PacketFactoryNoAuthCreation final  : public std::exception
+    {
+    public:
+        [[nodiscard]] const char *what() const override
+        {
+            return "PacketFactory cant create Auth packet";
+        }
+    };
+    class ClientNotRegistered final : public std::exception
+    {
+    public:
+        [[nodiscard]] const char *what() const override
+        {
+            return "Failed to get client id from not registered client";
+        }
+    };
+}
