@@ -66,6 +66,8 @@ namespace server
         {
             auto authPacket = recv_packet(clientSocket);
 
+            // Check type of first packet type to make sure that its Auth packet
+
             if (!dynamic_cast<packet::Auth*>(authPacket.get()))
                 throw std::runtime_error("Expected Auth packet");
 
@@ -79,6 +81,7 @@ namespace server
         catch (const std::exception& ex)
         {
             printf("[LOG] Caught client exception: \"%s\", disconnecting client...\n", ex.what());
+            unlink_user_with_socket(clientSocket);
             closesocket(clientSocket);
         }
     }
