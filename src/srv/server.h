@@ -10,6 +10,8 @@
 #include "packets/Base.h"
 #include <map>
 
+#define INVALID_USER_ID -1
+
 namespace server
 {
     class Server
@@ -20,17 +22,12 @@ namespace server
         void listen();
 
     private:
-        void link_user_with_socket(SOCKET soc, int id);
-        void unlink_user_with_socket(SOCKET soc);
-        int get_user_id_by_socket(SOCKET soc);
-        std::shared_ptr<packet::Base> recv_packet(SOCKET soc);
-        void client_handler(SOCKET clientSocket);
-        std::map<SOCKET, int> m_mLinkedUsers;
+        static std::shared_ptr<packet::Base> recv_packet(SOCKET soc);
+        static void client_handler(SOCKET clientSocket);
 
         bool m_bAllowListen = true;
 
         Server(const std::string &ip, int port);
-        std::mutex m_LinkedMapMutex;
 
         SOCKET m_sListen;
 

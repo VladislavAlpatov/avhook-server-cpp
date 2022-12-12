@@ -4,6 +4,8 @@
 #include "PacketFactory.h"
 #include "packets/SetUserName.h"
 #include "packets/Auth.h"
+#include "packets/OnlineUsersICount.h"
+
 #include "../lib/sqlite/connection.h"
 #include "exceptions.h"
 
@@ -14,10 +16,9 @@ namespace server
     {
         switch (data["type"].get<int>())
         {
-            case PACKET_SETUSERNAME:
-                return std::make_shared<packet::SetUserName>(data);
-            case PACKET_AUTH:
-                return std::make_shared<packet::Auth>(data);
+            case PACKET_SETUSERNAME:      return std::make_shared<packet::SetUserName>(data);
+            case PACKET_AUTH:             return std::make_shared<packet::Auth>(data);
+            case PACKET_ONLINEUSERSCOUNT: return std::make_shared<packet::OnlineUsersICount>(data);
         }
         throw exception::InvalidPacketType();
 

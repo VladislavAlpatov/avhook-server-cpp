@@ -8,7 +8,10 @@
 #include <thread>
 #include "../consts.h"
 #include "exceptions.h"
+#include <fmt/format.h>
+
 #include "PacketFactory.h"
+
 #include <map>
 #include "packets/Auth.h"
 
@@ -61,7 +64,7 @@ namespace server
     void Server::client_handler(SOCKET clientSocket)
     {
         printf("[LOG] Connected new user\n");
-
+        int iUserId = INVALID_USER_ID;
         try
         {
             auto authPacket = recv_packet(clientSocket);
@@ -71,18 +74,22 @@ namespace server
             if (!dynamic_cast<packet::Auth*>(authPacket.get()))
                 throw std::runtime_error("Expected Auth packet");
 
-            link_user_with_socket(clientSocket, std::stoi(authPacket->execute_payload(0)));
+            iUserId = std::stoi(authPacket->execute_payload(NULL));
 
-            printf("[LOG] New client passed auth, client id: \"%d\"\n", get_user_id_by_socket(clientSocket));
+            sql::Connection::get()->query(fmt::format("UPDATE `users` SET `is_online` = TRUE WHERE `id` = {}", iUserId));
+
+            printf("[LOG] New client passed auth, client id: \"%d\"\n", iUserId);
 
             while (true)
-                recv_packet(clientSocket)->execute_payload(get_user_id_by_socket(clientSocket));
+                recv_packet(clientSocket)->execute_payload(iUserId);
         }
         catch (const std::exception& ex)
         {
             printf("[LOG] Caught client exception: \"%s\", disconnecting client...\n", ex.what());
-            unlink_user_with_socket(clientSocket);
             closesocket(clientSocket);
+
+            if (iUserId != INVALID_USER_ID)
+                sql::Connection::get()->query(fmt::format("UPDATE `users` SET `is_online` = FALSE WHERE `id` = {}", iUserId));
         }
     }
 
@@ -118,27 +125,5 @@ namespace server
 
         recv(soc, data.get(), size);
         return PacketFactory::create(nlohmann::json::parse(data.get()));
-    }
-
-    void Server::link_user_with_socket(SOCKET soc, int id)
-    {
-        std::lock_guard guard(m_LinkedMapMutex);
-
-        m_mLinkedUsers[soc] = id;
-    }
-
-    void Server::unlink_user_with_socket(SOCKET soc)
-    {
-        std::lock_guard guard(m_LinkedMapMutex);
-        m_mLinkedUsers.erase(soc);
-    }
-
-    int Server::get_user_id_by_socket(SOCKET soc)
-    {
-        std::lock_guard guard(m_LinkedMapMutex);
-        if (!m_mLinkedUsers.contains(soc))
-            throw exception::ClientNotRegistered();
-
-        return m_mLinkedUsers[soc];
     }
 }

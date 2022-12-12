@@ -4,7 +4,7 @@
 #pragma once
 #include "packets/Base.h"
 #include <memory>
-#include <WinSock2.h>
+
 namespace server
 {
     class PacketFactory final

@@ -23,5 +23,13 @@ namespace server::packet::exception
             return "Accepted package was corrupted";
         }
     };
+    class AnotherSessionWithClientAlreadyExist final  : public std::exception
+    {
+    public:
+        [[nodiscard]] const char *what() const override
+        {
+            return "Only one connection can be linked with user in data base";
+        }
+    };
 
 }

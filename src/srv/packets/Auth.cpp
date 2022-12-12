@@ -18,15 +18,24 @@ namespace server::packet
     {
         const auto password = m_Data["password"].get<std::string>();
         const auto email    = m_Data["email"].get<std::string>();
+        auto pDataBase =sql::Connection::get();
 
         char hashedPass[65] = {0};
 
+
         sha256_easy_hash_hex(password.c_str(), password.size(), hashedPass);
 
-        auto res = sql::Connection::get()->query(fmt::format(R"(SELECT `id` FROM `users` WHERE `password` = "{}" AND `email` = "{}")", hashedPass, email) );
+        auto res = pDataBase->query(fmt::format(R"(SELECT `id` FROM `users` WHERE `password` = "{}" AND `email` = "{}")", hashedPass, email) );
 
         if (res.empty())
             throw exception::AuthFailedWrongPassword();
+        int iUserId = std::stoi(res[0][0]);
+
+
+        bool bIsAlreadyOnline = std::stoi(pDataBase->query(fmt::format("SELECT `is_online` FROM `users` WHERE `id` = {}", iUserId))[0][0] );
+
+        if (bIsAlreadyOnline)
+            throw exception::AnotherSessionWithClientAlreadyExist();
 
         return res[0][0];
     }

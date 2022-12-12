@@ -3,6 +3,7 @@
 //
 #pragma once
 #include "Base.h"
+
 #define  PACKET_AUTH 1
 namespace server::packet
 {
