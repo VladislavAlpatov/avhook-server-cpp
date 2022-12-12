@@ -11,7 +11,7 @@ namespace server::exception
         class RecvFailed  final : public std::exception
         {
         public:
-            [[nodiscard]] const char *what() const override
+            [[nodiscard]] const char *what() const noexcept override
             {
                 return "server::recv function failed to get data from connection";
             }
@@ -19,7 +19,7 @@ namespace server::exception
         class InvalidPacketSize final : public std::exception
         {
         public:
-            [[nodiscard]] const char *what() const override
+            [[nodiscard]] const char *what() const noexcept override
             {
                 return "The size of the packet to be received is invalid";
             }
@@ -27,7 +27,7 @@ namespace server::exception
     class InvalidPacketType final : public std::exception
     {
     public:
-        [[nodiscard]] const char *what() const override
+        [[nodiscard]] const char *what() const noexcept override
         {
             return "The type of packet is invalid";
         }
@@ -35,7 +35,7 @@ namespace server::exception
     class PacketFactoryNoAuthCreation final  : public std::exception
     {
     public:
-        [[nodiscard]] const char *what() const override
+        [[nodiscard]] const char *what() const noexcept override
         {
             return "PacketFactory cant create Auth packet";
         }
@@ -43,7 +43,7 @@ namespace server::exception
     class ClientNotRegistered final : public std::exception
     {
     public:
-        [[nodiscard]] const char *what() const override
+        [[nodiscard]] const char *what() const noexcept override
         {
             return "Failed to get client id from not registered client";
         }

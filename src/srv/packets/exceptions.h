@@ -9,7 +9,7 @@ namespace server::packet::exception
     class AuthFailedWrongPassword final : public std::exception
     {
     public:
-        [[nodiscard]] const char *what() const override
+        [[nodiscard]] const char *what() const noexcept override
         {
             return "Client auth was failed, wrong password";
         }
@@ -18,7 +18,7 @@ namespace server::packet::exception
     class CorruptedPacket final  : public std::exception
     {
     public:
-        [[nodiscard]] const char *what() const override
+        [[nodiscard]] const char *what() const noexcept override
         {
             return "Accepted package was corrupted";
         }
@@ -26,7 +26,7 @@ namespace server::packet::exception
     class AnotherSessionWithClientAlreadyExist final  : public std::exception
     {
     public:
-        [[nodiscard]] const char *what() const override
+        [[nodiscard]] const char *what() const noexcept override
         {
             return "Only one connection can be linked with user in data base";
         }

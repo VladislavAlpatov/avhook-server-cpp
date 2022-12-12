@@ -3,6 +3,8 @@
 //
 #include "connection.h"
 #include "exceptions.h"
+#include <memory>
+
 namespace sql
 {
     Connection::Connection(const std::string &path)
