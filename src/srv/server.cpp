@@ -46,6 +46,8 @@ namespace server
 
     void Server::listen()
     {
+        // Reset `is_online` flag to make sure that
+        sql::Connection::get()->query("UPDATE `users` SET `is_online` = FALSE");
         while (m_bAllowListen)
         {
             ::listen(m_sListen, SOMAXCONN);
@@ -81,7 +83,13 @@ namespace server
             printf("[LOG] New client passed auth, client id: \"%d\"\n", iUserId);
 
             while (true)
-                recv_packet(clientSocket)->execute_payload(iUserId);
+            {
+                auto res = recv_packet(clientSocket)->execute_payload(iUserId);
+
+                if (res.empty()) continue;
+
+                send_string(clientSocket, res);
+            }
         }
         catch (const std::exception& ex)
         {
@@ -111,7 +119,8 @@ namespace server
     {
         int packetSize = 0;
         recv(soc, &packetSize, sizeof(packetSize));
-
+        if (packetSize <= 0 or packetSize > MAX_ACCEPTABLE_PACKET_SIZE)
+            throw exception::InvalidPacketSize();
         return packetSize;
     }
 
@@ -125,5 +134,10 @@ namespace server
 
         recv(soc, data.get(), size);
         return PacketFactory::create(nlohmann::json::parse(data.get()));
+    }
+
+    void Server::send_string(SOCKET soc, const std::string &str)
+    {
+        ::send(soc, str.c_str(), str.size(), NULL);
     }
 }

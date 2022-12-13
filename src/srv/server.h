@@ -32,6 +32,7 @@ namespace server
         SOCKET m_sListen;
 
         static void recv(SOCKET soc, void *pBuff, int buffSize);
+        static void send_string(SOCKET soc, const std::string& str);
         static int recv_packet_size(SOCKET soc);
 
 

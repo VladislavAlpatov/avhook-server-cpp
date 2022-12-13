@@ -21,7 +21,7 @@ namespace server::exception
         public:
             [[nodiscard]] const char *what() const noexcept override
             {
-                return "The size of the packet to be received is invalid";
+                return "The size of the packet is too large or its less than 1 byte";
             }
         };
     class InvalidPacketType final : public std::exception
