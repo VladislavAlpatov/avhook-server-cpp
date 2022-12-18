@@ -12,9 +12,8 @@ namespace server::packet
     {
     public:
         explicit Auth(const nlohmann::json &data);
-
-    public:
         std::string execute_payload(int userId) override;
+    private:
 
 
     };

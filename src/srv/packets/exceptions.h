@@ -32,4 +32,13 @@ namespace server::packet::exception
         }
     };
 
+    class UserInfoNotFound final  : public std::exception
+    {
+    public:
+        [[nodiscard]] const char *what() const noexcept override
+        {
+            return "Information about this user does not exis";
+        }
+    };
+
 }

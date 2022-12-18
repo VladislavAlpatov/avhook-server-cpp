@@ -6,6 +6,10 @@ add_link_options(-pthread)
 project(server)
 add_executable(server src/main.cpp)
 
+if( NOT CMAKE_BUILD_TYPE MATCHES Debug)
+    add_link_options(-s -g0)
+endif()
+
 add_subdirectory(src)
 
 find_package(unofficial-sqlite3 CONFIG REQUIRED)

@@ -13,7 +13,7 @@ namespace server::exception
         public:
             [[nodiscard]] const char *what() const noexcept override
             {
-                return "server::recv function failed to get data from connection";
+                return "server::recv function failed";
             }
         };
         class InvalidPacketSize final : public std::exception

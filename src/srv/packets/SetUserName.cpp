@@ -4,7 +4,7 @@
 #include "SetUserName.h"
 #include <fmt/format.h>
 #include "../../lib/sqlite/connection.h"
-
+#include "exceptions.h"
 namespace server::packet
 {
 
@@ -15,8 +15,9 @@ namespace server::packet
 
     std::string SetUserName::execute_payload(int userId)
     {
-        sql::Connection::get()->query(fmt::format("UPDATE `users` SET `name`= \"{}\" WHERE `id` = {}", m_Data["name"].get<std::string>(), userId));
+        const auto data = sql::Connection::get()->query(fmt::format("UPDATE `users` SET `name`= \"{}\" WHERE `id` = {}", m_Data["name"].get<std::string>(), userId));
 
-        return "";
+        if (data.empty())
+            throw exception::UserInfoNotFound();
     }
 } // packet

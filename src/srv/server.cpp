@@ -48,6 +48,10 @@ namespace server
     {
         // Reset `is_online` flag to make sure that
         sql::Connection::get()->query("UPDATE `users` SET `is_online` = FALSE");
+
+        printf("[LOG] Server is online, listening...\n");
+
+
         while (m_bAllowListen)
         {
             ::listen(m_sListen, SOMAXCONN);

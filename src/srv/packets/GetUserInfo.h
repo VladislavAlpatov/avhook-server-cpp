@@ -3,6 +3,9 @@
 //
 #pragma once
 #include "Base.h"
+
+#define PACKET_GETUSERINFO 4
+
 namespace server::packet
 {
     class GetUserInfo final : public Base
