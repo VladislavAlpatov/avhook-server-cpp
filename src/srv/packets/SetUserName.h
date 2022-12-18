@@ -4,7 +4,6 @@
 #pragma once
 #include "Base.h"
 
-#define PACKET_SETUSERNAME 0
 
 namespace server::packet
 {
@@ -13,5 +12,9 @@ namespace server::packet
     public:
         explicit SetUserName(const nlohmann::json& data);
         std::string execute_payload(int userId) override;
+    private:
+        std::string m_sNewUserName;
+
+        static bool is_username_valid(const std::string& name);
     };
 } // packet

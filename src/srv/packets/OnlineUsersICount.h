@@ -4,7 +4,6 @@
 #pragma once
 #include "Base.h"
 
-#define PACKET_ONLINEUSERSCOUNT 3
 
 namespace server::packet
     {

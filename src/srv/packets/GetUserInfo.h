@@ -4,7 +4,6 @@
 #pragma once
 #include "Base.h"
 
-#define PACKET_GETUSERINFO 4
 
 namespace server::packet
 {
@@ -14,5 +13,7 @@ namespace server::packet
         explicit GetUserInfo(const nlohmann::json &data);
 
         std::string execute_payload(int userId) override;
+    private:
+        int m_iTargetUserId;
     };
 } // packet

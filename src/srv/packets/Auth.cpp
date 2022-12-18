@@ -11,24 +11,33 @@ namespace server::packet
 
     Auth::Auth(const nlohmann::json &data) : Base(data)
     {
+        try
+        {
+            m_sUserEmail = m_Data["email"].get<std::string>();
 
+            const auto password = m_Data["password"].get<std::string>();
+
+            char hashedPass[65] = {0};
+            sha256_easy_hash_hex(password.c_str(), password.size(), hashedPass);
+
+            m_sUserPasswordHash = hashedPass;
+        }
+        catch (...)
+        {
+            throw exception::CorruptedPacket();
+        }
     }
 
     std::string Auth::execute_payload(int userId)
     {
-        const auto password = m_Data["password"].get<std::string>();
-        const auto email    = m_Data["email"].get<std::string>();
+
         auto pDataBase =sql::Connection::get();
 
-        char hashedPass[65] = {0};
-
-
-        sha256_easy_hash_hex(password.c_str(), password.size(), hashedPass);
-
-        auto res = pDataBase->query(fmt::format(R"(SELECT `id` FROM `users` WHERE `password` = "{}" AND `email` = "{}")", hashedPass, email) );
+        auto res = pDataBase->query(fmt::format(R"(SELECT `id` FROM `users` WHERE `password` = "{}" AND `email` = "{}")", m_sUserPasswordHash, m_sUserEmail) );
 
         if (res.empty())
             throw exception::AuthFailedWrongPassword();
+
         int iUserId = std::stoi(res[0][0]);
 
 

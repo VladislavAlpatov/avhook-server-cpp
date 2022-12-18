@@ -4,7 +4,7 @@
 #pragma once
 #include "Base.h"
 
-#define  PACKET_AUTH 1
+
 namespace server::packet
 {
 
@@ -14,8 +14,8 @@ namespace server::packet
         explicit Auth(const nlohmann::json &data);
         std::string execute_payload(int userId) override;
     private:
-
-
+        std::string m_sUserPasswordHash;
+        std::string m_sUserEmail;
     };
 
 } // packet
