@@ -1,1 +1,1 @@
-target_sources(server PRIVATE Base.cpp SetUserName.cpp Auth.cpp OnlineUsersICount.cpp GetUserInfo.cpp SetUserStatus.cpp)
+target_sources(server PRIVATE Base.cpp SetUserName.cpp Auth.cpp OnlineUsersICount.cpp GetUserInfo.cpp SetUserStatus.cpp UpdateAVhookUserConfig.cpp GetUserAVhookConfigs.cpp)

@@ -37,7 +37,15 @@ namespace server::packet::exception
     public:
         [[nodiscard]] const char *what() const noexcept override
         {
-            return "Information about this user does not exis";
+            return "Information about this user does not exist";
+        }
+    };
+    class ConfigNotFound final : public std::exception
+    {
+    public:
+        [[nodiscard]] const char *what() const noexcept override
+        {
+            return "Failed to find avhook config";
         }
     };
 
