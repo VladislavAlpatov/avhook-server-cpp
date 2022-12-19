@@ -22,3 +22,6 @@ target_link_libraries(server PRIVATE nlohmann_json::nlohmann_json)
 
 find_package(fmt CONFIG REQUIRED)
 target_link_libraries(server PRIVATE fmt::fmt-header-only)
+
+find_package(ZLIB REQUIRED)
+target_link_libraries(server PRIVATE ZLIB::ZLIB)
