@@ -121,11 +121,14 @@ namespace server
 
     int Server::recv_packet_size(SOCKET soc)
     {
+
         int packetSize = 0;
         recv(soc, &packetSize, sizeof(packetSize));
-        if (packetSize <= 0 or packetSize > MAX_ACCEPTABLE_PACKET_SIZE)
+        if (packetSize <= 0 && packetSize > MAX_ACCEPTABLE_PACKET_SIZE)
             throw exception::InvalidPacketSize();
         return packetSize;
+
+
     }
 
 
@@ -135,7 +138,7 @@ namespace server
 
         const auto data = std::unique_ptr<char>(new char[size+1]);
         ZeroMemory(data.get(), size+1);
-
+        
         recv(soc, data.get(), size);
         return PacketFactory::create(nlohmann::json::parse(data.get()));
     }

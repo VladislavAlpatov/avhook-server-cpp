@@ -19,6 +19,8 @@
 #define PACKET_SET_USER_STATUS           4
 #define PACKET_UPDATE_USER_AVHOOK_CFG    5
 #define PACKET_GET_USER_AVHOOK_CFGS      6
+
+
 namespace server
 {
     std::shared_ptr<packet::Base> PacketFactory::create(const nlohmann::json &data)
