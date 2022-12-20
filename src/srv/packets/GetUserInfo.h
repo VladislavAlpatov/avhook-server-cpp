@@ -14,6 +14,5 @@ namespace server::packet
 
         std::string execute_payload(int userId) override;
     private:
-        int m_iTargetUserId;
     };
 } // packet
