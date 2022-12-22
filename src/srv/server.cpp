@@ -14,6 +14,7 @@
 #include "packets/Auth.h"
 #include "../lib/sqlite/connection.h"
 #include "../lib/nnl/nnl.h"
+#include "packets/exceptions.h"
 
 
 namespace server
@@ -47,7 +48,7 @@ namespace server
 
     void Server::listen()
     {
-        // Reset `is_online` flag to make sure that
+        // Reset `is_online` flag for all users
         sql::Connection::get()->query("UPDATE `users` SET `is_online` = FALSE");
 
         printf("[LOG] Server is online, listening...\n");
@@ -74,16 +75,7 @@ namespace server
         int iUserId = INVALID_USER_ID;
         try
         {
-            auto authPacket = recv_packet(clientSocket);
-
-            // Check type of first packet type to make sure that its Auth packet
-
-            if (!dynamic_cast<packet::Auth*>(authPacket.get()))
-                throw std::runtime_error("Expected Auth packet");
-
-            iUserId = std::stoi(authPacket->execute_payload(NULL));
-
-            sql::Connection::get()->query(fmt::format("UPDATE `users` SET `is_online` = TRUE WHERE `id` = {}", iUserId));
+            iUserId = auth_client(clientSocket);
 
             printf("[LOG] New client passed auth, client id: \"%d\"\n", iUserId);
 
@@ -109,5 +101,32 @@ namespace server
     std::shared_ptr<packet::Base> Server::recv_packet(SOCKET soc)
     {
         return PacketFactory::create(nnl::recv_json(soc));
+    }
+    int  Server::auth_client(SOCKET clientSocket)
+    {
+        while (true)
+        {
+            try
+            {
+                auto pAuthPacket = recv_packet(clientSocket);
+            
+                if (!dynamic_cast<packet::Auth*>(pAuthPacket.get()))
+                {
+                    nnl::send_string(clientSocket, "Acces denied");
+                    continue;
+                }
+                int iUserId = std::stoi(pAuthPacket->execute_payload(NULL));
+
+                sql::Connection::get()->query(fmt::format("UPDATE `users` SET `is_online` = TRUE WHERE `id` = {}", iUserId));
+
+                return iUserId;
+            }
+            catch(const packet::exception::AuthFailedWrongPassword& ex)
+            {
+                nnl::send_string(clientSocket, ex.what());
+            }
+            
+        }
+        
     }
 }

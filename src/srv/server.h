@@ -20,8 +20,8 @@ namespace server
 
     private:
         static std::shared_ptr<packet::Base> recv_packet(SOCKET soc);
-        static void client_handler(SOCKET clientSocket);
-
+        void client_handler(SOCKET clientSocket);
+        int  auth_client(SOCKET clientSocket);
         bool m_bAllowListen = true;
 
         Server(const std::string &ip, int port);
