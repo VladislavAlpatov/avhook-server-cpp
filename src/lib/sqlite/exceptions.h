@@ -9,7 +9,7 @@ namespace sql::exception
     class FailedConnectToDataBase : public std::exception
     {
     public:
-        [[nodiscard]] const char *what() const noexcept override
+        const char *what() const noexcept override
         {
             return "Failed to open data base";
         }
@@ -18,7 +18,7 @@ namespace sql::exception
     class SyntaxError : public std::exception
     {
     public:
-        [[nodiscard]] const char *what() const noexcept override
+        const char *what() const noexcept override
         {
             return "SQL query contains syntax errors";
         }

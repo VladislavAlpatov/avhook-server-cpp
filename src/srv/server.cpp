@@ -11,9 +11,10 @@
 #include <fmt/format.h>
 
 #include "PacketFactory.h"
-
-#include <map>
 #include "packets/Auth.h"
+#include "../lib/sqlite/connection.h"
+#include "../lib/nnl/nnl.h"
+
 
 namespace server
 {
@@ -92,7 +93,7 @@ namespace server
 
                 if (res.empty()) continue;
 
-                send_string(clientSocket, res);
+                nnl::send_string(clientSocket, res);
             }
         }
         catch (const std::exception& ex)
@@ -105,46 +106,8 @@ namespace server
         }
     }
 
-    void Server::recv(SOCKET soc, void *pBuff, int buffSize)
-    {
-        int wholeRecievedBytes = 0;
-
-        while (wholeRecievedBytes < buffSize)
-        {
-            auto recievedBytes = ::recv(soc, (char *) pBuff, buffSize - wholeRecievedBytes, NULL);
-            if (recievedBytes <= 0)
-                throw server::exception::RecvFailed();
-            wholeRecievedBytes += recievedBytes;
-        }
-
-    }
-
-    int Server::recv_packet_size(SOCKET soc)
-    {
-
-        int packetSize = 0;
-        recv(soc, &packetSize, sizeof(packetSize));
-        if (packetSize <= 0 && packetSize > MAX_ACCEPTABLE_PACKET_SIZE)
-            throw exception::InvalidPacketSize();
-        return packetSize;
-
-
-    }
-
-
     std::shared_ptr<packet::Base> Server::recv_packet(SOCKET soc)
     {
-        const auto size = recv_packet_size(soc);
-
-        const auto data = std::unique_ptr<char>(new char[size+1]);
-        ZeroMemory(data.get(), size+1);
-        
-        recv(soc, data.get(), size);
-        return PacketFactory::create(nlohmann::json::parse(data.get()));
-    }
-
-    void Server::send_string(SOCKET soc, const std::string &str)
-    {
-        ::send(soc, str.c_str(), str.size(), NULL);
+        return PacketFactory::create(nnl::recv_json(soc));
     }
 }

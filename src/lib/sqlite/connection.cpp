@@ -20,11 +20,11 @@ namespace sql
         sqlite3_stmt* pSqliteStatement = nullptr;
 
         std::lock_guard lock(m_lock);
-
+        
         sqlite3_prepare_v2(m_pDataBase, str.c_str(), str.size(), &pSqliteStatement, nullptr);
         if (!pSqliteStatement)
             throw exception::SyntaxError();
-
+        
         while (sqlite3_step(pSqliteStatement) != SQLITE_DONE)
         {
             const auto rowLength = sqlite3_column_count(pSqliteStatement);
@@ -35,13 +35,14 @@ namespace sql
             {
                 const auto pText = sqlite3_column_text(pSqliteStatement, i);
 
-                if (sqlite3_column_type(pSqliteStatement, i) != SQLITE_BLOB or !pText)
+                if (sqlite3_column_type(pSqliteStatement, i) != SQLITE_BLOB || !pText)
                     rowData.emplace_back((pText) ? (const char*)pText : "");
             }
             out.emplace_back(rowData);
         }
         sqlite3_finalize(pSqliteStatement);
         return out;
+        int x;
     }
 
     Connection::~Connection()
