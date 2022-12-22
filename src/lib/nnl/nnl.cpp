@@ -11,8 +11,8 @@ std::string nnl::recv_string(SOCKET soc)
         return "";
     
     auto pBuff = std::unique_ptr<char>(new char[iSize+1]);
-
     
+
     pBuff.get()[iSize] = '\0';
 
     while (iSize)
@@ -20,7 +20,7 @@ std::string nnl::recv_string(SOCKET soc)
        const auto tmp = ::recv(soc, pBuff.get(), iSize, NULL);
        
        if (!tmp) throw exception::RecvFailed();
-       
+
        iSize -= tmp;
     }
 
