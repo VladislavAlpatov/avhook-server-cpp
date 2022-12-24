@@ -17,7 +17,7 @@
 #include "packets/exceptions.h"
 
 
-namespace server
+namespace Web
 {
     Server::Server(const std::string &ip, const int port)
     {

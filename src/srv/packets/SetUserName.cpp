@@ -5,7 +5,7 @@
 #include <fmt/format.h>
 #include "../../lib/sqlite/connection.h"
 #include "exceptions.h"
-namespace server::packet
+namespace Web::packet
 {
 
     SetUserName::SetUserName(const nlohmann::json &data) : Base(data)

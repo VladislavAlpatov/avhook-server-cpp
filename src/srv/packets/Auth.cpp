@@ -6,7 +6,7 @@
 #include "../../lib/sha256/sha256.h"
 #include "fmt/format.h"
 #include "exceptions.h"
-namespace server::packet
+namespace Web::packet
 {
 
     Auth::Auth(const nlohmann::json &data) : Base(data)
@@ -42,9 +42,6 @@ namespace server::packet
 
 
         bool bIsAlreadyOnline = std::stoi(pDataBase->query(fmt::format("SELECT `is_online` FROM `users` WHERE `id` = {}", iUserId))[0][0] );
-
-        if (bIsAlreadyOnline)
-            throw exception::AnotherSessionWithClientAlreadyExist();
 
         return res[0][0];
     }

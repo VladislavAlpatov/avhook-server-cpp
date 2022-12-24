@@ -6,7 +6,7 @@
 
 
 
-namespace server::exception
+namespace Web::exception
     {
         class RecvFailed  final : public std::exception
         {

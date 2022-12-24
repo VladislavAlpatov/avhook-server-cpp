@@ -6,5 +6,5 @@
 
 int main()
 {
-    server::Server::get()->listen();
+    Web::Server::get()->listen();
 }

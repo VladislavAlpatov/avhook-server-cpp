@@ -3,7 +3,7 @@
 //
 #pragma once
 #include "Base.h"
-namespace server::packet
+namespace Web::packet
 {
 
     class UpdateAVhookUserConfig : public Base

@@ -5,7 +5,7 @@
 #include <string>
 #include "nlohmann/json.hpp"
 
-namespace server::packet
+namespace Web::packet
 {
 
     class Base

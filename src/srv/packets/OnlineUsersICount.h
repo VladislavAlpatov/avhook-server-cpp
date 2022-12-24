@@ -5,7 +5,7 @@
 #include "Base.h"
 
 
-namespace server::packet
+namespace Web::packet
     {
 
         class OnlineUsersICount final : public Base

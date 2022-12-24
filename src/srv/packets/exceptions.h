@@ -4,7 +4,7 @@
 #pragma once
 #include <stdexcept>
 
-namespace server::packet::exception
+namespace Web::packet::exception
 {
     class AuthFailedWrongPassword final : public std::exception
     {

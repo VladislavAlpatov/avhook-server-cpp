@@ -5,7 +5,7 @@
 #include "packets/Base.h"
 #include <memory>
 
-namespace server
+namespace Web
 {
     class PacketFactory final
     {

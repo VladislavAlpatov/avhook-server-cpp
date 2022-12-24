@@ -7,21 +7,20 @@ std::string nnl::recv_string(SOCKET soc)
     int iSize = 0;
     ::recv(soc, (char*)&iSize, 4, NULL);
 
-    if (iSize <= 0) 
-        return "";
+    if (iSize <= 0)
+		throw exception::RecvFailed();
     
     auto pBuff = std::unique_ptr<char>(new char[iSize+1]);
     
 
     pBuff.get()[iSize] = '\0';
-
-    while (iSize)
+	int iRecvdBytes = 0;
+    while (iRecvdBytes < iSize)
     {
-       const auto tmp = ::recv(soc, pBuff.get(), iSize, NULL);
+       const auto tmp = ::recv(soc, pBuff.get()+iRecvdBytes, iSize-iRecvdBytes, NULL);
        
        if (!tmp) throw exception::RecvFailed();
-
-       iSize -= tmp;
+	   iRecvdBytes += tmp;
     }
 
     return pBuff.get();   

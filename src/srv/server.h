@@ -9,7 +9,7 @@
 
 #define INVALID_USER_ID -1
 
-namespace server
+namespace Web
 {
     class Server
     {

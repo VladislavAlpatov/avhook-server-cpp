@@ -7,7 +7,7 @@
 #include "fmt/format.h"
 
 
-namespace server::packet
+namespace Web::packet
 {
     std::string GetUserAVhookConfigs::execute_payload(int userId)
     {

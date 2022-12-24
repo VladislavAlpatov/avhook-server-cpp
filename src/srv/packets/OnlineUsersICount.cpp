@@ -4,7 +4,7 @@
 #include "OnlineUsersICount.h"
 #include "../../lib/sqlite/connection.h"
 
-namespace server::packet
+namespace Web::packet
     {
         OnlineUsersICount::OnlineUsersICount(const nlohmann::json &data) : Base(data)
         {}

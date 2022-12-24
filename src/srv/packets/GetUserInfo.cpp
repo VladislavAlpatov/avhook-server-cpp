@@ -7,7 +7,7 @@
 #include <fmt/format.h>
 
 
-namespace server::packet
+namespace Web::packet
 {
     GetUserInfo::GetUserInfo(const nlohmann::json &data) : Base(data)
     {

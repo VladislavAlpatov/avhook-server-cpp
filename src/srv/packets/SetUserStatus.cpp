@@ -8,7 +8,7 @@
 #include <fmt/format.h>
 
 
-namespace server::packet
+namespace Web::packet
 {
     SetUserStatus::SetUserStatus(const nlohmann::json &data) : Base(data)
     {

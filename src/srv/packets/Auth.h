@@ -5,7 +5,7 @@
 #include "Base.h"
 
 
-namespace server::packet
+namespace Web::packet
 {
 
     class Auth final : public Base

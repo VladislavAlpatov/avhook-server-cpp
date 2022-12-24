@@ -6,7 +6,7 @@
 #include "../../lib/sqlite/connection.h"
 #include "fmt/format.h"
 
-namespace server::packet
+namespace Web::packet
 {
     UpdateAVhookUserConfig::UpdateAVhookUserConfig(const nlohmann::json &data) : Base(data)
     {
