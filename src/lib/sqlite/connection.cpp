@@ -34,7 +34,6 @@ namespace sql
             for (int i =0; i < rowLength; ++i)
             {
                 const auto pText = sqlite3_column_text(pSqliteStatement, i);
-
                 if (sqlite3_column_type(pSqliteStatement, i) != SQLITE_BLOB || !pText)
                     rowData.emplace_back((pText) ? (const char*)pText : "");
             }
@@ -42,7 +41,6 @@ namespace sql
         }
         sqlite3_finalize(pSqliteStatement);
         return out;
-        int x;
     }
 
     Connection::~Connection()

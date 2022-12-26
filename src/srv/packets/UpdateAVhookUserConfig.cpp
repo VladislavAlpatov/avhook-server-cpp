@@ -29,6 +29,7 @@ namespace Web::packet
             throw exception::ConfigNotFound();
 
         db->query(fmt::format("UPDATE `avhook-configs` SET `data` = '{}' WHERE `id` = {}", m_jsonConfig.dump(), m_iConfigId));
+
         return {};
     }
 }
