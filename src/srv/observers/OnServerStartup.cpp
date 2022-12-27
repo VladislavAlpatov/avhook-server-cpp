@@ -7,6 +7,6 @@ namespace Observers
 {
 	void OnServerStartup::HandleEvent()
 	{
-		printf("[LOG] Server online, listening...");
+		printf("[LOG] Server online, listening...\n");
 	}
 } // Observers

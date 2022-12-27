@@ -20,25 +20,26 @@ void Web::ClientHandle::Listen()
 	try
 	{
 		AuthClient();
-
-		try
+		while (true)
 		{
-			OnPacket(Web::Network::RecvPacket(m_clientSocket));
-		}
-		catch (const Web::Packet::Exception::BasePacketException& ex)
-		{
-			nlohmann::json jsn;
+			try
+			{
+				OnPacket(Web::Network::RecvPacket(m_clientSocket));
+			}
+			catch (const Web::Packet::Exception::BasePacketException& ex)
+			{
+				nlohmann::json jsn;
 
-			jsn["success"]    = false;
-			jsn["error_code"] = ex.what();
+				jsn["success"]    = false;
+				jsn["error_code"] = ex.what();
 
-			Web::Network::SendJson(m_clientSocket, jsn);
+				Web::Network::SendJson(m_clientSocket, jsn);
+			}
 		}
 
 	}
 	catch (const std::exception& ex)
 	{
-		printf("[LOG] Caught fatal client exception: \"%s\", disconnecting client...\n", ex.what());
 
 		if (INVALID_USER_ID != m_iUserIdInDataBase)
 			sql::Connection::get()->query(fmt::format("UPDATE `users` SET `is_online` = FALSE WHERE `id` = {}", m_iUserIdInDataBase));

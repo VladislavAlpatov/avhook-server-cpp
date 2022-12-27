@@ -8,6 +8,6 @@ namespace Observers
 {
 	void OnUserConnected::HandleEvent()
 	{
-		printf("[LOG] Connected new user");
+		printf("[LOG] Connected new user\n");
 	}
 } // Observers

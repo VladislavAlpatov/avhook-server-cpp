@@ -64,9 +64,12 @@ namespace Web
 			std::thread([connectionSocket]
 			{
 				auto clientHandle = ClientHandle(connectionSocket);
+
 				clientHandle.AddObserver(new Observers::OnUserConnected());
 				clientHandle.AddObserver(new Observers::OnUserDisconnected());
-				ClientHandle(connectionSocket).Listen();
+
+
+				clientHandle.Listen();
 
 			}).detach();
 

@@ -8,6 +8,6 @@ namespace Observers
 {
 	void OnUserDisconnected::HandleEvent()
 	{
-		printf("[LOG] User Disconnected");
+		printf("[LOG] User Disconnected\n");
 	}
 } // Obsevers
