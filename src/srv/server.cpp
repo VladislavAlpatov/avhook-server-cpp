@@ -2,12 +2,16 @@
 // Created by Vlad on 05.12.2022.
 //
 #include "server.h"
+
 #include <stdexcept>
 #include <ws2tcpip.h>
+#include <thread>
+
 #include "../lib/sqlite/connection.h"
 #include "ClientHandle/ClientHandle.h"
 #include "observers/OnUserConnected.h"
-
+#include "observers/OnServerStartup.h"
+#include "observers/OnUserDisconnected.h"
 
 namespace Web
 {
@@ -43,7 +47,7 @@ namespace Web
         // Reset `is_online` flag for all users
         sql::Connection::get()->query("UPDATE `users` SET `is_online` = FALSE");
 
-        printf("[LOG] Server is online, listening...\n");
+		NotifyObserver<Observers::OnServerStartup>();
 
 
         while (m_bAllowListen)
@@ -57,7 +61,14 @@ namespace Web
             if (!connectionSocket) continue;
 
 
-			ClientHandle::CreateNewThreadHandle(connectionSocket);
+			std::thread([connectionSocket]
+			{
+				auto clientHandle = ClientHandle(connectionSocket);
+				clientHandle.AddObserver(new Observers::OnUserConnected());
+				clientHandle.AddObserver(new Observers::OnUserDisconnected());
+				ClientHandle(connectionSocket).Listen();
+
+			}).detach();
 
 			NotifyObserver<Observers::OnUserConnected>();
 
