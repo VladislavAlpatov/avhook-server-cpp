@@ -7,9 +7,9 @@
 #include "fmt/format.h"
 
 
-namespace Web::packet
+namespace Web::Packet
 {
-    std::string GetUserAVhookConfigs::execute_payload(int userId)
+    nlohmann::json GetUserAVhookConfigs::ExecutePayload(int userId)
     {
         std::vector<nlohmann::json> cfgs;
         nlohmann::json out;
@@ -23,7 +23,7 @@ namespace Web::packet
 
         out["configs"] = cfgs;
 
-        return out.dump();
+        return out;
     }
 
     GetUserAVhookConfigs::GetUserAVhookConfigs(const nlohmann::json &data) : Base(data)

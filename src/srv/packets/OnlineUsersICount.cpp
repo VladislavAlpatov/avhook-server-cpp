@@ -4,16 +4,17 @@
 #include "OnlineUsersICount.h"
 #include "../../lib/sqlite/connection.h"
 
-namespace Web::packet
+namespace Web::Packet
     {
         OnlineUsersICount::OnlineUsersICount(const nlohmann::json &data) : Base(data)
         {}
 
-        std::string OnlineUsersICount::execute_payload(int userId)
+        nlohmann::json OnlineUsersICount::ExecutePayload(int userId)
         {
             auto dataBase = sql::Connection::get();
             const auto dt = dataBase->query("SELECT `id` FROM `users` WHERE `is_online` = TRUE");
-
-            return std::to_string(dt.size());
+			nlohmann::json out;
+			out["users_online"] = dt.size();
+            return out;
         }
     } // packet

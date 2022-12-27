@@ -4,9 +4,13 @@
 #pragma once
 #include <stdexcept>
 
-namespace Web::packet::exception
+namespace Web::Packet::Exception
 {
-    class AuthFailedWrongPassword final : public std::exception
+	class BasePacketException : public std::exception
+	{
+
+	};
+    class AuthFailedWrongPassword final : public BasePacketException
     {
     public:
         [[nodiscard]] const char *what() const noexcept override
@@ -15,7 +19,7 @@ namespace Web::packet::exception
         }
     };
 
-    class CorruptedPacket final  : public std::exception
+    class CorruptedPacket final  : public BasePacketException
     {
     public:
         [[nodiscard]] const char *what() const noexcept override
@@ -23,16 +27,14 @@ namespace Web::packet::exception
             return "Accepted package was corrupted";
         }
     };
-    class AnotherSessionWithClientAlreadyExist final  : public std::exception
-    {
-    public:
-        [[nodiscard]] const char *what() const noexcept override
-        {
-            return "Only one connection can be linked with user in data base";
-        }
-    };
-
-    class UserInfoNotFound final  : public std::exception
+	class InValidUserName final : public BasePacketException
+	{
+		[[nodiscard]] const char *what() const noexcept override
+		{
+			return "Invalid username, it must not contain newlines or tabs";
+		}
+	};
+    class UserInfoNotFound final  : public BasePacketException
     {
     public:
         [[nodiscard]] const char *what() const noexcept override
@@ -40,7 +42,7 @@ namespace Web::packet::exception
             return "Information about this user does not exist";
         }
     };
-    class ConfigNotFound final : public std::exception
+    class ConfigNotFound final : public BasePacketException
     {
     public:
         [[nodiscard]] const char *what() const noexcept override
@@ -48,5 +50,12 @@ namespace Web::packet::exception
             return "Failed to find avhook config";
         }
     };
-
+	class ExceptedAutPacket final : public BasePacketException
+	{
+	public:
+		[[nodiscard]] const char *what() const noexcept override
+		{
+			return "Expected Auth packet";
+		}
+	};
 }

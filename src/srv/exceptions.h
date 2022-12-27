@@ -37,7 +37,7 @@ namespace Web::exception
     public:
         [[nodiscard]] const char *what() const noexcept override
         {
-            return "PacketFactory cant create Auth packet";
+            return "PacketFactory cant Create Auth packet";
         }
     };
     class ClientNotRegistered final : public std::exception

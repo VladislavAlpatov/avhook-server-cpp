@@ -6,7 +6,7 @@
 #include "../../lib/sqlite/connection.h"
 #include "fmt/format.h"
 
-namespace Web::packet
+namespace Web::Packet
 {
     UpdateAVhookUserConfig::UpdateAVhookUserConfig(const nlohmann::json &data) : Base(data)
     {
@@ -17,16 +17,16 @@ namespace Web::packet
         }
         catch (...)
         {
-            throw exception::CorruptedPacket();
+            throw Exception::CorruptedPacket();
         }
     }
 
-    std::string UpdateAVhookUserConfig::execute_payload(int userId)
+    nlohmann::json UpdateAVhookUserConfig::ExecutePayload(int userId)
     {
         auto db = sql::Connection::get();
 
         if (db->query(fmt::format("SELECT `id` FROM `avhook-configs` WHERE `owner_id` = {} AND `id` = {}", userId, m_iConfigId)).empty())
-            throw exception::ConfigNotFound();
+            throw Exception::ConfigNotFound();
 
         db->query(fmt::format("UPDATE `avhook-configs` SET `data` = '{}' WHERE `id` = {}", m_jsonConfig.dump(), m_iConfigId));
 

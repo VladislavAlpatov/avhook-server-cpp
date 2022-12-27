@@ -4,14 +4,14 @@
 #pragma once
 #include "Base.h"
 
-namespace Web::packet
+namespace Web::Packet
 {
 
     class SetUserStatus : public Base
     {
     public:
         explicit SetUserStatus(const nlohmann::json &data);
-        std::string execute_payload(int userId) override;
+        nlohmann::json ExecutePayload(int userId) override;
     private:
         std::string m_sNewUserStatus;
     };

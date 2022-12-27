@@ -1,6 +1,6 @@
 #include <exception>
 
-namespace nnl::exception
+namespace Web::Network::Exception
 {
     class RecvFailed final : public std::exception
     {

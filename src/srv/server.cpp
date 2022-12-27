@@ -4,17 +4,8 @@
 #include "server.h"
 #include <stdexcept>
 #include <ws2tcpip.h>
-#include <memory>
-#include <thread>
-#include "../consts.h"
-#include "exceptions.h"
-#include <fmt/format.h>
-
-#include "PacketFactory.h"
-#include "packets/Auth.h"
 #include "../lib/sqlite/connection.h"
-#include "../lib/nnl/nnl.h"
-#include "packets/exceptions.h"
+#include "ClientHandle/ClientHandle.h"
 
 
 namespace Web
@@ -33,11 +24,11 @@ namespace Web
         m_sListen = socket(AF_INET, SOCK_STREAM, IPPROTO_TCP);
 
         if (!m_sListen)
-            throw std::runtime_error("Failed to create listen socket");
+            throw std::runtime_error("Failed to Create Listen socket");
         bind(m_sListen, (SOCKADDR *) &addr, sizeof(addr));
     }
 
-    Server *Server::get()
+    Server *Server::Get()
     {
         static std::unique_ptr<Server> pServer;
         if (!pServer)
@@ -46,7 +37,7 @@ namespace Web
         return pServer.get();
     }
 
-    void Server::listen()
+    void Server::Listen()
     {
         // Reset `is_online` flag for all users
         sql::Connection::get()->query("UPDATE `users` SET `is_online` = FALSE");
@@ -63,70 +54,9 @@ namespace Web
             auto connectionSocket = accept(m_sListen, (sockaddr *) &addr, &size);
 
             if (!connectionSocket) continue;
+				ClientHandle::CreateNewThreadHandle(connectionSocket);
 
-            std::thread([this, connectionSocket]
-                        { client_handler(connectionSocket); }).detach();
+
         }
-    }
-
-    void Server::client_handler(SOCKET clientSocket)
-    {
-        printf("[LOG] Connected new user\n");
-        int iUserId = INVALID_USER_ID;
-        try
-        {
-            iUserId = auth_client(clientSocket);
-
-            printf("[LOG] New client passed auth, client id: \"%d\"\n", iUserId);
-
-            while (true)
-            {
-                auto res = recv_packet(clientSocket)->execute_payload(iUserId);
-
-                if (res.empty()) continue;
-
-                nnl::send_string(clientSocket, res);
-            }
-        }
-        catch (const std::exception& ex)
-        {
-            printf("[LOG] Caught client exception: \"%s\", disconnecting client...\n", ex.what());
-            closesocket(clientSocket);
-
-            if (iUserId != INVALID_USER_ID)
-                sql::Connection::get()->query(fmt::format("UPDATE `users` SET `is_online` = FALSE WHERE `id` = {}", iUserId));
-        }
-    }
-
-    std::shared_ptr<packet::Base> Server::recv_packet(SOCKET soc)
-    {
-        return PacketFactory::create(nnl::recv_json(soc));
-    }
-    int  Server::auth_client(SOCKET clientSocket)
-    {
-        while (true)
-        {
-            try
-            {
-                auto pAuthPacket = recv_packet(clientSocket);
-            
-                if (!dynamic_cast<packet::Auth*>(pAuthPacket.get()))
-                {
-                    nnl::send_string(clientSocket, "Acces denied");
-                    continue;
-                }
-                int iUserId = std::stoi(pAuthPacket->execute_payload(NULL));
-
-                sql::Connection::get()->query(fmt::format("UPDATE `users` SET `is_online` = TRUE WHERE `id` = {}", iUserId));
-
-                return iUserId;
-            }
-            catch(const packet::exception::AuthFailedWrongPassword& ex)
-            {
-                nnl::send_string(clientSocket, ex.what());
-            }
-            
-        }
-        
     }
 }

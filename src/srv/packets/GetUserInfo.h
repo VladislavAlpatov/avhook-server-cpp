@@ -5,14 +5,14 @@
 #include "Base.h"
 
 
-namespace Web::packet
+namespace Web::Packet
 {
     class GetUserInfo final : public Base
     {
     public:
         explicit GetUserInfo(const nlohmann::json &data);
 
-        std::string execute_payload(int userId) override;
+        nlohmann::json ExecutePayload(int userId) override;
     private:
     };
 } // packet

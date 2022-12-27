@@ -7,14 +7,14 @@
 #include <fmt/format.h>
 
 
-namespace Web::packet
+namespace Web::Packet
 {
     GetUserInfo::GetUserInfo(const nlohmann::json &data) : Base(data)
     {
 
     }
 
-    std::string GetUserInfo::execute_payload(int userId)
+    nlohmann::json GetUserInfo::ExecutePayload(int userId)
     {
 
         const auto query = fmt::format("SELECT `id`, `name`, `status`, `type`, `email`,`is_online`, `in_game` FROM `users` WHERE `id` = {}", userId);
@@ -23,7 +23,7 @@ namespace Web::packet
 
 
         if (data.empty())
-            throw exception::UserInfoNotFound();
+            throw Exception::UserInfoNotFound();
 
         nlohmann::json outJson;
         outJson["id"]          = userId;
@@ -34,6 +34,6 @@ namespace Web::packet
         outJson["in_game"]     = std::stoi(data[0][6]);
         outJson["email"] = data[0][4];
 
-        return outJson.dump();
+        return outJson;
     }
 } // packet

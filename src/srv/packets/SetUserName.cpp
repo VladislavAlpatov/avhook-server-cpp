@@ -5,7 +5,7 @@
 #include <fmt/format.h>
 #include "../../lib/sqlite/connection.h"
 #include "exceptions.h"
-namespace Web::packet
+namespace Web::Packet
 {
 
     SetUserName::SetUserName(const nlohmann::json &data) : Base(data)
@@ -16,25 +16,22 @@ namespace Web::packet
         }
         catch (...)
         {
-            throw exception::CorruptedPacket();
+            throw Exception::CorruptedPacket();
         }
     }
 
-    std::string SetUserName::execute_payload(int userId)
+    nlohmann::json SetUserName::ExecutePayload(int userId)
     {
-        if (!is_username_valid(m_sNewUserName))
-            return "";
+        if (!IsUsernameValid(m_sNewUserName))
+            throw Exception::InValidUserName();
 
         sql::Connection::get()->query(fmt::format("UPDATE `users` SET `name`= \"{}\" WHERE `id` = {}", m_sNewUserName, userId));
 
         return "";
     }
 
-    bool SetUserName::is_username_valid(const std::string &name)
+    bool SetUserName::IsUsernameValid(const std::string &name)
     {
-        for (const auto chr : name)
-            if (chr == ' ' or chr == '\n' or chr == '\t')
-                return false;
-        return true;
+		return !std::any_of(name.begin(), name.end(), [](char chr) {return (chr == ' ' or chr == '\n' or chr == '\t'); });
     }
 } // packet

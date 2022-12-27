@@ -3,8 +3,7 @@
 //
 #include "srv/server.h"
 
-
 int main()
 {
-    Web::Server::get()->listen();
+	Web::Server::Get()->Listen();
 }

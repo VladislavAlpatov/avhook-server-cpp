@@ -4,6 +4,11 @@
     {
       "name": "windows-base",
       "hidden": true,
+      "vendor": {
+        "jetbrains.com/clion": {
+          "toolchain": "MinGW32_CLANG"
+        }
+      },
       "generator": "Ninja",
       "binaryDir": "${sourceDir}/cmake-build/build/${presetName}",
       "installDir": "${sourceDir}/cmake-build/install/${presetName}",

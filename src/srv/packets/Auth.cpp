@@ -6,7 +6,7 @@
 #include "../../lib/sha256/sha256.h"
 #include "fmt/format.h"
 #include "exceptions.h"
-namespace Web::packet
+namespace Web::Packet
 {
 
     Auth::Auth(const nlohmann::json &data) : Base(data)
@@ -24,11 +24,11 @@ namespace Web::packet
         }
         catch (...)
         {
-            throw exception::CorruptedPacket();
+            throw Exception::CorruptedPacket();
         }
     }
 
-    std::string Auth::execute_payload(int userId)
+    nlohmann::json Auth::ExecutePayload(int userId)
     {
 
         auto pDataBase =sql::Connection::get();
@@ -36,13 +36,12 @@ namespace Web::packet
         auto res = pDataBase->query(fmt::format(R"(SELECT `id` FROM `users` WHERE `password` = "{}" AND `email` = "{}")", m_sUserPasswordHash, m_sUserEmail) );
 
         if (res.empty())
-            throw exception::AuthFailedWrongPassword();
-
-        int iUserId = std::stoi(res[0][0]);
+            throw Exception::AuthFailedWrongPassword();
 
 
-        bool bIsAlreadyOnline = std::stoi(pDataBase->query(fmt::format("SELECT `is_online` FROM `users` WHERE `id` = {}", iUserId))[0][0] );
+		nlohmann::json out;
+		out["user_id"] = std::stoi(res[0][0]);
 
-        return res[0][0];
+		return out;
     }
 }// packet

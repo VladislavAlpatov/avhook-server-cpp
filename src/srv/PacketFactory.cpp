@@ -23,17 +23,17 @@
 
 namespace Web
 {
-    std::shared_ptr<packet::Base> PacketFactory::create(const nlohmann::json &data)
+    std::shared_ptr<Packet::Base> PacketFactory::Create(const nlohmann::json &data)
     {
         switch (data["type"].get<int>())
         {
-            case PACKET_SET_USERNAME:           return std::make_shared<packet::SetUserName>(data);
-            case PACKET_AUTH:                   return std::make_shared<packet::Auth>(data);
-            case PACKET_ONLINE_USERS_COUNT:     return std::make_shared<packet::OnlineUsersICount>(data);
-            case PACKET_GET_USERINFO:           return std::make_shared<packet::GetUserInfo>(data);
-            case PACKET_SET_USER_STATUS:        return std::make_shared<packet::SetUserStatus>(data);
-            case PACKET_UPDATE_USER_AVHOOK_CFG: return std::make_shared<packet::UpdateAVhookUserConfig>(data);
-            case PACKET_GET_USER_AVHOOK_CFGS:   return std::make_shared<packet::GetUserAVhookConfigs>(data);
+            case PACKET_SET_USERNAME:           return std::make_shared<Packet::SetUserName>(data);
+            case PACKET_AUTH:                   return std::make_shared<Packet::Auth>(data);
+            case PACKET_ONLINE_USERS_COUNT:     return std::make_shared<Packet::OnlineUsersICount>(data);
+            case PACKET_GET_USERINFO:           return std::make_shared<Packet::GetUserInfo>(data);
+            case PACKET_SET_USER_STATUS:        return std::make_shared<Packet::SetUserStatus>(data);
+            case PACKET_UPDATE_USER_AVHOOK_CFG: return std::make_shared<Packet::UpdateAVhookUserConfig>(data);
+            case PACKET_GET_USER_AVHOOK_CFGS:   return std::make_shared<Packet::GetUserAVhookConfigs>(data);
         }
         throw exception::InvalidPacketType();
 

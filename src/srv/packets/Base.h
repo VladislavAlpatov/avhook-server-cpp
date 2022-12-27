@@ -5,13 +5,13 @@
 #include <string>
 #include "nlohmann/json.hpp"
 
-namespace Web::packet
+namespace Web::Packet
 {
 
     class Base
     {
     public:
-        virtual std::string execute_payload(int userId) = 0;
+        virtual nlohmann::json ExecutePayload(int userId) = 0;
 
     protected:
         nlohmann::json m_Data;

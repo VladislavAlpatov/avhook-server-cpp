@@ -8,7 +8,7 @@
 #include <fmt/format.h>
 
 
-namespace Web::packet
+namespace Web::Packet
 {
     SetUserStatus::SetUserStatus(const nlohmann::json &data) : Base(data)
     {
@@ -18,14 +18,14 @@ namespace Web::packet
         }
         catch (...)
         {
-            throw exception::CorruptedPacket();
+            throw Exception::CorruptedPacket();
         }
     }
 
-    std::string SetUserStatus::execute_payload(int userId)
+    nlohmann::json SetUserStatus::ExecutePayload(int userId)
     {
         sql::Connection::get()->query(fmt::format("UPDATE `users` SET `status`= \"{}\" WHERE `id` = {}", m_sNewUserStatus, userId));
-        return "";
+        return {};
     }
 
 } // packet

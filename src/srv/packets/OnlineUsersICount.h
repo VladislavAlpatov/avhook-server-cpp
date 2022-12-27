@@ -5,7 +5,7 @@
 #include "Base.h"
 
 
-namespace Web::packet
+namespace Web::Packet
     {
 
         class OnlineUsersICount final : public Base
@@ -13,7 +13,7 @@ namespace Web::packet
         public:
             explicit OnlineUsersICount(const nlohmann::json &data);
 
-            std::string execute_payload(int userId) override;
+            nlohmann::json ExecutePayload(int userId) override;
 
 
         };

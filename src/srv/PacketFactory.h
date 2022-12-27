@@ -9,9 +9,8 @@ namespace Web
 {
     class PacketFactory final
     {
-        friend class Server;
-    private:
-        static std::shared_ptr<packet::Base> create(const nlohmann::json& data);
+	public:
+        static std::shared_ptr<Packet::Base> Create(const nlohmann::json& data);
     };
 
 } // server

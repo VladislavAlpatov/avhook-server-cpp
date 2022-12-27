@@ -3,7 +3,7 @@
 //
 #include "Base.h"
 
-namespace Web::packet
+namespace Web::Packet
 {
 
     Base::Base(const nlohmann::json&data)
