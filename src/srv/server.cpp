@@ -6,6 +6,7 @@
 #include <ws2tcpip.h>
 #include "../lib/sqlite/connection.h"
 #include "ClientHandle/ClientHandle.h"
+#include "observers/OnUserConnected.h"
 
 
 namespace Web
@@ -54,8 +55,11 @@ namespace Web
             auto connectionSocket = accept(m_sListen, (sockaddr *) &addr, &size);
 
             if (!connectionSocket) continue;
-				ClientHandle::CreateNewThreadHandle(connectionSocket);
 
+
+			ClientHandle::CreateNewThreadHandle(connectionSocket);
+
+			NotifyObserver<Observers::OnUserConnected>();
 
         }
     }

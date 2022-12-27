@@ -6,12 +6,11 @@
 #include <string>
 #include <vector>
 #include "packets/Base.h"
-
-#define INVALID_USER_ID (-1)
+#include "ObservableObject.h"
 
 namespace Web
 {
-    class Server
+	class Server : public ObservableObject
     {
     public:
         static Server *Get();
