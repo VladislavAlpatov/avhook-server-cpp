@@ -10,6 +10,9 @@
 #include "../observers/OnUserConnected.h"
 #include "../observers/OnUserDisconnected.h"
 #include "../observers/OnUserAuth.h"
+#include "../observers/OnPacket.h"
+
+
 #include <fmt/format.h>
 
 #define INVALID_USER_ID (-1)
@@ -91,6 +94,7 @@ void Web::ClientHandle::AuthClient()
 
 void Web::ClientHandle::OnPacket(const std::shared_ptr<Web::Packet::Base>& pPacket) const
 {
+	NotifyObserver<Observers::OnPacket>();
 	auto jsn = pPacket->ExecutePayload(m_iUserIdInDataBase);
 	jsn["success"] = true;
 

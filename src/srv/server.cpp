@@ -9,10 +9,12 @@
 
 #include "../lib/sqlite/connection.h"
 #include "ClientHandle/ClientHandle.h"
+
 #include "observers/OnUserConnected.h"
 #include "observers/OnServerStartup.h"
 #include "observers/OnUserDisconnected.h"
 #include "observers/OnUserAuth.h"
+#include "observers/OnPacket.h"
 
 
 namespace Web
@@ -70,6 +72,8 @@ namespace Web
 				clientHandle.AddObserver(new Observers::OnUserConnected());
 				clientHandle.AddObserver(new Observers::OnUserDisconnected());
 				clientHandle.AddObserver(new Observers::OnUserAuth());
+				clientHandle.AddObserver(new Observers::OnPacket());
+
 
 				clientHandle.Listen();
 
