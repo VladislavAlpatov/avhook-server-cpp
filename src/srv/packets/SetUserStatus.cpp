@@ -24,7 +24,8 @@ namespace Web::Packet
 
     nlohmann::json SetUserStatus::ExecutePayload(int userId)
     {
-        sql::Connection::get()->query(fmt::format("UPDATE `users` SET `status`= \"{}\" WHERE `id` = {}", m_sNewUserStatus, userId));
+		sql::Connection::Get()->Query(
+				fmt::format("UPDATE `users` SET `status`= \"{}\" WHERE `id` = {}", m_sNewUserStatus, userId));
         return {};
     }
 

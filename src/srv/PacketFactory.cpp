@@ -35,7 +35,7 @@ namespace Web
             case PACKET_UPDATE_USER_AVHOOK_CFG: return std::make_shared<Packet::UpdateAVhookUserConfig>(data);
             case PACKET_GET_USER_AVHOOK_CFGS:   return std::make_shared<Packet::GetUserAVhookConfigs>(data);
         }
-        throw exception::InvalidPacketType();
+        throw Exception::InvalidPacketType();
 
     }
 } // server

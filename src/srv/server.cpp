@@ -12,6 +12,8 @@
 #include "observers/OnUserConnected.h"
 #include "observers/OnServerStartup.h"
 #include "observers/OnUserDisconnected.h"
+#include "observers/OnUserAuth.h"
+
 
 namespace Web
 {
@@ -45,7 +47,7 @@ namespace Web
     void Server::Listen()
     {
         // Reset `is_online` flag for all users
-        sql::Connection::get()->query("UPDATE `users` SET `is_online` = FALSE");
+		sql::Connection::Get()->Query("UPDATE `users` SET `is_online` = FALSE");
 
 		NotifyObserver<Observers::OnServerStartup>();
 
@@ -67,7 +69,7 @@ namespace Web
 
 				clientHandle.AddObserver(new Observers::OnUserConnected());
 				clientHandle.AddObserver(new Observers::OnUserDisconnected());
-
+				clientHandle.AddObserver(new Observers::OnUserAuth());
 
 				clientHandle.Listen();
 

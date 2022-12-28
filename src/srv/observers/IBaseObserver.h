@@ -3,12 +3,14 @@
 //
 #pragma once
 
+class ObservableObject;
+
 namespace Observers
 {
 	class IBaseObserver
 	{
 	public:
-		virtual void HandleEvent() = 0;
+		virtual void HandleEvent(const ObservableObject* pContext) = 0;
 		virtual ~IBaseObserver() {};
 	};
 }

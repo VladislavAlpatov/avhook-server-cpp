@@ -19,7 +19,7 @@ namespace Web::Packet
 
         const auto query = fmt::format("SELECT `id`, `name`, `status`, `type`, `email`,`is_online`, `in_game` FROM `users` WHERE `id` = {}", userId);
 
-        const auto data = sql::Connection::get()->query(query);
+        const auto data = sql::Connection::Get()->Query(query);
 
 
         if (data.empty())

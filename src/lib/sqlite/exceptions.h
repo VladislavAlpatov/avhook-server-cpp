@@ -20,7 +20,7 @@ namespace sql::exception
     public:
         const char *what() const noexcept override
         {
-            return "SQL query contains syntax errors";
+            return "SQL Query contains syntax errors";
         }
 
     };

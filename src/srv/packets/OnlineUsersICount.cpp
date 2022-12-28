@@ -11,8 +11,8 @@ namespace Web::Packet
 
         nlohmann::json OnlineUsersICount::ExecutePayload(int userId)
         {
-            auto dataBase = sql::Connection::get();
-            const auto dt = dataBase->query("SELECT `id` FROM `users` WHERE `is_online` = TRUE");
+            auto dataBase = sql::Connection::Get();
+            const auto dt = dataBase->Query("SELECT `id` FROM `users` WHERE `is_online` = TRUE");
 			nlohmann::json out;
 			out["users_online"] = dt.size();
             return out;

@@ -3,13 +3,15 @@
 #include "exceptions.h"
 #include "../PacketFactory.h"
 #include "../packets/exceptions.h"
+#include "../../consts.h"
+
 
 std::string Web::Network::RecvString(SOCKET soc)
 {
     int iSize = 0;
     ::recv(soc, (char*)&iSize, 4, NULL);
 
-    if (iSize <= 0)
+    if (iSize <= 0 || iSize > MAX_ACCEPTABLE_PACKET_SIZE)
 		throw Exception::RecvFailed();
     
     auto pBuff = std::unique_ptr<char>(new char[iSize+1]);

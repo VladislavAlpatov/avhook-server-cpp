@@ -25,7 +25,8 @@ namespace Web::Packet
         if (!IsUsernameValid(m_sNewUserName))
             throw Exception::InValidUserName();
 
-        sql::Connection::get()->query(fmt::format("UPDATE `users` SET `name`= \"{}\" WHERE `id` = {}", m_sNewUserName, userId));
+		sql::Connection::Get()->Query(
+				fmt::format("UPDATE `users` SET `name`= \"{}\" WHERE `id` = {}", m_sNewUserName, userId));
 
         return "";
     }

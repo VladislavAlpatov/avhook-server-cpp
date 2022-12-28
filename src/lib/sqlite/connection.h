@@ -13,9 +13,9 @@ namespace sql
     class Connection
     {
     public:
-        static Connection* get();
+        static Connection* Get();
         Connection() = default;
-        std::vector<std::vector<std::string>> query(const std::string& str);
+        std::vector<std::vector<std::string>> Query(const std::string& str);
         ~Connection();
     private:
         explicit Connection(const std::string& path);

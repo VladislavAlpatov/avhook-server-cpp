@@ -17,7 +17,6 @@ namespace Web
 		void Listen();
 		void AuthClient();
 		~ClientHandle();
-	private:
 		SOCKET m_clientSocket;
 		int m_iUserIdInDataBase = -1;
 		void OnPacket(const std::shared_ptr<Web::Packet::Base>& pPacket) const;

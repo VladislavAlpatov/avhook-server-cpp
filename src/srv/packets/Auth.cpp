@@ -31,9 +31,11 @@ namespace Web::Packet
     nlohmann::json Auth::ExecutePayload(int userId)
     {
 
-        auto pDataBase =sql::Connection::get();
+        auto pDataBase = sql::Connection::Get();
 
-        auto res = pDataBase->query(fmt::format(R"(SELECT `id` FROM `users` WHERE `password` = "{}" AND `email` = "{}")", m_sUserPasswordHash, m_sUserEmail) );
+        auto res = pDataBase->Query(
+				fmt::format(R"(SELECT `id` FROM `users` WHERE `password` = "{}" AND `email` = "{}")",
+						m_sUserPasswordHash, m_sUserEmail));
 
         if (res.empty())
             throw Exception::AuthFailedWrongPassword();

@@ -4,6 +4,8 @@
 #include "connection.h"
 #include "exceptions.h"
 #include <memory>
+#include "../../consts.h"
+
 
 namespace sql
 {
@@ -13,7 +15,7 @@ namespace sql
             throw exception::FailedConnectToDataBase();
     }
 
-    std::vector<std::vector<std::string>> Connection::query(const std::string &str)
+    std::vector<std::vector<std::string>> Connection::Query(const std::string &str)
     {
         std::vector<std::vector<std::string>> out;
 
@@ -22,11 +24,13 @@ namespace sql
         std::lock_guard lock(m_lock);
         
         sqlite3_prepare_v2(m_pDataBase, str.c_str(), str.size(), &pSqliteStatement, nullptr);
+
         if (!pSqliteStatement)
             throw exception::SyntaxError();
-        
+
         while (sqlite3_step(pSqliteStatement) != SQLITE_DONE)
         {
+
             const auto rowLength = sqlite3_column_count(pSqliteStatement);
             std::vector<std::string> rowData;
             rowData.reserve(rowLength);
@@ -49,7 +53,7 @@ namespace sql
             sqlite3_close(m_pDataBase);
     }
 
-    Connection *Connection::get()
+    Connection *Connection::Get()
     {
         static std::unique_ptr<Connection> pConn;
         if (!pConn)

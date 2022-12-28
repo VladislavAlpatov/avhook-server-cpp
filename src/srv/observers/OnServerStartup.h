@@ -3,13 +3,15 @@
 //
 #pragma once
 #include "IBaseObserver.h"
+#include "../ObservableObject.h"
+
 namespace Observers
 {
 
 	class OnServerStartup final : public IBaseObserver
 	{
 	public:
-		void HandleEvent() override;
+		void HandleEvent(const ObservableObject* pContext) override;
 	};
 
 } // Observers

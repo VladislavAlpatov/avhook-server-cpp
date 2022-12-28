@@ -23,12 +23,14 @@ namespace Web::Packet
 
     nlohmann::json UpdateAVhookUserConfig::ExecutePayload(int userId)
     {
-        auto db = sql::Connection::get();
+        auto db = sql::Connection::Get();
 
-        if (db->query(fmt::format("SELECT `id` FROM `avhook-configs` WHERE `owner_id` = {} AND `id` = {}", userId, m_iConfigId)).empty())
+        if (db->Query(fmt::format("SELECT `id` FROM `avhook-configs` WHERE `owner_id` = {} AND `id` = {}", userId,
+				m_iConfigId)).empty())
             throw Exception::ConfigNotFound();
 
-        db->query(fmt::format("UPDATE `avhook-configs` SET `data` = '{}' WHERE `id` = {}", m_jsonConfig.dump(), m_iConfigId));
+		db->Query(fmt::format("UPDATE `avhook-configs` SET `data` = '{}' WHERE `id` = {}", m_jsonConfig.dump(),
+				m_iConfigId));
 
         return {};
     }

@@ -9,6 +9,7 @@
 
 #include "../observers/OnUserConnected.h"
 #include "../observers/OnUserDisconnected.h"
+#include "../observers/OnUserAuth.h"
 #include <fmt/format.h>
 
 #define INVALID_USER_ID (-1)
@@ -42,7 +43,8 @@ void Web::ClientHandle::Listen()
 	{
 
 		if (INVALID_USER_ID != m_iUserIdInDataBase)
-			sql::Connection::get()->query(fmt::format("UPDATE `users` SET `is_online` = FALSE WHERE `id` = {}", m_iUserIdInDataBase));
+			sql::Connection::Get()->Query(
+					fmt::format("UPDATE `users` SET `is_online` = FALSE WHERE `id` = {}", m_iUserIdInDataBase));
 
 		NotifyObserver<Observers::OnUserDisconnected>();
 	}
@@ -66,10 +68,12 @@ void Web::ClientHandle::AuthClient()
 
 			m_iUserIdInDataBase = pAuthPacket->ExecutePayload(NULL)["user_id"].get<int>();
 
-			sql::Connection::get()->query(fmt::format("UPDATE `users` SET `is_online` = TRUE WHERE `id` = {}", m_iUserIdInDataBase));
+			sql::Connection::Get()->Query(
+					fmt::format("UPDATE `users` SET `is_online` = TRUE WHERE `id` = {}", m_iUserIdInDataBase));
 
 			nlohmann::json jsn;
 			jsn["success"] = true;
+			NotifyObserver<Observers::OnUserAuth>();
 			Web::Network::SendJson(m_clientSocket, jsn);
 
 			return;

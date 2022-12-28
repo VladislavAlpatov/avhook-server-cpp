@@ -3,6 +3,7 @@
 //
 #include "srv/server.h"
 #include "srv/observers/OnServerStartup.h"
+
 int main()
 {
 	const auto pServer = Web::Server::Get();

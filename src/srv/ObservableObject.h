@@ -9,11 +9,13 @@
 
 class ObservableObject
 {
+	friend Observers::IBaseObserver;
 public:
 	void AddObserver(Observers::IBaseObserver* pObserver)
 	{
 		m_Observers.emplace_back(pObserver);
 	}
+	virtual ~ObservableObject() = default;
 protected:
 	std::list<std::shared_ptr<Observers::IBaseObserver>> m_Observers;
 
@@ -22,6 +24,6 @@ protected:
 	{
 		for (auto& pObserver : m_Observers)
 			if (dynamic_cast<ObserverType*>(pObserver.get()))
-				pObserver->HandleEvent();
+				pObserver->HandleEvent(this);
 	}
 };

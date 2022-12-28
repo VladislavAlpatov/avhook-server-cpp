@@ -3,10 +3,11 @@
 //
 #include "OnUserConnected.h"
 #include <cstdio>
+#include <any>
 
 namespace Observers
 {
-	void OnUserConnected::HandleEvent()
+	void OnUserConnected::HandleEvent(const ObservableObject* pContext)
 	{
 		printf("[LOG] Connected new user\n");
 	}
