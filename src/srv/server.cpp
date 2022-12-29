@@ -41,7 +41,7 @@ namespace Web
     {
         static std::unique_ptr<Server> pServer;
         if (!pServer)
-            pServer = std::unique_ptr<Server>(new Server("127.0.0.1", 7777));
+            pServer = std::unique_ptr<Server>(new Server("0.0.0.0", 7777));
 
         return pServer.get();
     }
