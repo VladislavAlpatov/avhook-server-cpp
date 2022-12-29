@@ -2,7 +2,6 @@
 // Created by Vlad on 05.12.2022.
 //
 #pragma once
-#include <WinSock2.h>
 #include <string>
 #include <vector>
 #include "packets/Base.h"
@@ -20,6 +19,6 @@ namespace Web
     private:
         bool m_bAllowListen = true;
         Server(const std::string &ip, int port);
-        SOCKET m_sListen;
+        int m_sListen;
     };
 }

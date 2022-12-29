@@ -4,19 +4,14 @@
     {
       "name": "windows-base",
       "hidden": true,
-      "vendor": {
-        "jetbrains.com/clion": {
-          "toolchain": "MinGW32_CLANG"
-        }
-      },
       "generator": "Ninja",
       "binaryDir": "${sourceDir}/cmake-build/build/${presetName}",
       "installDir": "${sourceDir}/cmake-build/install/${presetName}",
       "cacheVariables": {
-        "CMAKE_TOOLCHAIN_FILE": "C:/Users/Vlad/vcpkg/scripts/buildsystems/vcpkg.cmake",
-        "VCPKG_TARGET_TRIPLET": "x86-mingw-static",
-        "CMAKE_CXX_COMPILER": "clang++.exe",
-        "CMAKE_C_COMPILER": "clang.exe"
+        "CMAKE_TOOLCHAIN_FILE": "~/Documents/vcpkg/scripts/buildsystems/vcpkg.cmake",
+        "VCPKG_TARGET_TRIPLET": "x64-linux",
+        "CMAKE_CXX_COMPILER": "clang++",
+        "CMAKE_C_COMPILER": "clang"
       }
     },
     {

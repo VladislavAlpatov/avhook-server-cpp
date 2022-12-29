@@ -3,8 +3,13 @@
 //
 #include "server.h"
 
+#include <sys/types.h>
+#include <sys/socket.h>
+#include <netinet/in.h>
+#include <arpa/inet.h>
+
+
 #include <stdexcept>
-#include <ws2tcpip.h>
 #include <thread>
 
 #include "../lib/sqlite/connection.h"
@@ -21,12 +26,9 @@ namespace Web
 {
     Server::Server(const std::string &ip, const int port)
     {
-        WSADATA data;
-        if (WSAStartup(MAKEWORD(2, 2), &data))
-            throw std::runtime_error("Failed to initialize WinSock 2.2");
+        sockaddr_in addr{};
 
-        SOCKADDR_IN addr;
-        inet_pton(AF_INET, ip.c_str(), &addr.sin_addr.S_un.S_addr);
+        inet_pton(AF_INET, ip.c_str(), &addr.sin_addr.s_addr);
         addr.sin_port = htons(port);
         addr.sin_family = AF_INET;
 
@@ -34,7 +36,7 @@ namespace Web
 
         if (!m_sListen)
             throw std::runtime_error("Failed to Create Listen socket");
-        bind(m_sListen, (SOCKADDR *) &addr, sizeof(addr));
+        bind(m_sListen, (sockaddr*)&addr, sizeof(addr));
     }
 
     Server *Server::Get()
@@ -57,10 +59,8 @@ namespace Web
         while (m_bAllowListen)
         {
             ::listen(m_sListen, SOMAXCONN);
-            sockaddr_in addr{};
-            int size = sizeof(addr);
 
-            auto connectionSocket = accept(m_sListen, (sockaddr *) &addr, &size);
+            auto connectionSocket = accept(m_sListen, NULL, NULL);
 
             if (!connectionSocket) continue;
 

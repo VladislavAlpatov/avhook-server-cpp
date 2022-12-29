@@ -17,8 +17,6 @@ add_subdirectory(src)
 find_package(unofficial-sqlite3 CONFIG REQUIRED)
 target_link_libraries(server PRIVATE unofficial::sqlite3::sqlite3)
 
-target_link_libraries(server PRIVATE ws2_32)
-
 find_package(nlohmann_json CONFIG REQUIRED)
 target_link_libraries(server PRIVATE nlohmann_json::nlohmann_json)
 

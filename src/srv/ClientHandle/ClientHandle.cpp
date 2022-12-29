@@ -13,6 +13,8 @@
 #include "../observers/OnPacket.h"
 
 
+#include <sys/socket.h>
+
 #include <fmt/format.h>
 
 #define INVALID_USER_ID (-1)
@@ -55,7 +57,7 @@ void Web::ClientHandle::Listen()
 
 Web::ClientHandle::~ClientHandle()
 {
-	closesocket(m_clientSocket);
+	close(m_clientSocket);
 }
 
 void Web::ClientHandle::AuthClient()
@@ -101,7 +103,7 @@ void Web::ClientHandle::OnPacket(const std::shared_ptr<Web::Packet::Base>& pPack
 	Web::Network::SendJson(m_clientSocket,jsn);
 }
 
-Web::ClientHandle::ClientHandle(SOCKET soc)
+Web::ClientHandle::ClientHandle(int soc)
 {
 	m_clientSocket = soc;
 }

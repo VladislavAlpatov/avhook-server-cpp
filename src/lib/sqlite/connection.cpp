@@ -57,7 +57,7 @@ namespace sql
     {
         static std::unique_ptr<Connection> pConn;
         if (!pConn)
-            pConn = std::unique_ptr<Connection>(new Connection(R"(C:\Users\Vlad\Desktop\db.db)"));
+            pConn = std::unique_ptr<Connection>(new Connection("db.db"));
 
         return pConn.get();
     }
