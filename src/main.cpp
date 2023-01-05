@@ -8,5 +8,6 @@ int main()
 {
 	const auto pServer = Web::Server::Get();
 	pServer->AddObserver(new Observers::OnServerStartup());
+
 	pServer->Listen();
 }
