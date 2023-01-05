@@ -9,7 +9,7 @@
       "installDir": "${sourceDir}/cmake-build/install/${presetName}",
       "cacheVariables": {
         "CMAKE_TOOLCHAIN_FILE": "C:/Users/Vlad/Documents/vcpkg/scripts/buildsystems/vcpkg.cmake",
-        "VCPKG_TARGET_TRIPLET": "x64-mingw-static",
+        "VCPKG_TARGET_TRIPLET": "x64-windows-static",
         "CMAKE_CXX_COMPILER": "cl.exe",
         "CMAKE_C_COMPILER": "cl.exe"
       }
