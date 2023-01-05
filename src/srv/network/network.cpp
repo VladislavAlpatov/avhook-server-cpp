@@ -5,10 +5,8 @@
 #include "../packets/exceptions.h"
 #include "../../consts.h"
 
-#include <sys/socket.h>
 
-
-std::string Web::Network::RecvString(int soc)
+std::string Web::Network::RecvString(SOCKET soc)
 {
     int iSize = 0;
     ::recv(soc, (char*)&iSize, 4, NULL);
@@ -32,24 +30,25 @@ std::string Web::Network::RecvString(int soc)
     return pBuff.get();   
 }
 
-nlohmann::json Web::Network::RecvJson(int soc)
+nlohmann::json Web::Network::RecvJson(SOCKET soc)
 {
     return nlohmann::json::parse(RecvString(soc));
 }
 
-void Web::Network::SendString(int soc, const std::string& str)
+void Web::Network::SendString(SOCKET soc, const std::string& str)
 {
     int iSize = str.size();
-    ::send(soc, (const char*)&iSize, sizeof(iSize), 0);
+
+    ::send(soc, (const char*)&iSize, sizeof(iSize), NULL);
     ::send(soc, str.c_str(), str.size(), NULL);
 }
 
-void Web::Network::SendJson(int soc, const nlohmann::json& jsn)
+void Web::Network::SendJson(SOCKET soc, const nlohmann::json& jsn)
 {
 	SendString(soc, jsn.dump());
 }
 
-std::shared_ptr<Web::Packet::Base> Web::Network::RecvPacket(int soc)
+std::shared_ptr<Web::Packet::Base> Web::Network::RecvPacket(SOCKET soc)
 {
 	try
 	{

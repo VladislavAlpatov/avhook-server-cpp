@@ -2,8 +2,6 @@ cmake_minimum_required(VERSION 3.23)
 set(CMAKE_CXX_STANDARD 23)
 add_compile_definitions(WIN32_LEAN_AND_MEAN )
 
-add_link_options(-pthread -static)
-
 project(server)
 add_executable(server src/main.cpp)
 
