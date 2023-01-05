@@ -2,13 +2,6 @@ cmake_minimum_required(VERSION 3.23)
 set(CMAKE_CXX_STANDARD 23)
 add_compile_definitions(WIN32_LEAN_AND_MEAN )
 
-add_link_options(-pthread -static)
-
-if (CMAKE_BUILD_TYPE MATCHES Release)
-    add_link_options(-s -fvisibility=hidden)
-    add_compile_options(-O3)
-endif()
-
 project(server)
 add_executable(server src/main.cpp)
 

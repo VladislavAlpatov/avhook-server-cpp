@@ -39,6 +39,8 @@ nlohmann::json Web::Network::RecvJson(int soc)
 
 void Web::Network::SendString(int soc, const std::string& str)
 {
+    int iSize = str.size();
+    ::send(soc, (const char*)&iSize, sizeof(iSize), 0);
     ::send(soc, str.c_str(), str.size(), NULL);
 }
 
