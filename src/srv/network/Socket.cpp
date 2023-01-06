@@ -5,8 +5,8 @@
 #include "../packets/exceptions.h"
 
 #if defined(_WIN32) and __has_include("winsock2.h")
-
 #include <ws2tcpip.h>
+
 #else
 #include <sys/types.h>
 #include <sys/socket.h>
@@ -80,27 +80,44 @@ namespace Web::Network
 
     Socket::Socket(int af, int type, int protocol)
     {
-        m_pRawSocket = std::shared_ptr<SOCKET>(new SOCKET);
+        printf("Created Socket\n");
+        m_pRawSocket = std::shared_ptr<SOCKET>(new SOCKET, [](SOCKET* pSocket)
+        {
+#ifdef _WIN32
+            closesocket(*pSocket);
+#else
+            close(*pSocket)
+#endif
+        });
+
         *m_pRawSocket = socket(af, type, protocol);
     }
 
     void Socket::Bind(const std::string &ip, int iPort)
     {
+#if defined(_WIN32) // Windows
         SOCKADDR_IN addr;
         inet_pton(AF_INET, ip.c_str(), &addr.sin_addr.S_un.S_addr);
         addr.sin_port = htons(iPort);
         addr.sin_family = AF_INET;
 
-        int status = bind(*m_pRawSocket, (SOCKADDR *) &addr, sizeof(addr));
+        bind(*m_pRawSocket, (SOCKADDR *) &addr, sizeof(addr));
+#else // Linux
+        sockaddr_in addr{};
+
+        inet_pton(AF_INET, ip.c_str(), &addr.sin_addr.s_addr);
+        addr.sin_port = htons(port);
+        addr.sin_family = AF_INET;
+
+        bind(m_sListen, (sockaddr*)&addr, sizeof(addr));
+#endif
     }
 
     Socket Socket::Listen()
     {
         listen(*m_pRawSocket, SOMAXCONN);
-        sockaddr_in addr{};
-        int size = sizeof(addr);
 
-        auto connectionSocket = accept(*m_pRawSocket, (sockaddr *) &addr, &size);
+        auto connectionSocket = accept(*m_pRawSocket, NULL, NULL);
 
         if (!connectionSocket) throw Exception::SocketAcceptionFaild();
 
@@ -109,14 +126,32 @@ namespace Web::Network
 
     Socket::Socket(SOCKET socket)
     {
-        m_pRawSocket = std::shared_ptr<SOCKET>(new SOCKET);
+        m_pRawSocket = std::shared_ptr<SOCKET>(new SOCKET, [](SOCKET* pSocket)
+        {
+#ifdef _WIN32
+            closesocket(*pSocket);
+#else // Linux
+            close(*pSocket)
+#endif
+            delete pSocket;
+        });
         *m_pRawSocket = socket;
     }
 
     Socket::Socket()
     {
         // AF_INET, SOCK_STREAM, IPPROTO_TCP
-        m_pRawSocket = std::shared_ptr<SOCKET>(new SOCKET);
+        m_pRawSocket = std::shared_ptr<SOCKET>(new SOCKET, [](const SOCKET* pSocket)
+        {
+
+#ifdef _WIN32
+            closesocket(*pSocket);
+#else // Linux
+            close(*pSocket)
+#endif
+            delete pSocket;
+        });
+
         *m_pRawSocket = socket(AF_INET, SOCK_STREAM, IPPROTO_TCP);
     }
 }
