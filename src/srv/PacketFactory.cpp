@@ -12,6 +12,8 @@
 #include "packets/GetUserAVhookConfigs.h"
 #include "exceptions.h"
 
+// Purpose: Define packet unique ids for factory
+
 #define PACKET_SET_USERNAME              0
 #define PACKET_AUTH                      1
 #define PACKET_ONLINE_USERS_COUNT        2
@@ -19,11 +21,12 @@
 #define PACKET_SET_USER_STATUS           4
 #define PACKET_UPDATE_USER_AVHOOK_CFG    5
 #define PACKET_GET_USER_AVHOOK_CFGS      6
+#define PACKET_SEND_CHAT_MESSAGE         7
 
 
 namespace Web
 {
-    std::shared_ptr<Packet::Base> PacketFactory::Create(const nlohmann::json &data)
+    std::shared_ptr<Packet::BasePacket> PacketFactory::Create(const nlohmann::json &data)
     {
         switch (data["type"].get<int>())
         {

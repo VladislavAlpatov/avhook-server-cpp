@@ -2,13 +2,13 @@
 // Created by nullifiedvlad on 13.12.2022.
 //
 #pragma once
-#include "Base.h"
+#include "BasePacket.h"
 
 
 namespace Web::Packet
     {
 
-        class OnlineUsersICount final : public Base
+        class OnlineUsersICount final : public BasePacket
         {
         public:
             explicit OnlineUsersICount(const nlohmann::json &data);

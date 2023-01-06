@@ -8,14 +8,14 @@
 namespace Web::Packet
 {
 
-    class Base
+    class BasePacket
     {
     public:
         virtual nlohmann::json ExecutePayload(int userId) = 0;
 
     protected:
         nlohmann::json m_Data;
-        explicit Base(const nlohmann::json& data);
+        explicit BasePacket(const nlohmann::json& data);
     };
 
 } // packet

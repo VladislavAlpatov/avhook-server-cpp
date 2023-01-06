@@ -1,1 +1,1 @@
-target_sources(server PRIVATE network.cpp)
+target_sources(server PRIVATE Socket.cpp)

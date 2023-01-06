@@ -2,13 +2,13 @@
 // Created by nullifiedvlad on 08.12.2022.
 //
 #pragma once
-#include "Base.h"
+#include "BasePacket.h"
 
 
 namespace Web::Packet
 {
 
-    class Auth final : public Base
+    class Auth final : public BasePacket
     {
     public:
         explicit Auth(const nlohmann::json &data);

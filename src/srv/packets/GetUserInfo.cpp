@@ -9,7 +9,7 @@
 
 namespace Web::Packet
 {
-    GetUserInfo::GetUserInfo(const nlohmann::json &data) : Base(data)
+    GetUserInfo::GetUserInfo(const nlohmann::json &data) : BasePacket(data)
     {
 
     }

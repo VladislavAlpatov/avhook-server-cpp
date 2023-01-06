@@ -9,7 +9,7 @@
 namespace Web::Packet
 {
 
-    Auth::Auth(const nlohmann::json &data) : Base(data)
+    Auth::Auth(const nlohmann::json &data) : BasePacket(data)
     {
         try
         {

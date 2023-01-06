@@ -10,4 +10,12 @@ namespace Web::Network::Exception
         }
 
     };
+    class SocketAcceptionFaild final : public std::exception
+    {
+        const char* what() const noexcept override
+        {
+            return "Failed to accept new connection socket";
+        }
+
+    };
 }

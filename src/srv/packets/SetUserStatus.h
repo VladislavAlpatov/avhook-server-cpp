@@ -2,12 +2,12 @@
 // Created by nullifiedvlad on 19.12.2022.
 //
 #pragma once
-#include "Base.h"
+#include "BasePacket.h"
 
 namespace Web::Packet
 {
 
-    class SetUserStatus : public Base
+    class SetUserStatus : public BasePacket
     {
     public:
         explicit SetUserStatus(const nlohmann::json &data);

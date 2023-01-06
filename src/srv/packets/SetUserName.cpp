@@ -8,7 +8,7 @@
 namespace Web::Packet
 {
 
-    SetUserName::SetUserName(const nlohmann::json &data) : Base(data)
+    SetUserName::SetUserName(const nlohmann::json &data) : BasePacket(data)
     {
         try
         {

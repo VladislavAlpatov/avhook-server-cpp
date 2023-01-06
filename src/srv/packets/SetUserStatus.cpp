@@ -10,7 +10,7 @@
 
 namespace Web::Packet
 {
-    SetUserStatus::SetUserStatus(const nlohmann::json &data) : Base(data)
+    SetUserStatus::SetUserStatus(const nlohmann::json &data) : BasePacket(data)
     {
         try
         {

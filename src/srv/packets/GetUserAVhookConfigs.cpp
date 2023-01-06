@@ -27,6 +27,6 @@ namespace Web::Packet
         return out;
     }
 
-    GetUserAVhookConfigs::GetUserAVhookConfigs(const nlohmann::json &data) : Base(data)
+    GetUserAVhookConfigs::GetUserAVhookConfigs(const nlohmann::json &data) : BasePacket(data)
     {}
 } // packet

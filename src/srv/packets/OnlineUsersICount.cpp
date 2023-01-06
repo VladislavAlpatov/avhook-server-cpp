@@ -6,7 +6,7 @@
 
 namespace Web::Packet
     {
-        OnlineUsersICount::OnlineUsersICount(const nlohmann::json &data) : Base(data)
+        OnlineUsersICount::OnlineUsersICount(const nlohmann::json &data) : BasePacket(data)
         {}
 
         nlohmann::json OnlineUsersICount::ExecutePayload(int userId)

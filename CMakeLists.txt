@@ -3,7 +3,7 @@ set(CMAKE_CXX_STANDARD 23)
 add_compile_definitions(WIN32_LEAN_AND_MEAN )
 
 project(server)
-add_executable(server src/main.cpp)
+add_executable(server src/main.cpp src/srv/packets/SendChatMessage.cpp src/srv/packets/SendChatMessage.h)
 
 add_subdirectory(src)
 

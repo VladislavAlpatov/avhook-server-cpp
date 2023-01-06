@@ -2,11 +2,11 @@
 // Created by nullifiedvlad on 20.12.2022.
 //
 #pragma once
-#include "Base.h"
+#include "BasePacket.h"
 namespace Web::Packet
 {
 
-    class GetUserAVhookConfigs final : public Base
+    class GetUserAVhookConfigs final : public BasePacket
     {
     public:
         explicit GetUserAVhookConfigs(const nlohmann::json &data);
