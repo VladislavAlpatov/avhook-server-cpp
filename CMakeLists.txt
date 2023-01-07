@@ -5,7 +5,7 @@ if (NOT WIN32)
     set(CMAKE_CXX_COMPILER clang++)
     set(CMAKE_C_COMPILER clang)
 
-    set(CMAKE_TOOLCHAIN_FILE /root/vcpkg/scripts/buildsystems/vcpkg.cmake)
+    set(CMAKE_TOOLCHAIN_FILE ~/vcpkg/scripts/buildsystems/vcpkg.cmake)
     set(VCPKG_TARGET_TRIPLET x64-linux)
 
     add_link_options(-pthread -static)
