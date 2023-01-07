@@ -4,7 +4,8 @@
 #include "../PacketFactory.h"
 #include "../packets/exceptions.h"
 
-#if defined(_WIN32) and __has_include("winsock2.h")
+#if defined(_WIN32)
+#include <winsock2.h>
 #include <ws2tcpip.h>
 
 #else
@@ -106,7 +107,7 @@ namespace Web::Network
         sockaddr_in addr{};
 
         inet_pton(AF_INET, ip.c_str(), &addr.sin_addr.s_addr);
-        addr.sin_port = htons(port);
+        addr.sin_port = htons(iPort);
         addr.sin_family = AF_INET;
 
         bind(m_sListen, (sockaddr*)&addr, sizeof(addr));

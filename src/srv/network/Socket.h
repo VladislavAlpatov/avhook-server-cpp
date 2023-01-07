@@ -6,7 +6,7 @@
 #include <nlohmann/json.hpp>
 #include "../packets/BasePacket.h"
 
-#if defined(_WIN32) and __has_include("winsock2.h")
+#if defined(_WIN32)
 typedef unsigned long long SOCKET;
 #else
 typedef int SOCKET;
