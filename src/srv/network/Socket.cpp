@@ -87,7 +87,7 @@ namespace Web::Network
 #ifdef _WIN32
             closesocket(*pSocket);
 #else
-            close(*pSocket)
+            close(*pSocket);
 #endif
         });
 
@@ -110,7 +110,7 @@ namespace Web::Network
         addr.sin_port = htons(iPort);
         addr.sin_family = AF_INET;
 
-        bind(m_sListen, (sockaddr*)&addr, sizeof(addr));
+        bind(*m_pRawSocket, (sockaddr*)&addr, sizeof(addr));
 #endif
     }
 
@@ -132,7 +132,7 @@ namespace Web::Network
 #ifdef _WIN32
             closesocket(*pSocket);
 #else // Linux
-            close(*pSocket)
+            close(*pSocket);
 #endif
             delete pSocket;
         });
@@ -148,7 +148,7 @@ namespace Web::Network
 #ifdef _WIN32
             closesocket(*pSocket);
 #else // Linux
-            close(*pSocket)
+            close(*pSocket);
 #endif
             delete pSocket;
         });
