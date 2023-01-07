@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.23)
+cmake_minimum_required(VERSION 3.16)
 
 if (NOT WIN32)
 
@@ -21,6 +21,8 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "../../../out/${CMAKE_BUILD_TYPE}")
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "../../../out/${CMAKE_BUILD_TYPE}")
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "../../../out/${CMAKE_BUILD_TYPE}")
 
+
+set(CMAKE_BINARY_DIR "${CMAKE_SOURCE_DIR}/cmake-build/build/${CMAKE_BUILD_TYPE}")
 
 set(CMAKE_CXX_STANDARD 23)
 
