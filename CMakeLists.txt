@@ -17,10 +17,6 @@ else()
     set(VCPKG_TARGET_TRIPLET x64-windows-static)
 endif()
 
-set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "../../../out/${CMAKE_BUILD_TYPE}")
-set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "../../../out/${CMAKE_BUILD_TYPE}")
-set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "../../../out/${CMAKE_BUILD_TYPE}")
-
 
 set(CMAKE_CXX_STANDARD 23)
 
