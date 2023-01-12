@@ -16,7 +16,7 @@ namespace Web
         static Server *Get();
         Server() = delete;
         void Listen();
-
+        int GetConnectionsCount() const;
     private:
         int m_iConnectedCount = 0;
         bool m_bAllowListen = true;

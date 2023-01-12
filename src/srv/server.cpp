@@ -41,7 +41,9 @@ namespace Web
         {
 
             auto connectionSocket = m_sListen.Listen();
+
             NotifyObserver<Observers::OnUserConnected>();
+            m_iConnectedCount++;
 
 			std::thread([this, connectionSocket]
 			{
@@ -57,9 +59,15 @@ namespace Web
                 catch (...)
                 {
                     NotifyObserver<Observers::OnUserDisconnected>();
+                    m_iConnectedCount--;
                 }
 			}).detach();
 
         }
+    }
+
+    int Server::GetConnectionsCount() const
+    {
+        return m_iConnectedCount;
     }
 }

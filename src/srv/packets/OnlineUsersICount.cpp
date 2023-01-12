@@ -3,6 +3,7 @@
 //
 #include "OnlineUsersICount.h"
 #include "../../lib/sqlite/connection.h"
+#include "../server.h"
 
 namespace Web::Packet
     {
@@ -11,10 +12,8 @@ namespace Web::Packet
 
         nlohmann::json OnlineUsersICount::ExecutePayload(int userId)
         {
-            auto dataBase = sql::Connection::Get();
-            const auto dt = dataBase->Query("SELECT `id` FROM `users` WHERE `is_online` = TRUE");
 			nlohmann::json out;
-			out["users_online"] = dt.size();
+			out["users_online"] = Server::Get()->GetConnectionsCount();
             return out;
         }
     } // packet
