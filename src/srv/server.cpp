@@ -34,9 +34,6 @@ namespace Web
 
     void Server::Listen()
     {
-        // Reset `is_online` flag for all users
-		sql::Connection::Get()->Query("UPDATE `users` SET `is_online` = FALSE");
-
 		NotifyObserver<Observers::OnServerStartup>();
 
 
@@ -44,22 +41,24 @@ namespace Web
         {
 
             auto connectionSocket = m_sListen.Listen();
+            NotifyObserver<Observers::OnUserConnected>();
 
-			std::thread([connectionSocket]
+			std::thread([this, connectionSocket]
 			{
 				auto clientHandle = ClientHandle(connectionSocket);
 
-				clientHandle.AddObserver(new Observers::OnUserConnected());
-				clientHandle.AddObserver(new Observers::OnUserDisconnected());
 				clientHandle.AddObserver(new Observers::OnUserAuth());
 				clientHandle.AddObserver(new Observers::OnPacket());
 
-
-				clientHandle.Listen();
-
+                try
+                {
+                    clientHandle.Listen();
+                }
+                catch (...)
+                {
+                    NotifyObserver<Observers::OnUserDisconnected>();
+                }
 			}).detach();
-
-			NotifyObserver<Observers::OnUserConnected>();
 
         }
     }

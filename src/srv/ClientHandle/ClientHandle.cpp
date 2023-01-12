@@ -14,42 +14,26 @@
 
 #include <fmt/format.h>
 
-#define INVALID_USER_ID (-1)
 
 void Web::ClientHandle::Listen()
 {
-	NotifyObserver<Observers::OnUserConnected>();
+    AuthClient();
+    while (true)
+    {
+        try
+        {
+            OnPacket(m_clientSocket.RecvPacket());
+        }
+        catch (const Web::Packet::Exception::BasePacketException& ex)
+        {
+            nlohmann::json jsn;
 
-	try
-	{
-		AuthClient();
-		while (true)
-		{
-			try
-			{
-				OnPacket(m_clientSocket.RecvPacket());
-			}
-			catch (const Web::Packet::Exception::BasePacketException& ex)
-			{
-				nlohmann::json jsn;
+            jsn["success"]    = false;
+            jsn["error_code"] = ex.what();
 
-				jsn["success"]    = false;
-				jsn["error_code"] = ex.what();
-
-                m_clientSocket.SendJson(jsn);
-			}
-		}
-
-	}
-	catch (const std::exception& ex)
-	{
-
-		if (INVALID_USER_ID != m_iUserIdInDataBase)
-			sql::Connection::Get()->Query(
-					fmt::format("UPDATE `users` SET `is_online` = FALSE WHERE `id` = {}", m_iUserIdInDataBase));
-
-		NotifyObserver<Observers::OnUserDisconnected>();
-	}
+            m_clientSocket.SendJson(jsn);
+        }
+    }
 }
 
 Web::ClientHandle::~ClientHandle()
@@ -70,8 +54,6 @@ void Web::ClientHandle::AuthClient()
 
 			m_iUserIdInDataBase = pAuthPacket->ExecutePayload(NULL)["user_id"].get<int>();
 
-			sql::Connection::Get()->Query(
-					fmt::format("UPDATE `users` SET `is_online` = TRUE WHERE `id` = {}", m_iUserIdInDataBase));
 
 			nlohmann::json jsn;
 			jsn["success"] = true;

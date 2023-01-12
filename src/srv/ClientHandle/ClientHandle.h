@@ -12,14 +12,13 @@ namespace Web
 	class ClientHandle final : public ObservableObject
 	{
 	public:
-		ClientHandle(const Network::Socket& soc);
+		explicit ClientHandle(const Network::Socket& soc);
 
 		void Listen();
 		void AuthClient();
-		~ClientHandle();
+		~ClientHandle() override;
         Network::Socket m_clientSocket;
 		int m_iUserIdInDataBase = -1;
 		void OnPacket(const std::shared_ptr<Web::Packet::BasePacket>& pPacket) const;
 	};
-	void CreateNewThreadHandle(SOCKET clientSocket);
 }

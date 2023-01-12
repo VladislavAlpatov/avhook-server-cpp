@@ -8,8 +8,8 @@
 #include "packets/OnlineUsersICount.h"
 #include "packets/GetUserInfo.h"
 #include "packets/SetUserStatus.h"
-#include "packets/UpdateAVhookUserConfig.h"
-#include "packets/GetUserAVhookConfigs.h"
+#include "packets/UpdateUserConfig.h"
+#include "packets/GetUserConfigs.h"
 #include "exceptions.h"
 
 // Purpose: Define packet unique ids for factory
@@ -35,8 +35,8 @@ namespace Web
             case PACKET_ONLINE_USERS_COUNT:     return std::make_shared<Packet::OnlineUsersICount>(data);
             case PACKET_GET_USERINFO:           return std::make_shared<Packet::GetUserInfo>(data);
             case PACKET_SET_USER_STATUS:        return std::make_shared<Packet::SetUserStatus>(data);
-            case PACKET_UPDATE_USER_AVHOOK_CFG: return std::make_shared<Packet::UpdateAVhookUserConfig>(data);
-            case PACKET_GET_USER_AVHOOK_CFGS:   return std::make_shared<Packet::GetUserAVhookConfigs>(data);
+            case PACKET_UPDATE_USER_AVHOOK_CFG: return std::make_shared<Packet::UpdateUserConfig>(data);
+            case PACKET_GET_USER_AVHOOK_CFGS:   return std::make_shared<Packet::GetUserConfigs>(data);
         }
         throw Exception::InvalidPacketType();
 

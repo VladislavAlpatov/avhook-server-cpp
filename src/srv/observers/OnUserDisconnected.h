@@ -13,7 +13,7 @@ namespace Observers
 	class OnUserDisconnected final : public IBaseObserver
 	{
 	public:
-		void HandleEvent(const ObservableObject* pContext) override;
+		void HandleEvent(const ObservableObject *pContext) override;
 	};
 
 } // Obsevers

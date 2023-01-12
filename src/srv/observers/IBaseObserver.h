@@ -10,7 +10,7 @@ namespace Observers
 	class IBaseObserver
 	{
 	public:
-		virtual void HandleEvent(const ObservableObject* pContext) = 0;
+		virtual void HandleEvent(const ObservableObject *pContext) = 0;
 		virtual ~IBaseObserver() {};
 	};
 }

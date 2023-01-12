@@ -13,7 +13,7 @@ namespace Observers
 	class OnUserConnected final : public IBaseObserver
 	{
 	public:
-		void HandleEvent(const ObservableObject* pContext) override;
+		void HandleEvent(const ObservableObject *pContext) override;
 	};
 
 } // Observers

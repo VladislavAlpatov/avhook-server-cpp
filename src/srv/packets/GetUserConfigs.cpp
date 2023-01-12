@@ -1,7 +1,7 @@
 //
 // Created by nullifiedvlad on 20.12.2022.
 //
-#include "GetUserAVhookConfigs.h"
+#include "GetUserConfigs.h"
 #include "exceptions.h"
 #include "../../lib/sqlite/connection.h"
 #include "fmt/format.h"
@@ -9,7 +9,7 @@
 
 namespace Web::Packet
 {
-    nlohmann::json GetUserAVhookConfigs::ExecutePayload(int userId)
+    nlohmann::json GetUserConfigs::ExecutePayload(int userId)
     {
         std::vector<nlohmann::json> cfgs;
         nlohmann::json out;
@@ -27,6 +27,6 @@ namespace Web::Packet
         return out;
     }
 
-    GetUserAVhookConfigs::GetUserAVhookConfigs(const nlohmann::json &data) : BasePacket(data)
+    GetUserConfigs::GetUserConfigs(const nlohmann::json &data) : BasePacket(data)
     {}
 } // packet

@@ -1,14 +1,14 @@
 //
 // Created by nullifiedvlad on 19.12.2022.
 //
-#include "UpdateAVhookUserConfig.h"
+#include "UpdateUserConfig.h"
 #include "exceptions.h"
 #include "../../lib/sqlite/connection.h"
 #include "fmt/format.h"
 
 namespace Web::Packet
 {
-    UpdateAVhookUserConfig::UpdateAVhookUserConfig(const nlohmann::json &data) : BasePacket(data)
+    UpdateUserConfig::UpdateUserConfig(const nlohmann::json &data) : BasePacket(data)
     {
         try
         {
@@ -21,7 +21,7 @@ namespace Web::Packet
         }
     }
 
-    nlohmann::json UpdateAVhookUserConfig::ExecutePayload(int userId)
+    nlohmann::json UpdateUserConfig::ExecutePayload(int userId)
     {
         auto db = sql::Connection::Get();
 

@@ -6,10 +6,10 @@
 namespace Web::Packet
 {
 
-    class GetUserAVhookConfigs final : public BasePacket
+    class GetUserConfigs final : public BasePacket
     {
     public:
-        explicit GetUserAVhookConfigs(const nlohmann::json &data);
+        explicit GetUserConfigs(const nlohmann::json &data);
 
         nlohmann::json ExecutePayload(int userId) override;
 

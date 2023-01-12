@@ -7,7 +7,7 @@
 
 namespace Observers
 {
-	void OnUserConnected::HandleEvent(const ObservableObject* pContext)
+	void OnUserConnected::HandleEvent(const ObservableObject *pContext)
 	{
 		printf("[LOG] Connected new user\n");
 	}

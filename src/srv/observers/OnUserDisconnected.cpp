@@ -4,11 +4,10 @@
 
 #include "OnUserDisconnected.h"
 #include <cstdio>
-#include <any>
 
 namespace Observers
 {
-	void OnUserDisconnected::HandleEvent(const ObservableObject* pContext)
+	void OnUserDisconnected::HandleEvent(const ObservableObject *pContext)
 	{
 		printf("[LOG] User Disconnected\n");
 	}

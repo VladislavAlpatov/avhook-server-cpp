@@ -4,5 +4,11 @@
 
 #include "SendChatMessage.h"
 
-namespace Packets {
+namespace Web::Packet
+{
+
+    SendChatMessage::SendChatMessage(const nlohmann::json &data) : BasePacket(data)
+    {
+
+    }
 } // Packets

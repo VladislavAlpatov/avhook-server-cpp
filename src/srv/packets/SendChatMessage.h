@@ -3,10 +3,17 @@
 //
 #pragma once
 #include "BasePacket.h"
+#include "BasePacket.h"
+
 
 namespace Web::Packet
 {
+    class SendChatMessage : public BasePacket
+    {
+    public:
+        explicit SendChatMessage(const nlohmann::json &data);
 
+    };
 
 
 } // Packets

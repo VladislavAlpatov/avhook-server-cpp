@@ -10,7 +10,7 @@
 
 namespace Observers
 {
-	void OnUserAuth::HandleEvent(const ObservableObject* pContext)
+	void OnUserAuth::HandleEvent(const ObservableObject *pContext)
 	{
 		const auto pClientContext = dynamic_cast<const Web::ClientHandle*>(pContext);
 		if (!pClientContext)

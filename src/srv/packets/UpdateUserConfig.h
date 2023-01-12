@@ -6,10 +6,10 @@
 namespace Web::Packet
 {
 
-    class UpdateAVhookUserConfig : public BasePacket
+    class UpdateUserConfig : public BasePacket
     {
     public:
-        explicit UpdateAVhookUserConfig(const nlohmann::json &data);
+        explicit UpdateUserConfig(const nlohmann::json &data);
 
         nlohmann::json ExecutePayload(int userId) override;
 
