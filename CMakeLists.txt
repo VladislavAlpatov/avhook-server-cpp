@@ -13,7 +13,7 @@ else()
     set(CMAKE_CXX_COMPILER cl.exe)
     set(CMAKE_C_COMPILER cl.exe)
 
-    set(CMAKE_TOOLCHAIN_FILE C:/Users/Vlad/Documents/vcpkg/scripts/buildsystems/vcpkg.cmake)
+    set(CMAKE_TOOLCHAIN_FILE C:/vcpkg/scripts/buildsystems/vcpkg.cmake)
     set(VCPKG_TARGET_TRIPLET x64-windows-static)
 endif()
 

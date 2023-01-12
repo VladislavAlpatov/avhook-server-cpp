@@ -6,7 +6,6 @@
 #include <stdexcept>
 #include <thread>
 
-#include "../lib/sqlite/connection.h"
 #include "ClientHandle/ClientHandle.h"
 
 #include "observers/OnUserConnected.h"
