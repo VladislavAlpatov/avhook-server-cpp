@@ -3,9 +3,6 @@
 //
 #pragma once
 #include "BasePacket.h"
-#include "BasePacket.h"
-
-
 namespace Web::Packet
 {
     class SendChatMessage : public BasePacket
@@ -13,6 +10,10 @@ namespace Web::Packet
     public:
         explicit SendChatMessage(const nlohmann::json &data);
 
+        nlohmann::json ExecutePayload(int userId) override;
+    private:
+        std::string m_sText;
+        int m_iChatId;
     };
 
 

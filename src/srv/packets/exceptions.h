@@ -18,7 +18,6 @@ namespace Web::Packet::Exception
             return "Client auth was failed, wrong password";
         }
     };
-
     class CorruptedPacket final  : public BasePacketException
     {
     public:
@@ -58,4 +57,12 @@ namespace Web::Packet::Exception
 			return "Expected Auth packet";
 		}
 	};
+    class ChatDoesNotExist final : public BasePacketException
+    {
+    public:
+        const char *what() const override
+        {
+            return "Chat with this id does not exist";
+        }
+    };
 }

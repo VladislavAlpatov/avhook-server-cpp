@@ -10,6 +10,7 @@
 #include "packets/SetUserStatus.h"
 #include "packets/UpdateUserConfig.h"
 #include "packets/GetUserConfigs.h"
+#include "packets/SendChatMessage.h"
 #include "exceptions.h"
 
 // Purpose: Define packet unique ids for factory
@@ -37,6 +38,7 @@ namespace Web
             case PACKET_SET_USER_STATUS:        return std::make_shared<Packet::SetUserStatus>(data);
             case PACKET_UPDATE_USER_AVHOOK_CFG: return std::make_shared<Packet::UpdateUserConfig>(data);
             case PACKET_GET_USER_AVHOOK_CFGS:   return std::make_shared<Packet::GetUserConfigs>(data);
+            case PACKET_SEND_CHAT_MESSAGE:      return std::make_shared<Packet::SendChatMessage>(data);
         }
         throw Exception::InvalidPacketType();
 
