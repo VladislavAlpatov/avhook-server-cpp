@@ -60,7 +60,7 @@ namespace Web::Packet::Exception
     class ChatDoesNotExist final : public BasePacketException
     {
     public:
-        const char *what() const override
+        const char *what() const noexcept override
         {
             return "Chat with this id does not exist";
         }
