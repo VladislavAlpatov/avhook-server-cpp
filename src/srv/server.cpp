@@ -15,6 +15,7 @@
 #include "observers/OnPacket.h"
 
 
+
 namespace Web
 {
     Server::Server(const std::string &ip, const int port)
@@ -48,8 +49,10 @@ namespace Web
 			{
 				auto clientHandle = ClientHandle(connectionSocket);
 
+#ifdef _DEBUG
 				clientHandle.AddObserver(new Observers::OnUserAuth());
 				clientHandle.AddObserver(new Observers::OnPacket());
+#endif
 
                 try
                 {

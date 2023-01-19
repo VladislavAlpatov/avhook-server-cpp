@@ -17,9 +17,13 @@ int main()
     WSAStartup(MAKEWORD(2, 2), &data);
 #endif
 	const auto pServer = Web::Server::Get();
+
+#ifdef _DEBUG
 	pServer->AddObserver(new Observers::OnServerStartup());
     pServer->AddObserver(new Observers::OnUserDisconnected());
     pServer->AddObserver(new Observers::OnUserConnected());
+#endif
+
 	pServer->Listen();
 
 
