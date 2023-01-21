@@ -11,6 +11,6 @@ namespace Web::Packet::Decorator
 
     nlohmann::json BaseDecorator::ExecutePayload(ClientHandle &clientHandle)
     {
-        return nlohmann::json();
+        return m_pDecoratedPacket->ExecutePayload(clientHandle);
     }
 }
