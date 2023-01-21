@@ -7,6 +7,7 @@
 #include "../../lib/sqlite/connection.h"
 #include <fmt/format.h>
 #include <boost/algorithm/string/replace.hpp>
+#include "../ClientHandle/ClientHandle.h"
 
 namespace Web::Packet
 {
@@ -24,7 +25,7 @@ namespace Web::Packet
         }
     }
 
-    nlohmann::json SendChatMessage::ExecutePayload(int userId)
+    nlohmann::json SendChatMessage::ExecutePayload(ClientHandle &clientHandle)
     {
         auto  pDataBase = sql::Connection::Get();
 
@@ -35,7 +36,7 @@ namespace Web::Packet
         boost::replace_all(m_sText, "'", "''");
         boost::replace_all(m_sText, "\"", "\"\"");
 
-        pDataBase->Query(fmt::format("INSERT INTO `chat-messages` (`owner_id`, `chat_id`, `text`) VALUES({},{},'{}')", userId, m_iChatId, m_sText));
+        pDataBase->Query(fmt::format("INSERT INTO `chat-messages` (`owner_id`, `chat_id`, `text`) VALUES({},{},'{}')", clientHandle.m_iUserIdInDataBase, m_iChatId, m_sText));
 
         return {};
     }

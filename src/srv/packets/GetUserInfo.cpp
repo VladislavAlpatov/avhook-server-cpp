@@ -5,7 +5,7 @@
 #include "../../lib/sqlite/connection.h"
 #include "exceptions.h"
 #include <fmt/format.h>
-
+#include "../ClientHandle/ClientHandle.h"
 
 namespace Web::Packet
 {
@@ -14,10 +14,11 @@ namespace Web::Packet
 
     }
 
-    nlohmann::json GetUserInfo::ExecutePayload(int userId)
+    nlohmann::json GetUserInfo::ExecutePayload(ClientHandle &clientHandle)
     {
 
-        const auto query = fmt::format("SELECT `id`, `name`, `status`, `type`, `email`, FROM `users` WHERE `id` = {}", userId);
+        const auto query = fmt::format("SELECT `id`, `name`, `status`, `type`, `email`, FROM `users` WHERE `id` = {}",
+                                       clientHandle.m_iUserIdInDataBase );
 
         const auto data = sql::Connection::Get()->Query(query);
 
@@ -26,7 +27,7 @@ namespace Web::Packet
             throw Exception::UserInfoNotFound();
 
         nlohmann::json outJson;
-        outJson["id"]          = userId;
+        outJson["id"]          = clientHandle.m_iUserIdInDataBase;
         outJson["name"]        = data[0][1];
         outJson["status"]      = data[0][2];
         outJson["type"]        = std::stoi(data[0][3]);

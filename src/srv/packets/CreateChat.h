@@ -9,7 +9,7 @@ namespace Web::Packet
     class CreateChat : public BasePacket
     {
     public:
-        nlohmann::json ExecutePayload(int userId) override;
+        nlohmann::json ExecutePayload(ClientHandle &clientHandle) override;
 
     public:
         explicit CreateChat(const nlohmann::json &data);

@@ -5,6 +5,8 @@
 #include <fmt/format.h>
 #include "../../lib/sqlite/connection.h"
 #include "exceptions.h"
+#include "../ClientHandle/ClientHandle.h"
+
 namespace Web::Packet
 {
 
@@ -20,13 +22,14 @@ namespace Web::Packet
         }
     }
 
-    nlohmann::json SetUserName::ExecutePayload(int userId)
+    nlohmann::json SetUserName::ExecutePayload(ClientHandle &clientHandle)
     {
         if (!IsUsernameValid(m_sNewUserName))
             throw Exception::InValidUserName();
 
 		sql::Connection::Get()->Query(
-				fmt::format("UPDATE `users` SET `name`= \"{}\" WHERE `id` = {}", m_sNewUserName, userId));
+				fmt::format("UPDATE `users` SET `name`= \"{}\" WHERE `id` = {}"
+                            , m_sNewUserName, clientHandle.m_iUserIdInDataBase));
 
         return "";
     }

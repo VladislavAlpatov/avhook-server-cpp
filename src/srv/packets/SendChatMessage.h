@@ -10,7 +10,7 @@ namespace Web::Packet
     public:
         explicit SendChatMessage(const nlohmann::json &data);
 
-        nlohmann::json ExecutePayload(int userId) override;
+        nlohmann::json ExecutePayload(ClientHandle &clientHandle) override;
     private:
         std::string m_sText;
         int m_iChatId;

@@ -2,19 +2,18 @@
 // Created by nullifiedvlad on 20.12.2022.
 //
 #include "GetUserConfigs.h"
-#include "exceptions.h"
 #include "../../lib/sqlite/connection.h"
 #include "fmt/format.h"
-
+#include "../ClientHandle/ClientHandle.h"
 
 namespace Web::Packet
 {
-    nlohmann::json GetUserConfigs::ExecutePayload(int userId)
+    nlohmann::json GetUserConfigs::ExecutePayload(ClientHandle &clientHandle)
     {
         std::vector<nlohmann::json> cfgs;
         nlohmann::json out;
         for (const auto& cfgData : sql::Connection::Get()->Query(
-				fmt::format("SELECT `id`, `data` FROM `avhook-configs` WHERE `owner_id` = {}", userId)))
+				fmt::format("SELECT `id`, `data` FROM `avhook-configs` WHERE `owner_id` = {}", clientHandle.m_iUserIdInDataBase)))
         {
             nlohmann::json tmp;
             tmp["id"]   = std::stoi(cfgData[0]);

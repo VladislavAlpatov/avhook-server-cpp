@@ -7,6 +7,8 @@
 #include "../packets/BasePacket.h"
 #include "../network/Socket.h"
 
+#define INVALID_USER_ID (-1)
+
 namespace Web
 {
 	class ClientHandle final : public ObservableObject
@@ -15,10 +17,9 @@ namespace Web
 		explicit ClientHandle(const Network::Socket& soc);
 
 		void Listen();
-		void AuthClient();
 		~ClientHandle() override;
         Network::Socket m_clientSocket;
 		int m_iUserIdInDataBase = -1;
-		void OnPacket(const std::shared_ptr<Web::Packet::BasePacket>& pPacket) const;
+		void OnPacket(const std::shared_ptr<Web::Packet::BasePacket>& pPacket);
 	};
 }

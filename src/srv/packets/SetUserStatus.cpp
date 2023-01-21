@@ -3,7 +3,7 @@
 //
 #include "SetUserStatus.h"
 #include "../../lib/sqlite/connection.h"
-
+#include "../ClientHandle/ClientHandle.h"
 #include "exceptions.h"
 #include <fmt/format.h>
 
@@ -22,10 +22,11 @@ namespace Web::Packet
         }
     }
 
-    nlohmann::json SetUserStatus::ExecutePayload(int userId)
+    nlohmann::json SetUserStatus::ExecutePayload(ClientHandle &clientHandle)
     {
 		sql::Connection::Get()->Query(
-				fmt::format("UPDATE `users` SET `status`= \"{}\" WHERE `id` = {}", m_sNewUserStatus, userId));
+				fmt::format("UPDATE `users` SET `status`= \"{}\" WHERE `id` = {}",
+                            m_sNewUserStatus, clientHandle.m_iUserIdInDataBase));
         return {};
     }
 

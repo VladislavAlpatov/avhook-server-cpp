@@ -1,5 +1,8 @@
 #include "CreateChat.h"
 #include "exceptions.h"
+
+#include "../ClientHandle/ClientHandle.h"
+
 namespace Web::Packet
 {
     CreateChat::CreateChat(const nlohmann::json &data) : BasePacket(data)
@@ -14,7 +17,7 @@ namespace Web::Packet
         }
     }
 
-    nlohmann::json CreateChat::ExecutePayload(int userId)
+    nlohmann::json CreateChat::ExecutePayload(ClientHandle &clientHandle)
     {
 
         return {};

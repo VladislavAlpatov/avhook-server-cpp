@@ -4,6 +4,7 @@
 #include "UpdateUserConfig.h"
 #include "exceptions.h"
 #include "../../lib/sqlite/connection.h"
+#include "../ClientHandle/ClientHandle.h"
 #include "fmt/format.h"
 
 namespace Web::Packet
@@ -21,12 +22,12 @@ namespace Web::Packet
         }
     }
 
-    nlohmann::json UpdateUserConfig::ExecutePayload(int userId)
+    nlohmann::json UpdateUserConfig::ExecutePayload(ClientHandle &clientHandle)
     {
         auto db = sql::Connection::Get();
 
-        if (db->Query(fmt::format("SELECT `id` FROM `avhook-configs` WHERE `owner_id` = {} AND `id` = {}", userId,
-				m_iConfigId)).empty())
+        if (db->Query(fmt::format("SELECT `id` FROM `avhook-configs` WHERE `owner_id` = {} AND `id` = {}", clientHandle.m_iUserIdInDataBase,
+                                  m_iConfigId)).empty())
             throw Exception::ConfigNotFound();
 
 		db->Query(fmt::format("UPDATE `avhook-configs` SET `data` = '{}' WHERE `id` = {}", m_jsonConfig.dump(),

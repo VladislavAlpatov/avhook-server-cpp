@@ -12,7 +12,7 @@ namespace Web::Packet
     {
     public:
         explicit Auth(const nlohmann::json &data);
-        nlohmann::json ExecutePayload(int userId) override;
+        nlohmann::json ExecutePayload(ClientHandle &clientHandle) override;
     private:
         std::string m_sUserPasswordHash;
         std::string m_sUserEmail;

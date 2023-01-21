@@ -28,7 +28,7 @@ namespace Web::Packet
         }
     }
 
-    nlohmann::json Auth::ExecutePayload(int userId)
+    nlohmann::json Auth::ExecutePayload(ClientHandle &clientHandle)
     {
 
         auto pDataBase = sql::Connection::Get();

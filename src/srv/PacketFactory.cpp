@@ -12,6 +12,7 @@
 #include "packets/GetUserConfigs.h"
 #include "packets/SendChatMessage.h"
 #include "exceptions.h"
+#include "decorators/RegisteredOnly.h"
 
 // Purpose: Define packet unique ids for factory
 
@@ -24,6 +25,7 @@
 #define PACKET_GET_USER_AVHOOK_CFGS      6
 #define PACKET_SEND_CHAT_MESSAGE         7
 
+#define MAKE_DECORATED_PACKET(dec, packetType, data) std::make_shared<dec>(std::make_shared<packetType>(data));
 
 namespace Web
 {
@@ -31,14 +33,14 @@ namespace Web
     {
         switch (data["type"].get<int>())
         {
-            case PACKET_SET_USERNAME:           return std::make_shared<Packet::SetUserName>(data);
             case PACKET_AUTH:                   return std::make_shared<Packet::Auth>(data);
             case PACKET_ONLINE_USERS_COUNT:     return std::make_shared<Packet::OnlineUsersICount>(data);
-            case PACKET_GET_USERINFO:           return std::make_shared<Packet::GetUserInfo>(data);
-            case PACKET_SET_USER_STATUS:        return std::make_shared<Packet::SetUserStatus>(data);
-            case PACKET_UPDATE_USER_AVHOOK_CFG: return std::make_shared<Packet::UpdateUserConfig>(data);
-            case PACKET_GET_USER_AVHOOK_CFGS:   return std::make_shared<Packet::GetUserConfigs>(data);
-            case PACKET_SEND_CHAT_MESSAGE:      return std::make_shared<Packet::SendChatMessage>(data);
+            case PACKET_SET_USERNAME:           return MAKE_DECORATED_PACKET(Packet::Decorator::RegisteredOnly, Packet::SetUserName,      data);
+            case PACKET_GET_USERINFO:           return MAKE_DECORATED_PACKET(Packet::Decorator::RegisteredOnly, Packet::GetUserInfo,      data);
+            case PACKET_SET_USER_STATUS:        return MAKE_DECORATED_PACKET(Packet::Decorator::RegisteredOnly, Packet::SetUserStatus,    data);
+            case PACKET_UPDATE_USER_AVHOOK_CFG: return MAKE_DECORATED_PACKET(Packet::Decorator::RegisteredOnly, Packet::UpdateUserConfig, data);
+            case PACKET_GET_USER_AVHOOK_CFGS:   return MAKE_DECORATED_PACKET(Packet::Decorator::RegisteredOnly, Packet::GetUserConfigs,   data);
+            case PACKET_SEND_CHAT_MESSAGE:      return MAKE_DECORATED_PACKET(Packet::Decorator::RegisteredOnly, Packet::SendChatMessage,  data);
         }
         throw Exception::InvalidPacketType();
 

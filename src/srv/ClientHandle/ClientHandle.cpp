@@ -17,7 +17,6 @@
 
 void Web::ClientHandle::Listen()
 {
-    AuthClient();
     while (true)
     {
         try
@@ -41,42 +40,10 @@ Web::ClientHandle::~ClientHandle()
 
 }
 
-void Web::ClientHandle::AuthClient()
-{
-	while (true)
-	{
-		try
-		{
-			auto pAuthPacket = m_clientSocket.RecvPacket();
-
-			if (!dynamic_cast<Web::Packet::Auth*>(pAuthPacket.get()))
-				throw Web::Packet::Exception::ExceptedAutPacket();
-
-			m_iUserIdInDataBase = pAuthPacket->ExecutePayload(NULL)["user_id"].get<int>();
-
-
-			nlohmann::json jsn;
-			jsn["success"] = true;
-			NotifyObserver<Observers::OnUserAuth>();
-            m_clientSocket.SendJson(jsn);
-
-			return;
-		}
-		catch(const Web::Packet::Exception::BasePacketException& ex)
-		{
-			nlohmann::json jsn;
-			jsn["success"] = false;
-			jsn["error_code"] = ex.what();
-            m_clientSocket.SendJson(jsn);
-		}
-
-	}
-}
-
-void Web::ClientHandle::OnPacket(const std::shared_ptr<Web::Packet::BasePacket>& pPacket) const
+void Web::ClientHandle::OnPacket(const std::shared_ptr<Web::Packet::BasePacket>& pPacket)
 {
 	NotifyObserver<Observers::OnPacket>();
-	auto jsn = pPacket->ExecutePayload(m_iUserIdInDataBase);
+	auto jsn = pPacket->ExecutePayload(*this);
 	jsn["success"] = true;
 
     m_clientSocket.SendJson(jsn);
