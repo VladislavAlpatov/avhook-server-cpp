@@ -6,38 +6,34 @@
 #include <nlohmann/json.hpp>
 #include "../packets/BasePacket.h"
 
-#ifndef HEADER_FILE13243
-    #define HEADER_FILE13243
-
-    #if defined(_WIN32)
-    typedef unsigned long long SOCKET;
-    #else
-    typedef int SOCKET;
-    #endif
-
-
-    namespace Web::Network
-    {
-
-        class Socket
-        {
-        public:
-            Socket(SOCKET socket);
-            Socket();
-            SOCKET GetRawSocket() const;
-
-            Socket(int af, int type, int protocol);
-            std::string RecvString() const;
-            nlohmann::json RecvJson() const;
-            void SendString(const std::string& str) const;
-            void SendJson(const nlohmann::json& jsn) const;
-            void Bind(const std::string& ip, int iPort);
-            Socket Listen();
-            std::shared_ptr<Web::Packet::BasePacket> RecvPacket() const;
-
-        private:
-            std::shared_ptr<SOCKET> m_pRawSocket;
-        };
-
-    } // Network
+#if defined(_WIN32)
+typedef unsigned long long SOCKET;
+#else
+typedef int SOCKET;
 #endif
+
+
+namespace Web::Network
+{
+
+    class Socket
+    {
+    public:
+        Socket(SOCKET socket);
+        Socket();
+        SOCKET GetRawSocket() const;
+
+        Socket(int af, int type, int protocol);
+        std::string RecvString() const;
+        nlohmann::json RecvJson() const;
+        void SendString(const std::string& str) const;
+        void SendJson(const nlohmann::json& jsn) const;
+        void Bind(const std::string& ip, int iPort);
+        Socket Listen();
+        std::shared_ptr<Web::Packet::BasePacket> RecvPacket() const;
+
+    private:
+        std::shared_ptr<SOCKET> m_pRawSocket;
+    };
+
+} // Network
