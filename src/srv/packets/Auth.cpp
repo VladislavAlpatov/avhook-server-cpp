@@ -6,6 +6,9 @@
 #include "../../lib/sha256/sha256.h"
 #include "fmt/format.h"
 #include "exceptions.h"
+#include "../ClientHandle/ClientHandle.h"
+
+
 namespace Web::Packet
 {
 
@@ -40,9 +43,12 @@ namespace Web::Packet
         if (res.empty())
             throw Exception::AuthFailedWrongPassword();
 
+        int iUserId = std::stoi(res[0][0]);
+
+        clientHandle.m_iUserIdInDataBase = iUserId;
 
 		nlohmann::json out;
-		out["user_id"] = std::stoi(res[0][0]);
+		out["user_id"] = iUserId;
 
 		return out;
     }

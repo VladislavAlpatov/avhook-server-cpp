@@ -81,7 +81,6 @@ namespace Web::Network
 
     Socket::Socket(int af, int type, int protocol)
     {
-        printf("Created Socket\n");
         m_pRawSocket = std::shared_ptr<SOCKET>(new SOCKET, [](SOCKET* pSocket)
         {
 #ifdef _WIN32

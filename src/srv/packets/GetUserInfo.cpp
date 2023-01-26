@@ -17,7 +17,7 @@ namespace Web::Packet
     nlohmann::json GetUserInfo::ExecutePayload(ClientHandle &clientHandle)
     {
 
-        const auto query = fmt::format("SELECT `id`, `name`, `status`, `type`, `email`, FROM `users` WHERE `id` = {}",
+        const auto query = fmt::format("SELECT `id`, `name`, `status`, `type`, `email` FROM `users` WHERE `id` = {}",
                                        clientHandle.m_iUserIdInDataBase );
 
         const auto data = sql::Connection::Get()->Query(query);

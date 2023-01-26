@@ -13,7 +13,11 @@ namespace Observers
 	{
 		const auto pClientContext = dynamic_cast<const Web::ClientHandle*>(pContext);
 		if (!pClientContext) return;
-
+        if (pClientContext->m_iUserIdInDataBase == INVALID_USER_ID)
+        {
+            printf("[LOG] Accepted packet from unknow user\n");
+            return;
+        }
 		const auto userName =
 				sql::Connection::Get()->Query(fmt::format("SELECT `name` FROM `users` WHERE `id` = {}",
 						pClientContext->m_iUserIdInDataBase))[0][0];
