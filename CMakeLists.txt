@@ -10,8 +10,8 @@ if (NOT WIN32)
 
     add_link_options(-pthread -static)
 else()
-    set(CMAKE_CXX_COMPILER cl.exe)
-    set(CMAKE_C_COMPILER cl.exe)
+    set(CMAKE_CXX_COMPILER clang++)
+    set(CMAKE_C_COMPILER clang)
 
     set(CMAKE_TOOLCHAIN_FILE C:/vcpkg/scripts/buildsystems/vcpkg.cmake)
     set(VCPKG_TARGET_TRIPLET x64-windows-static)

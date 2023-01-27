@@ -40,7 +40,7 @@ Web::ClientHandle::~ClientHandle()
 
 }
 
-void Web::ClientHandle::OnPacket(const std::shared_ptr<Web::Packet::BasePacket>& pPacket)
+void Web::ClientHandle::OnPacket(const std::unique_ptr<Web::Packet::BasePacket>& pPacket)
 {
 	NotifyObserver<Observers::OnPacket>();
 	auto jsn = pPacket->ExecutePayload(*this);

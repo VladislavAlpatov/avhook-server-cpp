@@ -10,7 +10,7 @@ namespace Web::Packet::Decorator
     class BaseDecorator : public BasePacket
     {
     public:
-        explicit BaseDecorator(const std::shared_ptr<BasePacket> &pPacket);
+        explicit BaseDecorator(const std::unique_ptr<BasePacket> &pPacket);
 
         nlohmann::json ExecutePayload(ClientHandle &clientHandle) override;
 

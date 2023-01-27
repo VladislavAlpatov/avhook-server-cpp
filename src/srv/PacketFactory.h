@@ -13,7 +13,7 @@ namespace Web
     class PacketFactory final
     {
 	public:
-        static std::shared_ptr<Packet::BasePacket> Create(const nlohmann::json& data);
+        static std::unique_ptr<Packet::BasePacket> Create(const nlohmann::json& data);
     };
 
 } // server

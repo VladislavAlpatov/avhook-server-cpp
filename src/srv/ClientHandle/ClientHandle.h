@@ -20,6 +20,6 @@ namespace Web
 		~ClientHandle() override;
         Network::Socket m_clientSocket;
 		int m_iUserIdInDataBase = -1;
-		void OnPacket(const std::shared_ptr<Web::Packet::BasePacket>& pPacket);
+		void OnPacket(const std::unique_ptr<Web::Packet::BasePacket>& pPacket);
 	};
 }
