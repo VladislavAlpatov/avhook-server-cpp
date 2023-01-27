@@ -16,7 +16,7 @@ namespace Web::Packet::Decorator
         return  m_pDecoratedPacket->ExecutePayload(clientHandle);
     }
 
-    RegisteredOnly::RegisteredOnly(const std::unique_ptr<BasePacket> &pPacket) : BaseDecorator(pPacket)
+    RegisteredOnly::RegisteredOnly(const std::shared_ptr<BasePacket> &pPacket) : BaseDecorator(pPacket)
     {
 
     }

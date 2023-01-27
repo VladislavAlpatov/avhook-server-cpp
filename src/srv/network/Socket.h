@@ -30,7 +30,7 @@ namespace Web::Network
         void SendJson(const nlohmann::json& jsn) const;
         void Bind(const std::string& ip, int iPort);
         Socket Listen();
-        std::shared_ptr<Web::Packet::BasePacket> RecvPacket() const;
+        std::unique_ptr<Web::Packet::BasePacket> RecvPacket() const;
 
     private:
         std::shared_ptr<SOCKET> m_pRawSocket;

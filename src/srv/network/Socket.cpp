@@ -67,7 +67,7 @@ namespace Web::Network
         SendString(jsn.dump());
     }
 
-    std::shared_ptr<Web::Packet::BasePacket> Socket::RecvPacket() const
+    std::unique_ptr<Web::Packet::BasePacket> Socket::RecvPacket() const
     {
         try
         {
