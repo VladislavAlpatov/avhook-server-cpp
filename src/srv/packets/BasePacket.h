@@ -13,6 +13,7 @@ namespace Web::Packet
     class BasePacket
     {
     public:
+        virtual ~BasePacket() = default;
         virtual nlohmann::json ExecutePayload(ClientHandle &clientHandle) = 0;
 
     protected:
