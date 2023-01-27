@@ -2,16 +2,16 @@
   "version": 3,
   "configurePresets": [
     {
-      "name": "windows-base",
+      "name": "base",
       "hidden": true,
       "generator": "Ninja",
       "binaryDir": "${sourceDir}/cmake-build/build/${presetName}",
       "installDir": "${sourceDir}/cmake-build/install/${presetName}"
     },
     {
-      "name": "x86-debug",
+      "name": "x64-debug",
       "displayName": "Debug",
-      "inherits": "windows-base",
+      "inherits": "base",
       "architecture": {
         "value": "x64",
         "strategy": "external"
@@ -21,9 +21,9 @@
       }
     },
     {
-      "name": "x86-release",
+      "name": "x64-release",
       "displayName": "Release",
-      "inherits": "x86-debug",
+      "inherits": "x64-debug",
       "cacheVariables": {
         "CMAKE_BUILD_TYPE": "Release"
       }
