@@ -8,4 +8,5 @@ target_sources(server PRIVATE
         UpdateUserConfig.cpp
         GetUserConfigs.cpp
         SendChatMessage.cpp
+        CreateChat.cpp
         )

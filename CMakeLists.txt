@@ -52,4 +52,4 @@ find_package(ZLIB REQUIRED)
 target_link_libraries(server PRIVATE ZLIB::ZLIB)
 
 find_package(Boost REQUIRED)
-target_link_libraries(server PRIVATE ${Boost_LIBRARIES} )
+target_link_libraries(server PRIVATE ${Boost_LIBRARIES})

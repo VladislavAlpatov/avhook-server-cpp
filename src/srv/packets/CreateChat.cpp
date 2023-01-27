@@ -1,5 +1,7 @@
 #include "CreateChat.h"
 #include "exceptions.h"
+#include "../../lib/sqlite/connection.h"
+
 
 #include "../ClientHandle/ClientHandle.h"
 
@@ -19,6 +21,8 @@ namespace Web::Packet
 
     nlohmann::json CreateChat::ExecutePayload(ClientHandle &clientHandle)
     {
+        auto pCon = sql::Connection::Get();
+        
 
         return {};
     }
