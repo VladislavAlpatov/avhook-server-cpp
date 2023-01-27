@@ -14,5 +14,6 @@ namespace Web::Packet
     public:
         explicit CreateChat(const nlohmann::json &data);
         std::string m_sChatName;
+        static size_t CreateChatPublicId() ;
     };
 } // Packet

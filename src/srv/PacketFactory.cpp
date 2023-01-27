@@ -13,6 +13,8 @@
 #include "packets/SendChatMessage.h"
 #include "exceptions.h"
 #include "decorators/RegisteredOnly.h"
+#include "packets/CreateChat.h"
+
 
 // Purpose: Define packet unique ids for factory
 
@@ -21,9 +23,10 @@
 #define PACKET_ONLINE_USERS_COUNT        2
 #define PACKET_GET_USERINFO              3
 #define PACKET_SET_USER_STATUS           4
-#define PACKET_UPDATE_USER_CFG    5
+#define PACKET_UPDATE_USER_CFG           5
 #define PACKET_GET_USER_CFGS             6
 #define PACKET_SEND_CHAT_MESSAGE         7
+#define PACKET_CREATE_CHAT               8
 
 #define MAKE_DECORATED_PACKET(dec, packetType, data) std::make_unique<dec>(std::make_unique<packetType>(data));
 
@@ -41,6 +44,7 @@ namespace Web
             case PACKET_UPDATE_USER_CFG:        return MAKE_DECORATED_PACKET(Packet::Decorator::RegisteredOnly, Packet::UpdateUserConfig, data);
             case PACKET_GET_USER_CFGS:          return MAKE_DECORATED_PACKET(Packet::Decorator::RegisteredOnly, Packet::GetUserConfigs,   data);
             case PACKET_SEND_CHAT_MESSAGE:      return MAKE_DECORATED_PACKET(Packet::Decorator::RegisteredOnly, Packet::SendChatMessage,  data);
+            case PACKET_CREATE_CHAT:            return MAKE_DECORATED_PACKET(Packet::Decorator::RegisteredOnly, Packet::CreateChat,       data);
         }
         throw Exception::InvalidPacketType();
 

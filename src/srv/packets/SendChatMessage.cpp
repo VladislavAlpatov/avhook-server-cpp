@@ -32,6 +32,11 @@ namespace Web::Packet
         if(pDataBase->Query(fmt::format("SELECT `id` FROM `chats` WHERE `id` = {}", m_iChatId)).empty())
             throw Exception::ChatDoesNotExist();
 
+
+        if (pDataBase->Query(fmt::format("SELECT `user_id` FROM `chats-members` WHERE `user_id` = {} AND `chat_id` = {}",
+                                         clientHandle.m_iUserIdInDataBase, m_iChatId)).empty())
+            throw Exception::ChatDoesNotExist();
+
         // Fix string for SQLite if it contains ' or "
         boost::replace_all(m_sText, "'", "''");
         boost::replace_all(m_sText, "\"", "\"\"");
