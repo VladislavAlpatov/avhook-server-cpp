@@ -26,12 +26,11 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "../../../out/${CMAKE_BUILD_TYPE}")
 
 set(CMAKE_CXX_STANDARD 23)
 
-add_compile_definitions(WIN32_LEAN_AND_MEAN )
-
-
 
 project(server)
 add_executable(server src/main.cpp src/srv/packets/SendChatMessage.cpp src/srv/packets/SendChatMessage.h)
+
+add_compile_definitions(WIN32_LEAN_AND_MEAN)
 
 add_subdirectory(src)
 
@@ -53,3 +52,6 @@ target_link_libraries(server PRIVATE ZLIB::ZLIB)
 
 find_package(Boost REQUIRED)
 target_link_libraries(server PRIVATE ${Boost_LIBRARIES})
+
+find_package(OpenSSL REQUIRED)
+target_link_libraries(server PRIVATE OpenSSL::SSL OpenSSL::Crypto)

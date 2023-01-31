@@ -2,13 +2,7 @@
 // Created by Vlad on 27.12.2022.
 //
 #include "ClientHandle.h"
-#include "../packets/Auth.h"
 #include "../packets/exceptions.h"
-#include "../../lib/sqlite/connection.h"
-
-#include "../observers/OnUserConnected.h"
-#include "../observers/OnUserDisconnected.h"
-#include "../observers/OnUserAuth.h"
 #include "../observers/OnPacket.h"
 
 

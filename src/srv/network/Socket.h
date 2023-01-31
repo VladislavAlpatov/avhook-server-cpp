@@ -6,6 +6,8 @@
 #include <nlohmann/json.hpp>
 #include "../packets/BasePacket.h"
 
+
+
 #if defined(_WIN32)
 typedef unsigned long long SOCKET;
 #else
@@ -24,6 +26,8 @@ namespace Web::Network
         SOCKET GetRawSocket() const;
 
         Socket(int af, int type, int protocol);
+        virtual std::unique_ptr<uint8_t> RecvBytes() const;
+        virtual void SendBytes(const void* pBytes, int iSize) const;
         std::string RecvString() const;
         nlohmann::json RecvJson() const;
         void SendString(const std::string& str) const;

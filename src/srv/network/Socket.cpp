@@ -27,26 +27,7 @@ namespace Web::Network
 
     std::string Socket::RecvString() const
     {
-        int iSize = 0;
-        ::recv(*m_pRawSocket, (char*)&iSize, 4, NULL);
-
-        if (iSize <= 0 || iSize > MAX_ACCEPTABLE_PACKET_SIZE)
-            throw Exception::RecvFailed();
-
-        auto pBuff = std::unique_ptr<char>(new char[iSize+1]);
-
-
-        pBuff.get()[iSize] = '\0';
-        int iRecvdBytes = 0;
-        while (iRecvdBytes < iSize)
-        {
-            const auto tmp = ::recv(*m_pRawSocket, pBuff.get()+iRecvdBytes, iSize-iRecvdBytes, NULL);
-
-            if (!tmp) throw Exception::RecvFailed();
-            iRecvdBytes += tmp;
-        }
-
-        return pBuff.get();
+        return (char*)RecvBytes().get();
     }
 
     nlohmann::json Socket::RecvJson() const
@@ -56,10 +37,7 @@ namespace Web::Network
 
     void Socket::SendString(const std::string &str) const
     {
-        int iSize = str.size();
-
-        ::send(*m_pRawSocket, (const char*)&iSize, sizeof(iSize), NULL);
-        ::send(*m_pRawSocket, str.c_str(), str.size(), NULL);
+        SendBytes(str.c_str(), str.size());
     }
 
     void Socket::SendJson(const nlohmann::json &jsn) const
@@ -153,5 +131,34 @@ namespace Web::Network
         });
 
         *m_pRawSocket = socket(AF_INET, SOCK_STREAM, IPPROTO_TCP);
+    }
+
+    std::unique_ptr<uint8_t> Socket::RecvBytes() const
+    {
+        int iSize = 0;
+        ::recv(*m_pRawSocket, (char*)&iSize, 4, NULL);
+
+        if (iSize <= 0 || iSize > MAX_ACCEPTABLE_PACKET_SIZE)
+            throw Exception::RecvFailed();
+
+        auto pBuff = std::unique_ptr<uint8_t>(new uint8_t[iSize+1]);
+
+        pBuff.get()[iSize] = '\0';
+        int iRecvdBytes = 0;
+        while (iRecvdBytes < iSize)
+        {
+            const auto tmp = ::recv(*m_pRawSocket, (char*)pBuff.get()+iRecvdBytes, iSize-iRecvdBytes, NULL);
+
+            if (!tmp) throw Exception::RecvFailed();
+            iRecvdBytes += tmp;
+        }
+
+        return pBuff;
+    }
+
+    void Socket::SendBytes(const void *pBytes, int iSize) const
+    {
+        ::send(*m_pRawSocket, (const char*)&iSize, sizeof(iSize), NULL);
+        ::send(*m_pRawSocket, (const char*)pBytes, iSize, NULL);
     }
 }

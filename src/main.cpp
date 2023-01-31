@@ -23,8 +23,5 @@ int main()
     pServer->AddObserver(new Observers::OnUserDisconnected());
     pServer->AddObserver(new Observers::OnUserConnected());
 #endif
-
 	pServer->Listen();
-
-
 }
