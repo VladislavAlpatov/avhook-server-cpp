@@ -26,7 +26,7 @@ namespace Web::Packet
     {
 		sql::Connection::Get()->Query(
 				fmt::format("UPDATE `users` SET `status`= \"{}\" WHERE `id` = {}",
-                            m_sNewUserStatus, clientHandle.m_iUserIdInDataBase));
+                            m_sNewUserStatus, clientHandle.m_iUserId));
         return {};
     }
 

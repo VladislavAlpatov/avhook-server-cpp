@@ -26,7 +26,7 @@ namespace Web::Packet
     {
         auto db = sql::Connection::Get();
 
-        if (db->Query(fmt::format("SELECT `id` FROM `avhook-configs` WHERE `owner_id` = {} AND `id` = {}", clientHandle.m_iUserIdInDataBase,
+        if (db->Query(fmt::format("SELECT `id` FROM `avhook-configs` WHERE `owner_id` = {} AND `id` = {}", clientHandle.m_iUserId,
                                   m_iConfigId)).empty())
             throw Exception::ConfigNotFound();
 

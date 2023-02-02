@@ -11,7 +11,6 @@
 
 int main()
 {
-
     setbuf(stdout, 0);
 #if defined(_WIN32) and __has_include("winsock2.h")
     WSAData data;

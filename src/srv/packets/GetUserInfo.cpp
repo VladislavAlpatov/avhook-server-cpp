@@ -18,7 +18,7 @@ namespace Web::Packet
     {
 
         const auto query = fmt::format("SELECT `id`, `name`, `status`, `type`, `email` FROM `users` WHERE `id` = {}",
-                                       clientHandle.m_iUserIdInDataBase );
+                                       clientHandle.m_iUserId );
 
         const auto data = sql::Connection::Get()->Query(query);
 
@@ -27,7 +27,7 @@ namespace Web::Packet
             throw Exception::UserInfoNotFound();
 
         nlohmann::json outJson;
-        outJson["id"]          = clientHandle.m_iUserIdInDataBase;
+        outJson["id"]          = clientHandle.m_iUserId;
         outJson["name"]        = data[0][1];
         outJson["status"]      = data[0][2];
         outJson["type"]        = std::stoi(data[0][3]);

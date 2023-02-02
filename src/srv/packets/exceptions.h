@@ -65,7 +65,6 @@ namespace Web::Packet::Exception
             return "Chat with this id does not exist";
         }
     };
-
     class UserNotRegistered final : public BasePacketException
     {
     public:

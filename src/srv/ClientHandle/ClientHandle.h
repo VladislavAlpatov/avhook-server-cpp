@@ -19,7 +19,7 @@ namespace Web
 		void Listen();
 		~ClientHandle() override;
         Network::Socket m_clientSocket;
-		int m_iUserIdInDataBase = -1;
+		int m_iUserId = -1;
 		void OnPacket(const std::unique_ptr<Web::Packet::BasePacket>& pPacket);
 	};
 }

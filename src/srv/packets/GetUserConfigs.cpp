@@ -13,7 +13,7 @@ namespace Web::Packet
         std::vector<nlohmann::json> cfgs;
         nlohmann::json out;
         for (const auto& cfgData : sql::Connection::Get()->Query(
-				fmt::format("SELECT `id`, `data` FROM `avhook-configs` WHERE `owner_id` = {}", clientHandle.m_iUserIdInDataBase)))
+				fmt::format("SELECT `id`, `data` FROM `avhook-configs` WHERE `owner_id` = {}", clientHandle.m_iUserId)))
         {
             nlohmann::json tmp;
             tmp["id"]   = std::stoi(cfgData[0]);

@@ -30,10 +30,10 @@ namespace Web::Packet
         const auto iPublicId = CreateChatPublicId();
 
         pCon->Query(fmt::format("INSERT INTO `chats` (`owner_id`, `name`, `public_id`) VALUES({},'{}',{})",
-                                clientHandle.m_iUserIdInDataBase, m_sChatName, iPublicId));
+                                clientHandle.m_iUserId, m_sChatName, iPublicId));
 
         auto iChatId = pCon->Query(fmt::format("SELECT `id` FROM `chats` WHERE `public_id` = {}", iPublicId))[0][0];
-        pCon->Query(fmt::format("INSERT INTO `chats-members` (`chat_id`, `user_id`) VALUES({},{})", iChatId,clientHandle.m_iUserIdInDataBase));
+        pCon->Query(fmt::format("INSERT INTO `chats-members` (`chat_id`, `user_id`) VALUES({},{})", iChatId,clientHandle.m_iUserId));
 
         return {};
     }

@@ -29,7 +29,7 @@ namespace Web::Packet
 
 		sql::Connection::Get()->Query(
 				fmt::format("UPDATE `users` SET `name`= \"{}\" WHERE `id` = {}"
-                            , m_sNewUserName, clientHandle.m_iUserIdInDataBase));
+                            , m_sNewUserName, clientHandle.m_iUserId));
 
         return "";
     }

@@ -34,14 +34,14 @@ namespace Web::Packet
 
 
         if (pDataBase->Query(fmt::format("SELECT `user_id` FROM `chats-members` WHERE `user_id` = {} AND `chat_id` = {}",
-                                         clientHandle.m_iUserIdInDataBase, m_iChatId)).empty())
+                                         clientHandle.m_iUserId, m_iChatId)).empty())
             throw Exception::ChatDoesNotExist();
 
         // Fix string for SQLite if it contains ' or "
         boost::replace_all(m_sText, "'", "''");
         boost::replace_all(m_sText, "\"", "\"\"");
 
-        pDataBase->Query(fmt::format("INSERT INTO `chat-messages` (`owner_id`, `chat_id`, `text`) VALUES({},{},'{}')", clientHandle.m_iUserIdInDataBase, m_iChatId, m_sText));
+        pDataBase->Query(fmt::format("INSERT INTO `chat-messages` (`owner_id`, `chat_id`, `text`) VALUES({},{},'{}')", clientHandle.m_iUserId, m_iChatId, m_sText));
 
         return {};
     }

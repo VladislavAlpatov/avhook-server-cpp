@@ -45,7 +45,7 @@ namespace Web::Packet
 
         int iUserId = std::stoi(res[0][0]);
 
-        clientHandle.m_iUserIdInDataBase = iUserId;
+        clientHandle.m_iUserId = iUserId;
 
 		nlohmann::json out;
 		out["user_id"] = iUserId;
