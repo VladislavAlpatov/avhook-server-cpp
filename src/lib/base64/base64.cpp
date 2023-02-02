@@ -30,7 +30,7 @@ namespace base64
             number /= 64;
         }
 
-
+        
         std::reverse(out.begin(), out.end());
 
 

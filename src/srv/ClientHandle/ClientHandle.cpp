@@ -17,7 +17,7 @@ void Web::ClientHandle::Listen()
         {
             OnPacket(m_clientSocket.RecvPacket());
         }
-        catch (const Web::Packet::Exception::BasePacketException& ex)
+        catch (const Packet::Exception::BasePacketException& ex)
         {
             nlohmann::json jsn;
 
