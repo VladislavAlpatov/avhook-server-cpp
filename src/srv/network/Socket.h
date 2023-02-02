@@ -2,8 +2,6 @@
 // Created by Vlad on 06.01.2023.
 //
 #pragma once
-#include <string>
-#include <nlohmann/json.hpp>
 #include "../packets/BasePacket.h"
 
 
@@ -21,9 +19,10 @@ namespace Web::Network
     class Socket
     {
     public:
-        Socket(SOCKET socket);
+        explicit Socket(SOCKET socket);
         Socket();
-        SOCKET GetRawSocket() const;
+
+        [[maybe_unused]] SOCKET GetRawSocket() const;
 
         Socket(int af, int type, int protocol);
         virtual std::unique_ptr<uint8_t> RecvBytes() const;
@@ -34,7 +33,7 @@ namespace Web::Network
         void SendJson(const nlohmann::json& jsn) const;
         void Bind(const std::string& ip, int iPort);
         Socket Listen();
-        std::unique_ptr<Web::Packet::BasePacket> RecvPacket() const;
+        std::unique_ptr<Packet::BasePacket> RecvPacket() const;
 
     private:
         std::shared_ptr<SOCKET> m_pRawSocket;

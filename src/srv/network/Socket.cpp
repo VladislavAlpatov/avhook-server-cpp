@@ -20,7 +20,7 @@
 namespace Web::Network
 {
 
-    SOCKET Socket::GetRawSocket() const
+    [[maybe_unused]] SOCKET Socket::GetRawSocket() const
     {
         return *m_pRawSocket;
     }

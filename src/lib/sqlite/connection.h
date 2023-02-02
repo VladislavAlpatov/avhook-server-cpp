@@ -2,11 +2,10 @@
 // Created by nullifiedvlad on 06.12.2022.
 //
 #pragma once
-#include <sqlite3.h>
 #include <string>
 #include <vector>
 #include <mutex>
-
+struct  sqlite3;
 namespace sql
 {
 
@@ -20,6 +19,7 @@ namespace sql
     private:
         explicit Connection(const std::string& path);
         std::mutex m_lock;
+
         sqlite3* m_pDataBase = nullptr;
 
     };

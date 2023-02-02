@@ -14,6 +14,7 @@
 #include "exceptions.h"
 #include "decorators/RegisteredOnly.h"
 #include "packets/CreateChat.h"
+#include "packets/DeleteChat.h"
 
 
 // Purpose: Define packet unique ids for factory
@@ -27,24 +28,29 @@
 #define PACKET_GET_USER_CFGS             6
 #define PACKET_SEND_CHAT_MESSAGE         7
 #define PACKET_CREATE_CHAT               8
+#define PACKET_DELETE_CHAT               9
 
 #define MAKE_DECORATED_PACKET(dec, packetType, data) std::make_unique<dec>(std::make_unique<packetType>(data));
-
 namespace Web
 {
-    std::unique_ptr<Packet::BasePacket> PacketFactory::Create(const nlohmann::json &data)
+    using namespace Packet;
+
+    std::unique_ptr<BasePacket> PacketFactory::Create(const nlohmann::json &data)
     {
+        using namespace Packet;
+        
         switch (data["type"].get<int>())
         {
-            case PACKET_AUTH:                   return std::make_unique<Packet::Auth>(data);
-            case PACKET_ONLINE_USERS_COUNT:     return std::make_unique<Packet::OnlineUsersICount>(data);
-            case PACKET_SET_USERNAME:           return MAKE_DECORATED_PACKET(Packet::Decorator::RegisteredOnly, Packet::SetUserName,      data);
-            case PACKET_GET_USERINFO:           return MAKE_DECORATED_PACKET(Packet::Decorator::RegisteredOnly, Packet::GetUserInfo,      data);
-            case PACKET_SET_USER_STATUS:        return MAKE_DECORATED_PACKET(Packet::Decorator::RegisteredOnly, Packet::SetUserStatus,    data);
-            case PACKET_UPDATE_USER_CFG:        return MAKE_DECORATED_PACKET(Packet::Decorator::RegisteredOnly, Packet::UpdateUserConfig, data);
-            case PACKET_GET_USER_CFGS:          return MAKE_DECORATED_PACKET(Packet::Decorator::RegisteredOnly, Packet::GetUserConfigs,   data);
-            case PACKET_SEND_CHAT_MESSAGE:      return MAKE_DECORATED_PACKET(Packet::Decorator::RegisteredOnly, Packet::SendChatMessage,  data);
-            case PACKET_CREATE_CHAT:            return MAKE_DECORATED_PACKET(Packet::Decorator::RegisteredOnly, Packet::CreateChat,       data);
+            case PACKET_AUTH:                   return std::make_unique<Auth>(data);
+            case PACKET_ONLINE_USERS_COUNT:     return std::make_unique<OnlineUsersICount>(data);
+            case PACKET_SET_USERNAME:           return MAKE_DECORATED_PACKET(Decorator::RegisteredOnly, SetUserName,      data);
+            case PACKET_GET_USERINFO:           return MAKE_DECORATED_PACKET(Decorator::RegisteredOnly, GetUserInfo,      data);
+            case PACKET_SET_USER_STATUS:        return MAKE_DECORATED_PACKET(Decorator::RegisteredOnly, SetUserStatus,    data);
+            case PACKET_UPDATE_USER_CFG:        return MAKE_DECORATED_PACKET(Decorator::RegisteredOnly, UpdateUserConfig, data);
+            case PACKET_GET_USER_CFGS:          return MAKE_DECORATED_PACKET(Decorator::RegisteredOnly, GetUserConfigs,   data);
+            case PACKET_SEND_CHAT_MESSAGE:      return MAKE_DECORATED_PACKET(Decorator::RegisteredOnly, SendChatMessage,  data);
+            case PACKET_CREATE_CHAT:            return MAKE_DECORATED_PACKET(Decorator::RegisteredOnly, CreateChat,       data);
+            case PACKET_DELETE_CHAT:            return MAKE_DECORATED_PACKET(Decorator::RegisteredOnly, DeleteChat,       data);
         }
         throw Exception::InvalidPacketType();
 

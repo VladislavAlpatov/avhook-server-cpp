@@ -5,7 +5,7 @@
 #include "exceptions.h"
 #include <memory>
 #include "../../consts.h"
-
+#include <sqlite3.h>
 
 namespace sql
 {
