@@ -19,7 +19,7 @@ namespace Web::Network
     class Socket
     {
     public:
-        explicit Socket(SOCKET socket);
+        Socket(::SOCKET socket);
         Socket();
 
         [[maybe_unused]] SOCKET GetRawSocket() const;

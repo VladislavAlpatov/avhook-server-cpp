@@ -26,11 +26,11 @@ namespace Web::Packet
     {
         auto db = sql::Connection::Get();
 
-        if (db->Query(fmt::format("SELECT `id` FROM `avhook-configs` WHERE `owner_id` = {} AND `id` = {}", clientHandle.m_iUserId,
+        if (db->Query(fmt::format("SELECT `id` FROM `configs` WHERE `owner_id` = {} AND `id` = {}", clientHandle.m_iUserId,
                                   m_iConfigId)).empty())
             throw Exception::ConfigNotFound();
 
-		db->Query(fmt::format("UPDATE `avhook-configs` SET `data` = '{}' WHERE `id` = {}", m_jsonConfig.dump(),
+		db->Query(fmt::format("UPDATE `configs` SET `data` = '{}' WHERE `id` = {}", m_jsonConfig.dump(),
 				m_iConfigId));
 
         return {};

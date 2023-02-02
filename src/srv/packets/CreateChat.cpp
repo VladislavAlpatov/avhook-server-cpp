@@ -47,10 +47,9 @@ namespace Web::Packet
         {
             const auto id = std::rand();
 
-            if (!pCon->Query(fmt::format("SELECT `id` FROM `chats` WHERE `id` = {}", id)).empty())
-                continue;
+            if (pCon->Query(fmt::format("SELECT `id` FROM `chats` WHERE `id` = {}", id)).empty())
+                return id;
 
-            return id;
         }
     }
 } // Packet

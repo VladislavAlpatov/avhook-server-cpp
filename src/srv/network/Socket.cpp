@@ -102,9 +102,9 @@ namespace Web::Network
         return connectionSocket;
     }
 
-    Socket::Socket(SOCKET socket)
+    Socket::Socket(::SOCKET socket)
     {
-        m_pRawSocket = std::shared_ptr<SOCKET>(new SOCKET, [](SOCKET* pSocket)
+        m_pRawSocket = std::shared_ptr<SOCKET>(new SOCKET, [](const SOCKET* pSocket)
         {
 #ifdef _WIN32
             closesocket(*pSocket);

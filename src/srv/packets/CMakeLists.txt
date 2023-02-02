@@ -10,4 +10,5 @@ target_sources(server PRIVATE
         SendChatMessage.cpp
         CreateChat.cpp
         DeleteChat.cpp
+        GetChatList.cpp
         )

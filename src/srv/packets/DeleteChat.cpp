@@ -2,6 +2,7 @@
 #include "DeleteChat.h"
 #include "../../lib/sqlite/connection.h"
 #include <fmt/format.h>
+
 #include "exceptions.h"
 namespace Web::Packet
 {

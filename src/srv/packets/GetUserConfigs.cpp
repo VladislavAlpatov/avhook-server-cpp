@@ -3,8 +3,10 @@
 //
 #include "GetUserConfigs.h"
 #include "../../lib/sqlite/connection.h"
-#include "fmt/format.h"
 #include "../ClientHandle/ClientHandle.h"
+
+
+#include <fmt/format.h>
 
 namespace Web::Packet
 {
@@ -12,15 +14,17 @@ namespace Web::Packet
     {
         std::vector<nlohmann::json> cfgs;
         nlohmann::json out;
-        for (const auto& cfgData : sql::Connection::Get()->Query(
-				fmt::format("SELECT `id`, `data` FROM `avhook-configs` WHERE `owner_id` = {}", clientHandle.m_iUserId)))
-        {
-            nlohmann::json tmp;
-            tmp["id"]   = std::stoi(cfgData[0]);
-            tmp["data"] = nlohmann::json::parse(cfgData[1]);
-            cfgs.push_back(tmp);
-        }
+        const auto cfgList = sql::Connection::Get()->Query(
+                fmt::format("SELECT `id`, `data` FROM `configs` WHERE `owner_id` = {}", clientHandle.m_iUserId));
 
+        for (const auto& cfgData : cfgList)
+        {
+            nlohmann::json cfgJson;
+            cfgJson["id"]   = std::stoi(cfgData[0]);
+            cfgJson["data"] = nlohmann::json::parse(cfgData[1]);
+            cfgs.push_back(cfgJson);
+        }
+        
         out["configs"] = cfgs;
 
         return out;
