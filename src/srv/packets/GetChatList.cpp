@@ -1,9 +1,11 @@
 #include "GetChatList.h"
 
 #include "../../lib/sqlite/connection.h"
+#include "../../lib/base64/base64.h"
 #include "../ClientHandle/ClientHandle.h"
 
 #include <fmt/format.h>
+
 
 namespace Web::Packet
 {
@@ -28,10 +30,16 @@ namespace Web::Packet
             for (const auto& chatData : chatInfo)
             {
                 nlohmann::json jsnChatInfo;
-                jsnChatInfo["id"]        = std::stoi(chatData[0]);
-                jsnChatInfo["name"]      = chatData[1];
-                jsnChatInfo["owner_id"]  = std::stoi(chatData[2]);
-                jsnChatInfo["public_id"] = (clientHandle.m_iUserId == std::stoi(chatData[2])) ? chatData[3] : "";
+
+                int iChatId   = std::stoi(chatData[0]);
+                int iOwnerId  = std::stoi(chatData[2]);
+                int iPublicId = std::stoi(chatData[3]);
+
+                jsnChatInfo["id"]          = iChatId;
+                jsnChatInfo["name"]        = chatData[1];
+                jsnChatInfo["owner_id"]    = iOwnerId;
+                jsnChatInfo["invite_link"] = (clientHandle.m_iUserId == iOwnerId) ? base64::convert(iPublicId) : "";
+
 
                 chatList.push_back(jsnChatInfo);
             }

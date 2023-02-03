@@ -1,0 +1,1 @@
+target_sources(server PRIVATE Chat.cpp DataBase.cpp User.cpp)

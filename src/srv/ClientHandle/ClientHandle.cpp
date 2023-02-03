@@ -4,7 +4,7 @@
 #include "ClientHandle.h"
 #include "../packets/exceptions.h"
 #include "../observers/OnPacket.h"
-
+#include "../network/exceptions.h"
 
 #include <fmt/format.h>
 
@@ -17,7 +17,11 @@ void Web::ClientHandle::Listen()
         {
             OnPacket(m_clientSocket.RecvPacket());
         }
-        catch (const Packet::Exception::BasePacketException& ex)
+        catch (const Network::Exception::RecvFailed& ex)
+        {
+            return;
+        }
+        catch (const std::exception ex)
         {
             nlohmann::json jsn;
 
@@ -30,9 +34,7 @@ void Web::ClientHandle::Listen()
 }
 
 Web::ClientHandle::~ClientHandle()
-{
-
-}
+= default;
 
 void Web::ClientHandle::OnPacket(const std::unique_ptr<Web::Packet::BasePacket>& pPacket)
 {

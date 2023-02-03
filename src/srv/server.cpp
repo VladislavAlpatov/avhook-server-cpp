@@ -54,15 +54,9 @@ namespace Web
 				clientHandle.AddObserver(new Observers::OnPacket());
 #endif
 
-                try
-                {
-                    clientHandle.Listen();
-                }
-                catch (...)
-                {
-                    NotifyObserver<Observers::OnUserDisconnected>();
-                    m_iConnectedCount--;
-                }
+                clientHandle.Listen();
+                NotifyObserver<Observers::OnUserDisconnected>();
+                m_iConnectedCount--;
 			}).detach();
 
         }

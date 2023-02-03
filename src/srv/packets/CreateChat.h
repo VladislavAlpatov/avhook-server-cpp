@@ -6,12 +6,10 @@
 #include "BasePacket.h"
 namespace Web::Packet
 {
-    class CreateChat : public BasePacket
+    class CreateChat final : public BasePacket
     {
     public:
         nlohmann::json ExecutePayload(ClientHandle &clientHandle) override;
-
-    public:
         explicit CreateChat(const nlohmann::json &data);
         std::string m_sChatName;
         static size_t CreateChatPublicId() ;

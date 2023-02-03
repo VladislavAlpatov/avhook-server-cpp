@@ -21,8 +21,6 @@ namespace sql
 
         sqlite3_stmt* pSqliteStatement = nullptr;
 
-        std::lock_guard lock(m_lock);
-        
         sqlite3_prepare_v2(m_pDataBase, str.c_str(), str.size(), &pSqliteStatement, nullptr);
 
         if (!pSqliteStatement)
@@ -51,15 +49,6 @@ namespace sql
     {
         if (m_pDataBase)
             sqlite3_close(m_pDataBase);
-    }
-
-    Connection *Connection::Get()
-    {
-        static std::unique_ptr<Connection> pConn;
-        if (!pConn)
-            pConn = std::unique_ptr<Connection>(new Connection("db.db"));
-
-        return pConn.get();
     }
 
 } // sqlite3

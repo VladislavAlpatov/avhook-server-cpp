@@ -3,18 +3,18 @@
 //
 #include "PacketFactory.h"
 
-#include "packets/SetUserName.h"
-#include "packets/Auth.h"
-#include "packets/OnlineUsersICount.h"
-#include "packets/GetUserInfo.h"
-#include "packets/SetUserStatus.h"
-#include "packets/UpdateUserConfig.h"
-#include "packets/GetUserConfigs.h"
-#include "packets/SendChatMessage.h"
-#include "exceptions.h"
-#include "decorators/RegisteredOnly.h"
-#include "packets/CreateChat.h"
-#include "packets/DeleteChat.h"
+#include "../packets/SetUserName.h"
+#include "../packets/Auth.h"
+#include "../packets/OnlineUsersICount.h"
+#include "../packets/GetUserInfo.h"
+#include "../packets/SetUserStatus.h"
+#include "../packets/UpdateUserConfig.h"
+#include "../packets/GetUserConfigs.h"
+#include "../packets/SendChatMessage.h"
+#include "../exceptions.h"
+#include "../decorators/RegisteredOnly.h"
+#include "../packets/CreateChat.h"
+#include "../packets/DeleteChat.h"
 
 
 // Purpose: Define packet unique ids for factory

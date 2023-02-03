@@ -1,7 +1,7 @@
 #include "Socket.h"
 #include "exceptions.h"
 
-#include "../PacketFactory.h"
+#include "../Factories/PacketFactory.h"
 #include "../packets/exceptions.h"
 
 #if defined(_WIN32)
