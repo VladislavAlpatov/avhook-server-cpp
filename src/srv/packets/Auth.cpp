@@ -7,6 +7,7 @@
 #include "fmt/format.h"
 #include "exceptions.h"
 #include "../ClientHandle/ClientHandle.h"
+#include "../DataBaseAPI/DataBase.h"
 
 
 namespace Web::Packet
@@ -34,7 +35,7 @@ namespace Web::Packet
     nlohmann::json Auth::ExecutePayload(ClientHandle &clientHandle)
     {
 
-        auto pDataBase = sql::Connection::Get();
+        auto pDataBase = DBAPI::DataBase::Get();
 
         auto res = pDataBase->Query(
 				fmt::format(R"(SELECT `id` FROM `users` WHERE `password` = "{}" AND `email` = "{}")",
@@ -48,7 +49,7 @@ namespace Web::Packet
         clientHandle.m_iUserId = iUserId;
 
 		nlohmann::json out;
-		out["user_id"] = iUserId;
+		 out["user_id"] = iUserId;
 
 		return out;
     }

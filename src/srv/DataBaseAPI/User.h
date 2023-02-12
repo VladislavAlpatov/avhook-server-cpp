@@ -4,15 +4,15 @@
 
 #pragma once
 #include <string>
+#include "Object.h"
 
 namespace DBAPI
 {
-    class User
+    class User final : public Object
     {
         friend class DataBase;
     public:
         User() = default;
-        int GetID() const {return m_iID;};
         std::string GetName()     const;
         std::string GetStatus()   const;
         int         GetType()     const;
@@ -23,8 +23,8 @@ namespace DBAPI
         void SetStatus(const std::string& sStatus);
         void SetType(int iType);
         void SetEmail(const std::string& sEmail);
+        bool IsUserNameAcceptable(const std::string& name) const;
     private:
-        int m_iID = 0;
         User(int iUserId);
     };
 

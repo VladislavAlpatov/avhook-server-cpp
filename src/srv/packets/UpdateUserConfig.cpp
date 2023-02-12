@@ -6,6 +6,7 @@
 #include "../../lib/sqlite/connection.h"
 #include "../ClientHandle/ClientHandle.h"
 #include "fmt/format.h"
+#include "../DataBaseAPI/DataBase.h"
 
 namespace Web::Packet
 {
@@ -24,14 +25,6 @@ namespace Web::Packet
 
     nlohmann::json UpdateUserConfig::ExecutePayload(ClientHandle &clientHandle)
     {
-        auto db = sql::Connection::Get();
-
-        if (db->Query(fmt::format("SELECT `id` FROM `configs` WHERE `owner_id` = {} AND `id` = {}", clientHandle.m_iUserId,
-                                  m_iConfigId)).empty())
-            throw Exception::ConfigNotFound();
-
-		db->Query(fmt::format("UPDATE `configs` SET `data` = '{}' WHERE `id` = {}", m_jsonConfig.dump(),
-				m_iConfigId));
 
         return {};
     }

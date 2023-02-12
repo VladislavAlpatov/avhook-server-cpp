@@ -2,10 +2,10 @@
 // Created by nullifiedvlad on 19.12.2022.
 //
 #include "SetUserStatus.h"
-#include "../../lib/sqlite/connection.h"
 #include "../ClientHandle/ClientHandle.h"
 #include "exceptions.h"
-#include <fmt/format.h>
+#include "../DataBaseAPI/DataBase.h"
+#include "../DataBaseAPI/User.h"
 
 
 namespace Web::Packet
@@ -24,9 +24,9 @@ namespace Web::Packet
 
     nlohmann::json SetUserStatus::ExecutePayload(ClientHandle &clientHandle)
     {
-		sql::Connection::Get()->Query(
-				fmt::format("UPDATE `users` SET `status`= \"{}\" WHERE `id` = {}",
-                            m_sNewUserStatus, clientHandle.m_iUserId));
+        auto user = DBAPI::DataBase::Get()->GetUserById(clientHandle.m_iUserId);
+        user.SetStatus(m_sNewUserStatus);
+
         return {};
     }
 

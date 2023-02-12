@@ -3,14 +3,22 @@
 //
 
 #pragma once
+#include <string>
+#include <vector>
+#include "Object.h"
 
-namespace DBAP
+
+namespace DBAPI
 {
-
-    class Chat
+    class User;
+    class Chat final : public Object
     {
     public:
-
+        void SendMessage(const User& user, std::string text);
+        std::vector<User> GetMembers() const;
+        void AddUser(const User& user);
+        void RemoveUser(const User& user);
+        bool IsUserInChat(const User& user) const;
     };
 
 } // DBAP

@@ -5,6 +5,7 @@
 #include <fmt/format.h>
 #include "../../lib/base64/base64.h"
 #include "../ClientHandle/ClientHandle.h"
+#include "../DataBaseAPI/DataBase.h"
 #include <random>
 
 namespace Web::Packet
@@ -23,31 +24,19 @@ namespace Web::Packet
 
     nlohmann::json CreateChat::ExecutePayload(ClientHandle &clientHandle)
     {
-        auto pCon = sql::Connection::Get();
-
-        boost::replace_all(m_sChatName, "'", "''");
-        boost::replace_all(m_sChatName, "\"", "\"\"");
-        const auto iPublicId = CreateChatPublicId();
-
-        pCon->Query(fmt::format("INSERT INTO `chats` (`owner_id`, `name`, `public_id`) VALUES({},'{}',{})",
-                                clientHandle.m_iUserId, m_sChatName, iPublicId));
-
-        auto iChatId = pCon->Query(fmt::format("SELECT `id` FROM `chats` WHERE `public_id` = {}", iPublicId))[0][0];
-        pCon->Query(fmt::format("INSERT INTO `chats-members` (`chat_id`, `user_id`) VALUES({},{})", iChatId,clientHandle.m_iUserId));
-
         return {};
     }
 
     size_t CreateChat::CreateChatPublicId()
     {
         std::srand(time(NULL));
-        auto pCon = sql::Connection::Get();
+        auto pDataBase = DBAPI::DataBase::Get();
 
         while (true)
         {
             const auto id = std::rand();
 
-            if (pCon->Query(fmt::format("SELECT `id` FROM `chats` WHERE `id` = {}", id)).empty())
+            if (!pDataBase->IsChatExist(id))
                 return id;
 
         }

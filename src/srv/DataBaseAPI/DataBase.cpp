@@ -6,6 +6,8 @@
 #include <memory>
 #include <fmt/format.h>
 #include "exceptions.h"
+#include "User.h"
+#include "Chat.h"
 
 namespace DBAPI
 {
@@ -32,5 +34,15 @@ namespace DBAPI
     bool DataBase::IsUserExist(int iUserId)
     {
         return !Query(fmt::format("SELECT `id FROM `users` WHERE `id` = {}", iUserId)).empty();
+    }
+
+    bool DataBase::IsChatExist(int iChatId)
+    {
+        return !Query(fmt::format("SELECT `id FROM `chats` WHERE `id` = {}", iChatId)).empty();;
+    }
+
+    Chat DataBase::GetChatById(int iChatId)
+    {
+        return Chat();
     }
 } // DBAP

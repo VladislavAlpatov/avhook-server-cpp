@@ -3,7 +3,8 @@
 //
 #include "SetUserName.h"
 #include <fmt/format.h>
-#include "../../lib/sqlite/connection.h"
+#include "../DataBaseAPI/DataBase.h"
+
 #include "exceptions.h"
 #include "../ClientHandle/ClientHandle.h"
 
@@ -27,11 +28,8 @@ namespace Web::Packet
         if (!IsUsernameValid(m_sNewUserName))
             throw Exception::InValidUserName();
 
-		sql::Connection::Get()->Query(
-				fmt::format("UPDATE `users` SET `name`= \"{}\" WHERE `id` = {}"
-                            , m_sNewUserName, clientHandle.m_iUserId));
 
-        return "";
+        return {};
     }
 
     bool SetUserName::IsUsernameValid(const std::string &name)

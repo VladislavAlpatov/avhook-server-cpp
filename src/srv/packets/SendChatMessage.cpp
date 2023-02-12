@@ -4,10 +4,11 @@
 
 #include "SendChatMessage.h"
 #include "exceptions.h"
-#include "../../lib/sqlite/connection.h"
-#include <fmt/format.h>
-#include <boost/algorithm/string/replace.hpp>
 #include "../ClientHandle/ClientHandle.h"
+#include "../DataBaseAPI/DataBase.h"
+#include "../DataBaseAPI/Chat.h"
+#include "../DataBaseAPI/User.h"
+
 
 namespace Web::Packet
 {
@@ -27,22 +28,12 @@ namespace Web::Packet
 
     nlohmann::json SendChatMessage::ExecutePayload(ClientHandle &clientHandle)
     {
-        auto  pDataBase = sql::Connection::Get();
+        const auto pDataBase = DBAPI::DataBase::Get();
 
-        if(pDataBase->Query(fmt::format("SELECT `id` FROM `chats` WHERE `id` = {}", m_iChatId)).empty())
-            throw Exception::ChatDoesNotExist();
+        auto chat  = pDataBase->GetChatById(m_iChatId);
+        const auto user  = pDataBase->GetUserById(clientHandle.m_iUserId);
 
-
-        if (pDataBase->Query(fmt::format("SELECT `user_id` FROM `chats-members` WHERE `user_id` = {} AND `chat_id` = {}",
-                                         clientHandle.m_iUserId, m_iChatId)).empty())
-            throw Exception::ChatDoesNotExist();
-
-        // Fix string for SQLite if it contains ' or "
-        boost::replace_all(m_sText, "'", "''");
-        boost::replace_all(m_sText, "\"", "\"\"");
-
-        pDataBase->Query(fmt::format("INSERT INTO `chat-messages` (`owner_id`, `chat_id`, `text`) VALUES({},{},'{}')", clientHandle.m_iUserId, m_iChatId, m_sText));
-
+        chat.SendMessage(user, m_sText);
         return {};
     }
 } // Packets
