@@ -5,6 +5,9 @@
 #pragma once
 
 #include "../../lib/sqlite/connection.h"
+
+
+
 namespace DBAPI
 {
     class User;
@@ -18,6 +21,7 @@ namespace DBAPI
         bool        IsUserExist(int iUserId);
         bool        IsChatExist(int iChatId);
         Chat        GetChatById(int iChatId) ;
+        User        GetUserByEmail(std::string sEmail);
 
         void AddNewUser(const std::string& sName, const std::string& sStatus,const std::string& sPassword, const std::string sEmail, int iType);
     private:

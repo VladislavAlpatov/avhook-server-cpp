@@ -8,6 +8,8 @@
 #include "exceptions.h"
 #include "User.h"
 #include "Chat.h"
+#include <boost/algorithm/string.hpp>
+
 
 namespace DBAPI
 {
@@ -38,11 +40,25 @@ namespace DBAPI
 
     bool DataBase::IsChatExist(int iChatId)
     {
-        return !Query(fmt::format("SELECT `id FROM `chats` WHERE `id` = {}", iChatId)).empty();;
+        return !Query(fmt::format("SELECT `id FROM `chats` WHERE `id` = {}", iChatId)).empty();
     }
 
     Chat DataBase::GetChatById(int iChatId)
     {
-        return Chat(0);
+        return {0};
+    }
+
+    User DataBase::GetUserByEmail(std::string sEmail)
+    {
+        boost::replace_all(sEmail, "'", "''");
+        boost::replace_all(sEmail, "\"", "\"\"");
+
+        const auto data = Query(fmt::format("SELECT `id` FROM `users` WHERE `email` = '{}'", sEmail));
+
+        if (data.empty())
+            throw Exception::UserNotFound();
+
+
+        return {std::stoi(data[0][0])};
     }
 } // DBAP

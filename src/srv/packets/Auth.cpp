@@ -2,12 +2,16 @@
 // Created by nullifiedvlad on 08.12.2022.
 //
 #include "Auth.h"
+
 #include "../../lib/sqlite/connection.h"
 #include "../../lib/sha256/sha256.h"
+
 #include "fmt/format.h"
 #include "exceptions.h"
 #include "../ClientHandle/ClientHandle.h"
+
 #include "../DataBaseAPI/DataBase.h"
+#include "../DataBaseAPI/User.h"
 
 
 namespace Web::Packet
@@ -37,19 +41,16 @@ namespace Web::Packet
 
         auto pDataBase = DBAPI::DataBase::Get();
 
-        auto res = pDataBase->Query(
-				fmt::format(R"(SELECT `id` FROM `users` WHERE `password` = "{}" AND `email` = "{}")",
-						m_sUserPasswordHash, m_sUserEmail));
+        const auto user = pDataBase->GetUserByEmail(m_sUserEmail);
 
-        if (res.empty())
+        if (user.GetPassword() != m_sUserPasswordHash)
             throw Exception::AuthFailedWrongPassword();
 
-        int iUserId = std::stoi(res[0][0]);
 
-        clientHandle.m_iUserId = iUserId;
+        clientHandle.m_iUserId = user.GetID();
 
 		nlohmann::json out;
-		 out["user_id"] = iUserId;
+        out["user_id"] = user.GetID();
 
 		return out;
     }

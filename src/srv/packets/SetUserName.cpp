@@ -7,6 +7,9 @@
 
 #include "exceptions.h"
 #include "../ClientHandle/ClientHandle.h"
+#include "../DataBaseAPI/User.h"
+
+
 
 namespace Web::Packet
 {
@@ -27,6 +30,9 @@ namespace Web::Packet
     {
         if (!IsUsernameValid(m_sNewUserName))
             throw Exception::InValidUserName();
+
+        auto user = DBAPI::DataBase::Get()->GetUserById(clientHandle.m_iUserId);
+        user.SetName(m_sNewUserName);
 
 
         return {};

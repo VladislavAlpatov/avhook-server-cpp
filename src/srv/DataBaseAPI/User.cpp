@@ -78,4 +78,22 @@ namespace DBAPI
 
         return chats;
     }
+
+    void User::SetName(std::string sName)
+    {
+        auto pDataBase = DataBase::Get();
+
+        boost::replace_all(sName, "'", "''");
+        boost::replace_all(sName, "\"", "\"\"");
+        pDataBase->Query(fmt::format("UPDATE `users` SET `name` = '{}' WHERE `id` = {}",sName, m_iID));
+
+
+    }
+
+    void User::SetType(int iType)
+    {
+        auto pDataBase = DataBase::Get();
+        pDataBase->Query(fmt::format("UPDATE `users` SET `type` = {} WHERE `id` = {}", iType, m_iID));
+
+    }
 } // DBAPI

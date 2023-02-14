@@ -23,7 +23,7 @@ namespace DBAPI
         std::string GetPassword() const;
         std::string GetEmail()    const;
 
-        void SetName(const std::string& sName);
+        void SetName(std::string sName);
         void SetStatus(std::string sStatus);
         void SetType(int iType);
         void SetEmail(const std::string& sEmail);
