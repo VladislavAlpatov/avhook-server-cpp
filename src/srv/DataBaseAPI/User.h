@@ -5,12 +5,16 @@
 #pragma once
 #include <string>
 #include "Object.h"
+#include <vector>
+
 
 namespace DBAPI
 {
+    class Chat;
     class User final : public Object
     {
         friend class DataBase;
+        friend class Chat;
     public:
         User() = default;
         std::string GetName()     const;
@@ -20,10 +24,11 @@ namespace DBAPI
         std::string GetEmail()    const;
 
         void SetName(const std::string& sName);
-        void SetStatus(const std::string& sStatus);
+        void SetStatus(std::string sStatus);
         void SetType(int iType);
         void SetEmail(const std::string& sEmail);
         bool IsUserNameAcceptable(const std::string& name) const;
+        std::vector<Chat> GetChatList() const;
     private:
         User(int iUserId);
     };

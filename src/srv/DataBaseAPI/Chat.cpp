@@ -48,4 +48,11 @@ namespace DBAPI
 
         return out;
     }
+
+    std::string Chat::GetName() const
+    {
+        auto pDataBase = DataBase::Get();
+
+        return pDataBase->Query(fmt::format("SELECT `name` FROM `chats` WHERE `id` = {}", m_iID))[0][0];
+    }
 } // DBAP

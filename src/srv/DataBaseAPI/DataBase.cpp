@@ -43,6 +43,6 @@ namespace DBAPI
 
     Chat DataBase::GetChatById(int iChatId)
     {
-        return Chat();
+        return Chat(0);
     }
 } // DBAP

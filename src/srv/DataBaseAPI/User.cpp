@@ -5,6 +5,8 @@
 #include "User.h"
 #include "DataBase.h"
 #include <fmt/format.h>
+#include <boost/algorithm/string.hpp>
+#include "Chat.h"
 
 namespace DBAPI
 {
@@ -50,5 +52,30 @@ namespace DBAPI
     {
         auto pDataBase = DataBase::Get();
         return pDataBase->Query(fmt::format("SELECT `email` FROM `users` WHERE `id` = {}", m_iID))[0][0];
+    }
+
+    void User::SetStatus(std::string sStatus)
+    {
+        auto pDataBase = DataBase::Get();
+
+        boost::replace_all(sStatus, "'", "''");
+        boost::replace_all(sStatus, "\"", "\"\"");
+        pDataBase->Query(fmt::format("UPDATE `users` SET `status` = '{}' WHERE `id` = {}",sStatus, m_iID ));
+
+    }
+
+    std::vector<Chat> User::GetChatList() const
+    {
+        auto pDataBase = DataBase::Get();
+        std::vector<Chat> chats;
+
+        const auto chatIds = pDataBase->Query(fmt::format("SELECT `chat_id` FROM `chats-members` WHERE `user_id` = {}", m_iID));
+
+        chats.reserve(chatIds.size());
+
+        for (const auto& data : chatIds)
+            chats.push_back({std::stoi(data[0])});
+
+        return chats;
     }
 } // DBAPI
