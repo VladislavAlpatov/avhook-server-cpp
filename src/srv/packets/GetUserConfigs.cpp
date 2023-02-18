@@ -18,5 +18,7 @@ namespace Web::Packet
     }
 
     GetUserConfigs::GetUserConfigs(const nlohmann::json &data) : BasePacket(data)
-    {}
+    {
+        
+    }
 } // packet

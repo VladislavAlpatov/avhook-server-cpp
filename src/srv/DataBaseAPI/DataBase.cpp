@@ -35,12 +35,12 @@ namespace DBAPI
 
     bool DataBase::IsUserExist(int iUserId)
     {
-        return !Query(fmt::format("SELECT `id FROM `users` WHERE `id` = {}", iUserId)).empty();
+        return !Query(fmt::format("SELECT `id` FROM `users` WHERE `id` = {}", iUserId)).empty();
     }
 
     bool DataBase::IsChatExist(int iChatId)
     {
-        return !Query(fmt::format("SELECT `id FROM `chats` WHERE `id` = {}", iChatId)).empty();
+        return !Query(fmt::format("SELECT `id` FROM `chats` WHERE `id` = {}", iChatId)).empty();
     }
 
     Chat DataBase::GetChatById(int iChatId)
