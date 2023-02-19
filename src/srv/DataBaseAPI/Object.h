@@ -11,6 +11,6 @@ namespace DBAPI
     public:
         int GetID() const {return  m_iID;}
     protected:
-        int m_iID;
+        int m_iID = -1;
     };
 }
