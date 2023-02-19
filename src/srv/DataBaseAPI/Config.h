@@ -15,7 +15,7 @@ namespace DBAPI
     public:
         Config(int iId);
         void SetData(const nlohmann::json& data);
-        void GetData() const;
+        nlohmann::json GetData() const;
 
     };
 

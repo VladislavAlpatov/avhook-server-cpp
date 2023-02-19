@@ -26,10 +26,11 @@ namespace DBAPI
 
         pDataBase->Query(fmt::format("UPDATE `configs` SET `data` '{}' WHERE `id` = {}", jsnDump, m_iID));
     }
-    void Config::GetData() const
+    nlohmann::json Config::GetData() const
     {
         auto pDataBase = DBAPI::DataBase::Get();
-        int x;
-        pDataBase->Query(fmt::format("SELECT `data` FROM `configs` WHERE `id` = {}", m_iID));
+        const auto data = pDataBase->Query(fmt::format("SELECT `data` FROM `configs` WHERE `id` = {}", m_iID));
+
+        return nlohmann::json::parse(data[0][0]);
     }
 } // DBAPI

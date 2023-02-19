@@ -12,6 +12,7 @@
 namespace DBAPI
 {
     class Chat;
+    class Config;
     class User final : public Object
     {
         friend class DataBase;
@@ -23,6 +24,7 @@ namespace DBAPI
         int         GetType()     const;
         std::string GetPassword() const;
         std::string GetEmail()    const;
+        std::vector<Config>      GetConfigs()   const;
         bool IsValid() const {return m_iID != INVALID_USER_ID;};
         void SetName(std::string sName);
         void SetStatus(std::string sStatus);

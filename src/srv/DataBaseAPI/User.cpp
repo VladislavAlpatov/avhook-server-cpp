@@ -7,6 +7,8 @@
 #include <fmt/format.h>
 #include <boost/algorithm/string.hpp>
 #include "Chat.h"
+#include "Config.h"
+
 
 namespace DBAPI
 {
@@ -105,5 +107,20 @@ namespace DBAPI
         boost::replace_all(sEmail, "\"", "\"\"");
 
         pDataBase->Query(fmt::format("UPDATE `users` SET `email` = '{}' WHERE `id` = {}", sEmail, m_iID));
+    }
+
+    std::vector<Config> User::GetConfigs() const
+    {
+        auto pDataBase = DataBase::Get();
+
+        std::vector<Config> cfgs;
+        const auto data = pDataBase->Query(fmt::format("SELECT `id` FROM `configs` WHERE `owner_id` = {}", m_iID));
+        cfgs.reserve(data.size());
+
+        for (const auto& cfg : data)
+            cfgs.emplace_back(std::stoi(cfg[0]));
+
+        return cfgs;
+
     }
 } // DBAPI

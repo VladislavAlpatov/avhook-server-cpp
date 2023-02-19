@@ -26,6 +26,6 @@ namespace Web::Packet
         outJson["email"]       = clientHandle.m_dbUser.GetEmail();
 
 
-        return {};
+        return outJson;
     }
 } // packet
