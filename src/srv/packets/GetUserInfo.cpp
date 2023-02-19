@@ -16,16 +16,14 @@ namespace Web::Packet
 
     nlohmann::json GetUserInfo::ExecutePayload(ClientHandle &clientHandle)
     {
-
-        auto user = DBAPI::DataBase::Get()->GetUserById(clientHandle.m_iUserId);
-
-
         nlohmann::json outJson;
-        outJson["id"]          = clientHandle.m_iUserId;
-        outJson["name"]        = user.GetName();
-        outJson["status"]      = user.GetStatus();
-        outJson["type"]        = user.GetType();
-        outJson["email"]       = user.GetEmail();
+
+
+        outJson["id"]          = clientHandle.m_dbUser.GetID();
+        outJson["name"]        = clientHandle.m_dbUser.GetName();
+        outJson["status"]      = clientHandle.m_dbUser.GetStatus();
+        outJson["type"]        = clientHandle.m_dbUser.GetType();
+        outJson["email"]       = clientHandle.m_dbUser.GetEmail();
 
 
         return {};

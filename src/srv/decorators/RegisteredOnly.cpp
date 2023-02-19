@@ -10,7 +10,7 @@ namespace Web::Packet::Decorator
 
     nlohmann::json RegisteredOnly::ExecutePayload(ClientHandle& clientHandle)
     {
-        if (clientHandle.m_iUserId == INVALID_USER_ID)
+        if (!clientHandle.m_dbUser.IsValid())
             throw Exception::UserNotRegistered();
 
         return  m_pDecoratedPacket->ExecutePayload(clientHandle);

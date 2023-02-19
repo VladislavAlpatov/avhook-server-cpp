@@ -96,4 +96,14 @@ namespace DBAPI
         pDataBase->Query(fmt::format("UPDATE `users` SET `type` = {} WHERE `id` = {}", iType, m_iID));
 
     }
+
+    void User::SetEmail(std::string sEmail)
+    {
+        auto pDataBase = DataBase::Get();
+
+        boost::replace_all(sEmail, "'", "''");
+        boost::replace_all(sEmail, "\"", "\"\"");
+
+        pDataBase->Query(fmt::format("UPDATE `users` SET `email` = '{}' WHERE `id` = {}", sEmail, m_iID));
+    }
 } // DBAPI

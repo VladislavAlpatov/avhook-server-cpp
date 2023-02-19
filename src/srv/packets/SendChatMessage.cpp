@@ -31,9 +31,8 @@ namespace Web::Packet
         const auto pDataBase = DBAPI::DataBase::Get();
 
         auto chat  = pDataBase->GetChatById(m_iChatId);
-        const auto user  = pDataBase->GetUserById(clientHandle.m_iUserId);
 
-        chat.SendMessage(user, m_sText);
+        chat.SendMessage(clientHandle.m_dbUser, m_sText);
         return {};
     }
 } // Packets

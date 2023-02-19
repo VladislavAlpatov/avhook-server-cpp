@@ -2,7 +2,6 @@
 // Created by Vlad on 27.12.2022.
 //
 #include "ClientHandle.h"
-#include "../packets/exceptions.h"
 #include "../observers/OnPacket.h"
 #include "../network/exceptions.h"
 
@@ -33,8 +32,7 @@ void Web::ClientHandle::Listen()
     }
 }
 
-Web::ClientHandle::~ClientHandle()
-= default;
+Web::ClientHandle::~ClientHandle() = default;
 
 void Web::ClientHandle::OnPacket(const std::unique_ptr<Web::Packet::BasePacket>& pPacket)
 {

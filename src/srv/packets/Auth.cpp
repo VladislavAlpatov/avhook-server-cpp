@@ -47,7 +47,7 @@ namespace Web::Packet
             throw Exception::AuthFailedWrongPassword();
 
 
-        clientHandle.m_iUserId = user.GetID();
+        clientHandle.m_dbUser = user;
 
 		nlohmann::json out;
         out["user_id"] = user.GetID();

@@ -3,11 +3,11 @@
 //
 #pragma once
 #include "../ObservableObject.h"
-#include <memory>
 #include "../packets/BasePacket.h"
 #include "../network/Socket.h"
+#include "../DataBaseAPI/User.h"
 
-#define INVALID_USER_ID (-1)
+#include <memory>
 
 namespace Web
 {
@@ -19,7 +19,7 @@ namespace Web
 		void Listen();
 		~ClientHandle() override;
         Network::Socket m_clientSocket;
-		int m_iUserId = -1;
+		DBAPI::User m_dbUser;
 		void OnPacket(const std::unique_ptr<Web::Packet::BasePacket>& pPacket);
 	};
 }

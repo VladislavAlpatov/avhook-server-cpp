@@ -13,13 +13,15 @@ namespace Observers
 
 		const auto pClientContext = dynamic_cast<const Web::ClientHandle*>(pContext);
 		if (!pClientContext) return;
-        if (pClientContext->m_iUserId == INVALID_USER_ID)
+
+
+        if (!pClientContext->m_dbUser.IsValid())
         {
             printf("[LOG] Accepted packet from unknow user\n");
             return;
         }
-
-		const auto user = DBAPI::DataBase::Get()->GetUserById(pClientContext->m_iUserId);
-		printf("[LOG] Accepted packet from (%s#%d)\n", user.GetName().c_str(), pClientContext->m_iUserId);
+		printf("[LOG] Accepted packet from (%s#%d)\n",
+               pClientContext->m_dbUser.GetName().c_str(),
+               pClientContext->m_dbUser.GetID());
 	}
 } // Observers

@@ -14,12 +14,12 @@ namespace Observers
 	void OnUserAuth::HandleEvent(const ObservableObject *pContext)
 	{
 		const auto pClientContext = dynamic_cast<const Web::ClientHandle*>(pContext);
+
 		if (!pClientContext)
 			return;
 
-		const auto user = DBAPI::DataBase::Get()->GetUserById(pClientContext->m_iUserId);
-
-		printf("[LOG] A new user (%s#%d) has been authorized\n", user.GetName().c_str(), pClientContext->m_iUserId);
+		printf("[LOG] A new user (%s#%d) has been authorized\n", pClientContext->m_dbUser.GetName().c_str(),
+               pClientContext->m_dbUser.GetID());
 
 	}
 } // Observers

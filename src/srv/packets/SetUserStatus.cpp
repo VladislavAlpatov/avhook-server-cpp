@@ -24,9 +24,7 @@ namespace Web::Packet
 
     nlohmann::json SetUserStatus::ExecutePayload(ClientHandle &clientHandle)
     {
-        auto user = DBAPI::DataBase::Get()->GetUserById(clientHandle.m_iUserId);
-        user.SetStatus(m_sNewUserStatus);
-
+        clientHandle.m_dbUser.SetStatus(m_sNewUserStatus);
         return {};
     }
 

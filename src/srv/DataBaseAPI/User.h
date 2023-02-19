@@ -6,6 +6,7 @@
 #include <string>
 #include "Object.h"
 #include <vector>
+#define INVALID_USER_ID (-1)
 
 
 namespace DBAPI
@@ -22,11 +23,11 @@ namespace DBAPI
         int         GetType()     const;
         std::string GetPassword() const;
         std::string GetEmail()    const;
-
+        bool IsValid() const {return m_iID != INVALID_USER_ID;};
         void SetName(std::string sName);
         void SetStatus(std::string sStatus);
         void SetType(int iType);
-        void SetEmail(const std::string& sEmail);
+        void SetEmail(std::string sEmail);
         bool IsUserNameAcceptable(const std::string& name) const;
         std::vector<Chat> GetChatList() const;
     private:

@@ -31,8 +31,8 @@ namespace Web::Packet
         if (!IsUsernameValid(m_sNewUserName))
             throw Exception::InValidUserName();
 
-        auto user = DBAPI::DataBase::Get()->GetUserById(clientHandle.m_iUserId);
-        user.SetName(m_sNewUserName);
+
+        clientHandle.m_dbUser.SetName(m_sNewUserName);
 
 
         return {};
