@@ -17,7 +17,10 @@ namespace Web::Packet
             cfgInfo["data"] = cfg.GetData();
             cfgInfo["id"]  = cfg.GetID();
 
-            jsnLst.push_back(cfgInfo);
+            jsnLst.push_back({
+                {"data", cfg.GetData()},
+                {"id", cfg.GetID()},
+                             });
         }
 
         nlohmann::json out;
