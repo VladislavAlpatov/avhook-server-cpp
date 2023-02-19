@@ -3,8 +3,9 @@
 //
 #pragma once
 #include "../packets/BasePacket.h"
-#include <memory>
 #include "../ClientHandle/ClientHandle.h"
+
+#include <memory>
 namespace Web::Packet::Decorator
 {
     class BaseDecorator : public BasePacket

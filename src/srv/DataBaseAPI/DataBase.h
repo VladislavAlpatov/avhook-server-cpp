@@ -7,7 +7,6 @@
 #include "../../lib/sqlite/connection.h"
 
 
-
 namespace DBAPI
 {
     class User;

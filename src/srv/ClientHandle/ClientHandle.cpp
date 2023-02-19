@@ -21,7 +21,7 @@ void Web::ClientHandle::Listen()
         {
             return;
         }
-        catch (const std::exception ex)
+        catch (const std::exception& ex)
         {
             nlohmann::json jsn;
 

@@ -2,11 +2,10 @@ cmake_minimum_required(VERSION 3.20)
 
 set(CMAKE_CXX_STANDARD 23)
 
+set(CMAKE_CXX_COMPILER clang++)
+set(CMAKE_C_COMPILER clang)
+
 if (NOT WIN32)
-
-    set(CMAKE_CXX_COMPILER clang++)
-    set(CMAKE_C_COMPILER clang)
-
     set(CMAKE_TOOLCHAIN_FILE ~/vcpkg/scripts/buildsystems/vcpkg.cmake)
     set(VCPKG_TARGET_TRIPLET x64-linux)
 
@@ -16,7 +15,7 @@ else()
     set(CMAKE_C_COMPILER clang)
 
     set(CMAKE_TOOLCHAIN_FILE C:/vcpkg/scripts/buildsystems/vcpkg.cmake)
-    set(VCPKG_TARGET_TRIPLET x64-mingw-static)
+    set(VCPKG_TARGET_TRIPLET x64-windows-static)
     add_link_options(-pthread )
 endif()
 if (CMAKE_BUILD_TYPE MATCHES Debug)
@@ -48,11 +47,5 @@ target_link_libraries(server PRIVATE nlohmann_json::nlohmann_json)
 find_package(fmt CONFIG REQUIRED)
 target_link_libraries(server PRIVATE fmt::fmt-header-only)
 
-find_package(ZLIB REQUIRED)
-target_link_libraries(server PRIVATE ZLIB::ZLIB)
-
 find_package(Boost REQUIRED)
 target_link_libraries(server PRIVATE ${Boost_LIBRARIES})
-
-find_package(OpenSSL REQUIRED)
-target_link_libraries(server PRIVATE OpenSSL::SSL OpenSSL::Crypto)
