@@ -35,6 +35,12 @@ namespace Web::Network
         Socket Listen();
         std::unique_ptr<Packet::BasePacket> RecvPacket() const;
 
+        template<typename Type>
+        void SendStruct(const Type& strct) const
+        {
+            SendBytes((void*)&strct, sizeof(Type));
+        }
+
     private:
         std::shared_ptr<SOCKET> m_pRawSocket;
     };
