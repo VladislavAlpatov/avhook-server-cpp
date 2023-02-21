@@ -19,19 +19,19 @@ namespace DBAPI
         friend class Chat;
     public:
         User() = default;
-        std::string GetName()     const;
-        std::string GetStatus()   const;
-        int         GetType()     const;
-        std::string GetPassword() const;
-        std::string GetEmail()    const;
-        std::vector<Config>      GetConfigs()   const;
-        bool IsValid() const {return m_iID != INVALID_USER_ID;};
+        [[nodiscard]] std::string              GetName()                                           const;
+        [[nodiscard]] std::string              GetStatus()                                         const;
+        [[nodiscard]] int                      GetType()                                           const;
+        [[nodiscard]] std::string              GetPassword()                                       const;
+        [[nodiscard]] std::string              GetEmail()                                          const;
+        [[nodiscard]] std::vector<Config>      GetConfigs()                                        const;
+        [[nodiscard]] bool                     IsUserNameAcceptable(const std::string& name)       const;
+        [[nodiscard]] std::vector<Chat>        GetChatList()                                       const;
+        [[nodiscard]] bool                     IsValid() const {return m_iID != INVALID_USER_ID;};
         void SetName(std::string sName);
         void SetStatus(std::string sStatus);
         void SetType(int iType);
         void SetEmail(std::string sEmail);
-        bool IsUserNameAcceptable(const std::string& name) const;
-        std::vector<Chat> GetChatList() const;
     private:
         User(int iUserId);
     };

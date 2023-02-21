@@ -11,8 +11,6 @@
 
 int main()
 {
-
-    setbuf(stdout, 0);
 #if defined(_WIN32) and __has_include("winsock2.h")
     WSAData data;
     WSAStartup(MAKEWORD(2, 2), &data);
@@ -20,6 +18,8 @@ int main()
 	const auto pServer = Web::Server::Get();
 
 #ifdef _DEBUG
+    setbuf(stdout, 0);
+
 	pServer->AddObserver(new Observers::OnServerStartup());
     pServer->AddObserver(new Observers::OnUserDisconnected());
     pServer->AddObserver(new Observers::OnUserConnected());
