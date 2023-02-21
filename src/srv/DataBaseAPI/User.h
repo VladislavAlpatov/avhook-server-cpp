@@ -3,9 +3,13 @@
 //
 
 #pragma once
+
 #include <string>
-#include "Object.h"
 #include <vector>
+
+#include "Object.h"
+
+
 #define INVALID_USER_ID (-1)
 
 
@@ -28,10 +32,13 @@ namespace DBAPI
         [[nodiscard]] bool                     IsUserNameAcceptable(const std::string& name)       const;
         [[nodiscard]] std::vector<Chat>        GetChatList()                                       const;
         [[nodiscard]] bool                     IsValid() const {return m_iID != INVALID_USER_ID;};
+
+
         void SetName(std::string sName);
         void SetStatus(std::string sStatus);
         void SetType(int iType);
         void SetEmail(std::string sEmail);
+
     private:
         User(int iUserId);
     };
