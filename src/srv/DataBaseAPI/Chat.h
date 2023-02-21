@@ -22,6 +22,8 @@ namespace DBAPI
         void RemoveUser(const User& user);
         bool IsUserInChat(const User& user) const;
         std::string GetName() const;
+        std::string GetInviteLink() const;
+
     private:
         Chat(int iId) {m_iID = iId;}
     };

@@ -6,6 +6,6 @@
 
 namespace base64
 {
-    std::string convert(size_t number);
+    std::string code(size_t number);
     size_t decode(const std::string& str);
 };

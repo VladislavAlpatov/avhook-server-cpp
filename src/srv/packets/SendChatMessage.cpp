@@ -5,9 +5,8 @@
 #include "SendChatMessage.h"
 #include "exceptions.h"
 #include "../ClientHandle/ClientHandle.h"
-#include "../DataBaseAPI/DataBase.h"
 #include "../DataBaseAPI/Chat.h"
-#include "../DataBaseAPI/User.h"
+#include <algorithm>
 
 
 namespace Web::Packet
@@ -28,11 +27,20 @@ namespace Web::Packet
 
     nlohmann::json SendChatMessage::ExecutePayload(ClientHandle &clientHandle)
     {
-        const auto pDataBase = DBAPI::DataBase::Get();
 
-        auto chat  = pDataBase->GetChatById(m_iChatId);
+        auto chats  = clientHandle.m_dbUser.GetChatList();
 
-        chat.SendMessage(clientHandle.m_dbUser, m_sText);
+        auto chat = std::find_if(chats.begin(), chats.end(),
+                                [this](const DBAPI::Chat& chat)
+                                {
+                                    return chat.GetID() == m_iChatId;
+                                } );
+
+        if (chat == chats.end())
+            throw Exception::ChatDoesNotExist();
+
+
+        chat->SendMessage(clientHandle.m_dbUser, m_sText);
         return {};
     }
 } // Packets

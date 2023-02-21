@@ -1,9 +1,8 @@
 #include "GetChatList.h"
-
-#include "../../lib/sqlite/connection.h"
-#include "../../lib/base64/base64.h"
 #include "../ClientHandle/ClientHandle.h"
-#include "../DataBaseAPI/DataBase.h"
+#include "../DataBaseAPI/Chat.h"
+
+#include <vector>
 
 
 namespace Web::Packet
@@ -16,6 +15,17 @@ namespace Web::Packet
 
     nlohmann::json GetChatList::ExecutePayload(ClientHandle &clientHandle)
     {
-        return {};
+        std::vector<nlohmann::json> jsnChats;
+        const auto chats = clientHandle.m_dbUser.GetChatList();
+        jsnChats.reserve(chats.size());
+
+        for (const auto& chat : chats)
+            jsnChats.push_back({
+                    {"name", chat.GetName()},
+                    {"id", chat.GetID()},
+                    {"invite", chat.GetInviteLink()}
+            });
+
+        return {{"chats", jsnChats}};
     }
 }

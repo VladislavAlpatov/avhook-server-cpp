@@ -7,6 +7,7 @@
 #include <fmt/format.h>
 #include "exceptions.h"
 #include <boost/algorithm/string.hpp>
+#include "../../lib/base64/base64.h"
 
 #include "User.h"
 
@@ -54,5 +55,13 @@ namespace DBAPI
         auto pDataBase = DataBase::Get();
 
         return pDataBase->Query(fmt::format("SELECT `name` FROM `chats` WHERE `id` = {}", m_iID))[0][0];
+    }
+
+    std::string Chat::GetInviteLink() const
+    {
+        auto pDataBase = DataBase::Get();
+        const auto data = pDataBase->Query(fmt::format("SELECT `public_id` FROM `chats` WHERE `id` = {}", m_iID));
+
+        return base64::code(std::stoi(data[0][0]));
     }
 } // DBAP
