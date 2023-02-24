@@ -114,6 +114,7 @@ namespace Web::Network
             delete pSocket;
         });
         *m_pRawSocket = socket;
+
     }
 
     Socket::Socket()

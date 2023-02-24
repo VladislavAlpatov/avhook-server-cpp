@@ -19,7 +19,8 @@ endif()
 
 if (CMAKE_BUILD_TYPE MATCHES Debug)
     add_compile_definitions(_DEBUG)
-
+else()
+    add_link_options(-s)
 endif()
 
 
@@ -31,7 +32,7 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "../../../out/${CMAKE_BUILD_TYPE}")
 
 
 project(server)
-add_executable(server src/main.cpp src/srv/packets/SendChatMessage.cpp src/srv/packets/SendChatMessage.h)
+add_executable(server src/main.cpp)
 
 add_compile_definitions(WIN32_LEAN_AND_MEAN)
 
