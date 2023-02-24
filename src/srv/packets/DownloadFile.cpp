@@ -38,7 +38,7 @@ namespace Web::Packet
         }
         catch (const std::runtime_error& ex)
         {
-            // Send true to notify client that we are not ready to send file
+            // Send false to notify client that we are not ready to send file
             clientHandle.m_clientSocket.SendStruct(false);
             throw ex;
         }
