@@ -17,7 +17,8 @@ namespace DBAPI
         friend class User;
         friend class DataBase;
         void SendMessage(const User& user, std::string text);
-        std::vector<User> GetMembers() const;
+        [[nodiscard]] std::vector<User> GetMembers() const;
+        [[nodiscard]] User              GetOwner() const;
         void AddUser(const User& user);
         void RemoveUser(const User& user);
         bool IsUserInChat(const User& user) const;

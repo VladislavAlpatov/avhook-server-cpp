@@ -25,5 +25,13 @@ namespace DBAPI::Exception
             return "User not in chat";
         }
     };
+    class UserAlreadyInChat final : public std::exception
+    {
+    public:
+        const char *what() const noexcept override
+        {
+            return "User already in chat, impossible to add twice";
+        }
+    };
 }
 

@@ -64,4 +64,23 @@ namespace DBAPI
 
         return base64::code(std::stoi(data[0][0]));
     }
+
+    User Chat::GetOwner() const
+    {
+        auto pDataBase = DataBase::Get();
+
+        const auto data = pDataBase->Query(fmt::format("SELECT `owner_id` FROM `chats` WHERE `id` = {}", m_iID));
+
+        return {std::stoi(data[0][0])};
+    }
+
+    void Chat::AddUser(const User &user)
+    {
+        if (IsUserInChat(user))
+            throw Exception::UserAlreadyInChat();
+
+        auto pDataBase = DataBase::Get();
+
+        pDataBase->Query(fmt::format("INSERT INTO `chats-members` (`user_id`, `chat_id`) VALUES({},{})",user.GetID(), m_iID));
+    }
 } // DBAP
