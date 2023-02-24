@@ -21,10 +21,7 @@ namespace DBAPI
         auto pDataBase = DBAPI::DataBase::Get();
         std::string jsnDump = data.dump();
 
-        boost::replace_all(jsnDump, "'", "''");
-        boost::replace_all(jsnDump, "\"", "\"\"");
-
-        pDataBase->Query(fmt::format("UPDATE `configs` SET `data` '{}' WHERE `id` = {}", jsnDump, m_iID));
+        pDataBase->Query(fmt::format("UPDATE `configs` SET `data` = '{}' WHERE `id` = {}", jsnDump, m_iID));
     }
     nlohmann::json Config::GetData() const
     {
