@@ -9,7 +9,16 @@
 #include "User.h"
 #include "Chat.h"
 #include <boost/algorithm/string.hpp>
+#include <random>
 
+uint64_t GeneratePublicId()
+{
+    std::random_device rd;
+    std::mt19937 rng(rd());
+    std::uniform_int_distribution<uint64_t> uni(0,UINT64_MAX);
+
+    return uni(rng);
+}
 
 namespace DBAPI
 {
@@ -60,5 +69,23 @@ namespace DBAPI
 
 
         return {std::stoi(data[0][0])};
+    }
+
+    void DataBase::CreateChat(const User &owner, const std::string &sName)
+    {
+        uint64_t publicId = 0;
+
+        do
+        {
+            publicId = GeneratePublicId();
+
+        } while (IsPrivateChatLinkTaken(publicId));
+
+        Query(fmt::format("INSERT INTO `chats` (`owner_id`, `name`, `public_id`) VALUES({},'{}',{})", owner.m_iID, sName, publicId));
+    }
+
+    bool DataBase::IsPrivateChatLinkTaken(uint64_t link)
+    {
+        return !Query(fmt::format("SELECT `id` FROM `chats` WHERE `public_id` = {}", link)).empty();
     }
 } // DBAP

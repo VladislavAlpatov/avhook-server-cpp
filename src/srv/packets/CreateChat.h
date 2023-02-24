@@ -12,6 +12,5 @@ namespace Web::Packet
         nlohmann::json ExecutePayload(ClientHandle &clientHandle) override;
         explicit CreateChat(const nlohmann::json &data);
         std::string m_sChatName;
-        static size_t CreateChatPublicId() ;
     };
 } // Packet

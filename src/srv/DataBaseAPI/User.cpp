@@ -8,6 +8,7 @@
 #include <boost/algorithm/string.hpp>
 #include "Chat.h"
 #include "Config.h"
+#include "exceptions.h"
 
 
 namespace DBAPI
@@ -23,7 +24,7 @@ namespace DBAPI
         return pDataBase->Query(fmt::format("SELECT `name` FROM `users` WHERE `id` = {}", m_iID))[0][0];
     }
 
-    bool User::IsUserNameAcceptable(const std::string &name) const
+    bool User::IsUserNameAcceptable(const std::string &name)
     {
         if (name.size() > 32)
             return false;
@@ -85,8 +86,12 @@ namespace DBAPI
     {
         auto pDataBase = DataBase::Get();
 
+        if (IsUserNameAcceptable(sName))
+            throw std::runtime_error("Username is invalid");
+
         boost::replace_all(sName, "'", "''");
         boost::replace_all(sName, "\"", "\"\"");
+
         pDataBase->Query(fmt::format("UPDATE `users` SET `name` = '{}' WHERE `id` = {}",sName, m_iID));
 
 
@@ -122,5 +127,10 @@ namespace DBAPI
 
         return cfgs;
 
+    }
+
+    void User::CreateChat(const std::string &sName)
+    {
+        DataBase::Get()->CreateChat(*this,sName);
     }
 } // DBAPI

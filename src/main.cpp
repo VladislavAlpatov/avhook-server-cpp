@@ -5,6 +5,9 @@
 #include "srv/observers/OnServerStartup.h"
 #include "srv/observers/OnUserConnected.h"
 #include "srv/observers/OnUserDisconnected.h"
+
+
+
 #if defined(_WIN32) and __has_include("winsock2.h")
 #include <winsock.h>
 #endif
@@ -24,5 +27,7 @@ int main()
     pServer->AddObserver(new Observers::OnUserDisconnected());
     pServer->AddObserver(new Observers::OnUserConnected());
 #endif
+
+
 	pServer->Listen();
 }

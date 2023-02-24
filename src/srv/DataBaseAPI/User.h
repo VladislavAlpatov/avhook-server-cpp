@@ -29,7 +29,7 @@ namespace DBAPI
         [[nodiscard]] std::string              GetPassword()                                       const;
         [[nodiscard]] std::string              GetEmail()                                          const;
         [[nodiscard]] std::vector<Config>      GetConfigs()                                        const;
-        [[nodiscard]] bool                     IsUserNameAcceptable(const std::string& name)       const;
+        [[nodiscard]] static bool                     IsUserNameAcceptable(const std::string& name)       ;
         [[nodiscard]] std::vector<Chat>        GetChatList()                                       const;
         [[nodiscard]] bool                     IsValid() const {return m_iID != INVALID_USER_ID;};
 
@@ -38,7 +38,7 @@ namespace DBAPI
         void SetStatus(std::string sStatus);
         void SetType(int iType);
         void SetEmail(std::string sEmail);
-
+        void CreateChat(const std::string& sName);
     private:
         User(int iUserId);
     };
