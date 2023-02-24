@@ -20,11 +20,7 @@ namespace Web::Packet
         jsnChats.reserve(chats.size());
 
         for (const auto& chat : chats)
-            jsnChats.push_back({
-                    {"name", chat.GetName()},
-                    {"id", chat.GetID()},
-                    {"invite", chat.GetInviteLink()}
-            });
+            jsnChats.push_back(chat.ToJson());
 
         return {{"chats", jsnChats}};
     }

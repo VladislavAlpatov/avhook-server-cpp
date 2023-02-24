@@ -83,4 +83,17 @@ namespace DBAPI
 
         pDataBase->Query(fmt::format("INSERT INTO `chats-members` (`user_id`, `chat_id`) VALUES({},{})",user.GetID(), m_iID));
     }
+
+    nlohmann::json Chat::ToJson() const
+    {
+        nlohmann::json data = {
+
+                {"name",      GetName()},
+                {"id",         GetID()},
+                {"owner",      GetOwner().ToJson()},
+                {"invite_link",GetInviteLink()},
+        };
+
+        return data;
+    }
 } // DBAP

@@ -133,4 +133,17 @@ namespace DBAPI
     {
         DataBase::Get()->CreateChat(*this,sName);
     }
+
+    nlohmann::json User::ToJson() const
+    {
+
+        return {
+
+                {"id",     GetID()},
+                {"name",   GetName()},
+                {"status", GetStatus()},
+                {"type",   GetType()},
+
+        };
+    }
 } // DBAPI

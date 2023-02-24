@@ -10,7 +10,7 @@ namespace Web::Packet
     class GetUserInfo final : public BasePacket
     {
     public:
-        explicit GetUserInfo(const nlohmann::json &data);
+         explicit GetUserInfo(const nlohmann::json &data) {};
 
         nlohmann::json ExecutePayload(ClientHandle &clientHandle) override;
     private:

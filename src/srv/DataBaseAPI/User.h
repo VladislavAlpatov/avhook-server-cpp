@@ -8,7 +8,7 @@
 #include <vector>
 
 #include "Object.h"
-
+#include "IJsonExportable.h"
 
 #define INVALID_USER_ID (-1)
 
@@ -17,7 +17,8 @@ namespace DBAPI
 {
     class Chat;
     class Config;
-    class User final : public Object
+
+    class User final : public Object, public IJsonExportable
     {
         friend class DataBase;
         friend class Chat;
@@ -29,7 +30,7 @@ namespace DBAPI
         [[nodiscard]] std::string              GetPassword()                                       const;
         [[nodiscard]] std::string              GetEmail()                                          const;
         [[nodiscard]] std::vector<Config>      GetConfigs()                                        const;
-        [[nodiscard]] static bool                     IsUserNameAcceptable(const std::string& name)       ;
+        [[nodiscard]] static bool              IsUserNameAcceptable(const std::string& name);
         [[nodiscard]] std::vector<Chat>        GetChatList()                                       const;
         [[nodiscard]] bool                     IsValid() const {return m_iID != INVALID_USER_ID;};
 
@@ -39,6 +40,9 @@ namespace DBAPI
         void SetType(int iType);
         void SetEmail(std::string sEmail);
         void CreateChat(const std::string& sName);
+
+        nlohmann::json ToJson() const override;
+
     private:
         User(int iUserId);
     };
