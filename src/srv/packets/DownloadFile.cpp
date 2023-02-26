@@ -7,6 +7,10 @@
 #include "../ClientHandle/ClientHandle.h"
 
 
+#define KILOBYTE 1024
+#define MEGABYTE (KILOBYTE*1024)
+#define GIGABYTE (MEGABYTE*1024)
+
 
 namespace Web::Packet
 {
@@ -19,22 +23,22 @@ namespace Web::Packet
             if (!file.is_open())
                 throw std::runtime_error("File does not exist");
 
-            int file_size = (int)file.tellg();
+            size_t szFileSize = (size_t)file.tellg();
 
-            if (file_size <= 0)
+            if (szFileSize == 0 or szFileSize >= 64*MEGABYTE)
                 throw std::runtime_error("File size is to big or too small");
 
 
             // Send true to notify client that we are ready to send file
             clientHandle.m_clientSocket.SendStruct(true);
 
-            auto buffer = std::unique_ptr<char> (new char[file_size]);
+            auto buffer = std::unique_ptr<char> (new char[szFileSize]);
 
             file.seekg(0, std::ios::beg);
-            file.read(buffer.get(), file_size);
+            file.read(buffer.get(), (int)szFileSize);
 
 
-            clientHandle.m_clientSocket.SendBytes(buffer.get(), file_size);
+            clientHandle.m_clientSocket.SendBytes(buffer.get(), (int)szFileSize);
         }
         catch (const std::runtime_error& ex)
         {

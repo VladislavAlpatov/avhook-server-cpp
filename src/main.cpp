@@ -6,8 +6,6 @@
 #include "srv/observers/OnUserConnected.h"
 #include "srv/observers/OnUserDisconnected.h"
 
-
-
 #if defined(_WIN32) and __has_include("winsock2.h")
 #include <winsock.h>
 #endif
