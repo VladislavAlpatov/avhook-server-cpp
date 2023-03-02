@@ -15,6 +15,7 @@
 #include "../packets/CreateChat.h"
 #include "../packets/DeleteChat.h"
 #include "../packets/DownloadFile.h"
+#include "../packets/GetChatList.h"
 
 #include "../exceptions.h"
 
@@ -31,7 +32,7 @@
 #define PACKET_CREATE_CHAT               8
 #define PACKET_DELETE_CHAT               9
 #define PACKET_DOWNLOAD_FILE             10
-
+#define PACKET_GET_CHAT_LIST             11
 
 
 #define MAKE_DECORATED_PACKET(dec, packetType, data) std::make_unique<dec>(std::make_unique<packetType>(data));
@@ -56,6 +57,7 @@ namespace Web
             case PACKET_CREATE_CHAT:            return MAKE_DECORATED_PACKET(RegisteredOnly, CreateChat,       data);
             case PACKET_DELETE_CHAT:            return MAKE_DECORATED_PACKET(RegisteredOnly, DeleteChat,       data);
             case PACKET_DOWNLOAD_FILE:          return MAKE_DECORATED_PACKET(RegisteredOnly, DownloadFile,     data);
+            case PACKET_GET_CHAT_LIST:          return MAKE_DECORATED_PACKET(RegisteredOnly, GetChatList,      data);
         }
         throw Exception::InvalidPacketType();
 
