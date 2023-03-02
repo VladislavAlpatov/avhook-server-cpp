@@ -5,7 +5,7 @@
 #include "srv/observers/OnServerStartup.h"
 #include "srv/observers/OnUserConnected.h"
 #include "srv/observers/OnUserDisconnected.h"
-
+#include "lib/crypto/rsa.h"
 #if defined(_WIN32) and __has_include("winsock2.h")
 #include <winsock.h>
 #endif
@@ -25,7 +25,8 @@ int main()
     pServer->AddObserver(new Observers::OnUserDisconnected());
     pServer->AddObserver(new Observers::OnUserConnected());
 #endif
-
-
+    //auto keys = RSA::GenerateKeyPair();
+    //auto enc = RSA::Encrypt(keys.first, "Hello World!");
+    //std::cout << RSA::Decrypt(keys.second, enc);
 	pServer->Listen();
 }

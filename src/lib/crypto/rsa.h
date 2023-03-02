@@ -35,7 +35,7 @@ namespace RSA
 
     bool IsPrime(boost::multiprecision::cpp_int number);
     std::pair<PublicKey, PrivateKey> GenerateKeyPair();
-    std::vector<boost::multiprecision::cpp_int> Encrypt(const PublicKey& key, const std::string& str);
-    std::string Decrypt(const PrivateKey& key,const std::vector<boost::multiprecision::cpp_int> & str);
+    std::vector<unsigned char > Encrypt(const PublicKey& key, const std::string& str);
+    std::string Decrypt(const PrivateKey& key,const std::vector<unsigned char> & str);
 } // crypto
 

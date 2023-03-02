@@ -9,6 +9,8 @@
 
 #include <boost/random.hpp>
 #include <iostream>
+#include <array>
+
 
 using namespace boost::multiprecision;
 using namespace boost::random;
@@ -59,28 +61,83 @@ std::pair<RSA::PublicKey, RSA::PrivateKey> RSA::GenerateKeyPair()
     }
     while (gcd(e, phi) != 1);
     auto d = boost::integer::mod_inverse<cpp_int>(e, phi);
-    auto enc = powm<cpp_int>(1, e, n);
-    auto dec = (int) powm<cpp_int>(enc, d, n);
-    std::cout << n << '\n' << (uint256_t)n;
+
     return {{n,e}, {n,d}};
 }
 
-std::vector<cpp_int>  RSA::Encrypt(const RSA::PublicKey &key, const std::string &str)
+std::vector<unsigned char >  RSA::Encrypt(const RSA::PublicKey &key, const std::string &str)
 {
-    std::vector<cpp_int> out;
+    std::vector<unsigned char> out;
     out.reserve(str.size());
-    for (const auto chr : str)
-        out.push_back(powm<cpp_int>(chr, key.m_NumberEncrypt, key.m_NumberN));
+
+    for (size_t i = 0; i < str.size(); i+= 32)
+    {
+        auto              szBlockSize = str.size() - i;
+        cpp_int           encryptedBlock;
+
+        if (szBlockSize < 32)
+        {
+            std::array<unsigned char, 32> paddedBlock = {0};
+            //memcpy(paddedBlock.data(), str.data() + i, szBlockSize);
+
+            import_bits(encryptedBlock, (unsigned char*)str.data()+i, (unsigned char*)str.data()+i+szBlockSize);
+        }
+        else
+            import_bits(encryptedBlock, str.begin(), str.end());
+
+
+        encryptedBlock = powm<cpp_int>(encryptedBlock, key.m_NumberEncrypt, key.m_NumberN);
+
+        std::list<unsigned char> encryptedBlockBytes;
+        export_bits(encryptedBlock, std::back_inserter(encryptedBlockBytes), 8);
+
+        while (encryptedBlockBytes.size() < 32)
+            encryptedBlockBytes.push_front(NULL);
+
+        for (const auto& encryptedByte : encryptedBlockBytes)
+            out.push_back(encryptedByte);
+    }
+
 
     return out;
 }
 
-std::string RSA::Decrypt(const RSA::PrivateKey &key, const std::vector<boost::multiprecision::cpp_int> &str)
+std::string RSA::Decrypt(const RSA::PrivateKey &key, const std::vector<unsigned char> &str)
 {
-    std::string out;
+    std::vector<unsigned char> out;
     out.reserve(str.size());
 
-    for (const auto& encChar : str)
-        out.push_back((char)powm<cpp_int>(encChar, key.m_NumberDecrypt, key.m_NumberN));
+    for (size_t i = 0; i < str.size(); i+= 32)
+    {
+        auto              szBlockSize = str.size() - i;
+        cpp_int           encryptedBlock;
+
+        if (szBlockSize < 32)
+        {
+            std::array<unsigned char, 32> paddedBlock = {0};
+            //memcpy(paddedBlock.data(), str.data() + i, szBlockSize);
+
+            import_bits(encryptedBlock, (unsigned char*)str.data()+i, (unsigned char*)str.data()+i+szBlockSize);
+        }
+        else
+            import_bits(encryptedBlock, str.begin(), str.end());
+
+
+        encryptedBlock = powm<cpp_int>(encryptedBlock, key.m_NumberDecrypt, key.m_NumberN);
+
+        std::vector<unsigned char> encryptedBlockBytes;
+        encryptedBlockBytes.reserve(32);
+        export_bits(encryptedBlock, std::back_inserter(encryptedBlockBytes), 8);
+
+
+        while (encryptedBlockBytes.size() <= 32)
+            encryptedBlockBytes.push_back(NULL);
+
+        for (const auto& encryptedByte : encryptedBlockBytes)
+            out.push_back(encryptedByte);
+    }
+
+
+    return {(const char*)out.data()};
 
 }
