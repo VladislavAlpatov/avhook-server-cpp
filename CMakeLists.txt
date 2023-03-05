@@ -5,16 +5,8 @@ set(CMAKE_CXX_STANDARD 23)
 set(CMAKE_CXX_COMPILER clang++)
 set(CMAKE_C_COMPILER clang)
 
-add_link_options(-pthread -static)
+add_link_options(-pthread)
 
-if (NOT WIN32)
-    set(CMAKE_TOOLCHAIN_FILE ~/vcpkg/scripts/buildsystems/vcpkg.cmake)
-    set(VCPKG_TARGET_TRIPLET x64-linux)
-
-else()
-    set(CMAKE_TOOLCHAIN_FILE C:/vcpkg/scripts/buildsystems/vcpkg.cmake)
-    set(VCPKG_TARGET_TRIPLET x64-windows-static)
-endif()
 
 
 if (CMAKE_BUILD_TYPE MATCHES Debug)
@@ -28,8 +20,7 @@ endif()
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "../../../out/${CMAKE_BUILD_TYPE}")
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "../../../out/${CMAKE_BUILD_TYPE}")
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "../../../out/${CMAKE_BUILD_TYPE}")
-
-
+set(nlohmann_json "lib/json")
 
 project(server)
 add_executable(server src/main.cpp)
@@ -38,18 +29,18 @@ add_compile_definitions(WIN32_LEAN_AND_MEAN)
 
 add_subdirectory(src)
 
-find_package(unofficial-sqlite3 CONFIG REQUIRED)
-target_link_libraries(server PRIVATE unofficial::sqlite3::sqlite3)
+find_package(Boost REQUIRED)
+target_link_libraries(server PRIVATE ${Boost_LIBRARIES})
+
+find_package(SQLite3)
+target_link_libraries(server PRIVATE SQLite::SQLite3)
+
+add_subdirectory(src/lib/json)
+target_link_libraries( server PRIVATE nlohmann_json )
+
+find_package(fmt CONFIG REQUIRED)
+target_link_libraries(server PRIVATE fmt::fmt)
 
 if (WIN32)
     target_link_libraries(server PRIVATE ws2_32)
 endif()
-
-find_package(nlohmann_json CONFIG REQUIRED)
-target_link_libraries(server PRIVATE nlohmann_json::nlohmann_json)
-
-find_package(fmt CONFIG REQUIRED)
-target_link_libraries(server PRIVATE fmt::fmt-header-only)
-
-find_package(Boost REQUIRED)
-target_link_libraries(server PRIVATE ${Boost_LIBRARIES})
