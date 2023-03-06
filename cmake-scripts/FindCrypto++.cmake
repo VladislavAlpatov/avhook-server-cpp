@@ -1,10 +1,8 @@
-find_path(CryptoPP_INCLUDE_DIR cryptopp)
 find_library(CryptoPP_LIBRARY cryptopp)
 
 set(CryptoPP_LIBRARIES ${CryptoPP_LIBRARY})
-set(CryptoPP_INCLUDE_DIRS ${CryptoPP_INCLUDE_DIR})
 
-if(CryptoPP_INCLUDE_DIRS AND CryptoPP_LIBRARIES)
+if(CryptoPP_LIBRARIES)
     set(CryptoPP_FOUND TRUE)
 endif()
 
