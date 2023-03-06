@@ -25,8 +25,5 @@ int main()
     pServer->AddObserver(new Observers::OnUserDisconnected());
     pServer->AddObserver(new Observers::OnUserConnected());
 #endif
-    //auto keys = RSA::GenerateKeyPair();
-    //auto enc = RSA::Encrypt(keys.first, "Hello World!");
-    //std::cout << RSA::Decrypt(keys.second, enc);
 	pServer->Listen();
 }
