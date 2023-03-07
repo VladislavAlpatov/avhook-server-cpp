@@ -12,8 +12,8 @@ namespace Web::Packet::Decorator
     class RegisteredOnly : public BaseDecorator
     {
     public:
-        explicit RegisteredOnly(const std::shared_ptr<BasePacket> &pPacket);
-
+        explicit RegisteredOnly(std::unique_ptr<BasePacket>& pPacket);
+        RegisteredOnly() =  default;
         nlohmann::json ExecutePayload(ClientHandle &clientHandle) override;
     };
 } // Decorator

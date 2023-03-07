@@ -4,9 +4,9 @@
 namespace Web::Packet::Decorator
 {
 
-    BaseDecorator::BaseDecorator(const std::shared_ptr<BasePacket> &pPacket)
+    BaseDecorator::BaseDecorator(std::unique_ptr<BasePacket> &pPacket)
     {
-        m_pDecoratedPacket = pPacket;
+        m_pDecoratedPacket = std::move(pPacket);
     }
 
     nlohmann::json BaseDecorator::ExecutePayload(ClientHandle &clientHandle)

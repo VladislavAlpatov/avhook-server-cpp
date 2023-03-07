@@ -35,29 +35,27 @@
 #define PACKET_GET_CHAT_LIST             11
 
 
-#define MAKE_DECORATED_PACKET(dec, packetType, data) std::make_unique<dec>(std::make_unique<packetType>(data));
-
-
 namespace Web
 {
     using namespace Packet;
     using namespace Decorator;
     std::unique_ptr<BasePacket> PacketFactory::Create(const nlohmann::json &data)
     {
+
         switch (data["type"].get<int>())
         {
-            case PACKET_AUTH:                   return std::make_unique<Auth>(data);
-            case PACKET_ONLINE_USERS_COUNT:     return std::make_unique<OnlineUsersICount>(data);
-            case PACKET_SET_USERNAME:           return MAKE_DECORATED_PACKET(RegisteredOnly, SetUserName,      data);
-            case PACKET_GET_USERINFO:           return MAKE_DECORATED_PACKET(RegisteredOnly, GetUserInfo,      data);
-            case PACKET_SET_USER_STATUS:        return MAKE_DECORATED_PACKET(RegisteredOnly, SetUserStatus,    data);
-            case PACKET_UPDATE_USER_CFG:        return MAKE_DECORATED_PACKET(RegisteredOnly, UpdateUserConfig, data);
-            case PACKET_GET_USER_CONFIGS:       return MAKE_DECORATED_PACKET(RegisteredOnly, GetUserConfigs,   data);
-            case PACKET_SEND_CHAT_MESSAGE:      return MAKE_DECORATED_PACKET(RegisteredOnly, SendChatMessage,  data);
-            case PACKET_CREATE_CHAT:            return MAKE_DECORATED_PACKET(RegisteredOnly, CreateChat,       data);
-            case PACKET_DELETE_CHAT:            return MAKE_DECORATED_PACKET(RegisteredOnly, DeleteChat,       data);
-            case PACKET_DOWNLOAD_FILE:          return MAKE_DECORATED_PACKET(RegisteredOnly, DownloadFile,     data);
-            case PACKET_GET_CHAT_LIST:          return MAKE_DECORATED_PACKET(RegisteredOnly, GetChatList,      data);
+            case PACKET_AUTH:                   return MutipleDecoration(new Auth(data), new RegisteredOnly());
+            case PACKET_ONLINE_USERS_COUNT:     return MutipleDecoration(new OnlineUsersICount(data), new RegisteredOnly());
+            case PACKET_SET_USERNAME:           return MutipleDecoration(new SetUserName(data), new RegisteredOnly());
+            case PACKET_GET_USERINFO:           return MutipleDecoration(new GetUserInfo(data),   new RegisteredOnly());
+            case PACKET_SET_USER_STATUS:        return MutipleDecoration(new SetUserStatus(data), new RegisteredOnly());
+            case PACKET_UPDATE_USER_CFG:        return MutipleDecoration(new UpdateUserConfig(data), new RegisteredOnly());
+            case PACKET_GET_USER_CONFIGS:       return MutipleDecoration(new GetUserConfigs(data), new RegisteredOnly());
+            case PACKET_SEND_CHAT_MESSAGE:      return MutipleDecoration(new SendChatMessage(data), new RegisteredOnly());
+            case PACKET_CREATE_CHAT:            return MutipleDecoration(new CreateChat(data), new RegisteredOnly());
+            case PACKET_DELETE_CHAT:            return MutipleDecoration(new DeleteChat(data), new RegisteredOnly());
+            case PACKET_DOWNLOAD_FILE:          return MutipleDecoration(new DownloadFile(data), new RegisteredOnly());
+            case PACKET_GET_CHAT_LIST:          return MutipleDecoration(new GetChatList(data), new RegisteredOnly());
         }
         throw Exception::InvalidPacketType();
 

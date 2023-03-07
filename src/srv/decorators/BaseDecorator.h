@@ -11,11 +11,29 @@ namespace Web::Packet::Decorator
     class BaseDecorator : public BasePacket
     {
     public:
-        explicit BaseDecorator(const std::shared_ptr<BasePacket> &pPacket);
-
+        explicit BaseDecorator(std::unique_ptr<BasePacket> &pPacket);
+        BaseDecorator() = default;
         nlohmann::json ExecutePayload(ClientHandle &clientHandle) override;
 
+        template<class... Args>
+        friend std::unique_ptr<BasePacket> MutipleDecoration(BasePacket* pPacket, Args... args);
+
     protected:
-        std::shared_ptr<BasePacket> m_pDecoratedPacket;
+        std::unique_ptr<BasePacket> m_pDecoratedPacket;
     };
+
+    template<class... Args>
+    std::unique_ptr<BasePacket> MutipleDecoration(BasePacket* pPacket, Args... args)
+    {
+        const std::vector<BaseDecorator*> decorators = {args...};
+        auto pDecoratedPacket =  std::unique_ptr<BasePacket>(pPacket);
+
+        for (auto pDecorator : decorators)
+        {
+            pDecorator->m_pDecoratedPacket = std::move(pDecoratedPacket);
+            pDecoratedPacket = std::move(std::unique_ptr<BasePacket>(pDecorator));
+        }
+
+        return pDecoratedPacket;
+    }
 }
