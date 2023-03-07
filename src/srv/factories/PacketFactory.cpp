@@ -44,7 +44,7 @@ namespace Web
 
         switch (data["type"].get<int>())
         {
-            case PACKET_AUTH:                   return MutipleDecoration(new Auth(data), new RegisteredOnly());
+            case PACKET_AUTH:                   return std::make_unique<Auth>(data);
             case PACKET_ONLINE_USERS_COUNT:     return MutipleDecoration(new OnlineUsersICount(data), new RegisteredOnly());
             case PACKET_SET_USERNAME:           return MutipleDecoration(new SetUserName(data), new RegisteredOnly());
             case PACKET_GET_USERINFO:           return MutipleDecoration(new GetUserInfo(data),   new RegisteredOnly());
