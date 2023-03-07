@@ -18,4 +18,9 @@ namespace Web::Packet::User
 
         return {{"Status", user.GetStatus()}};
     }
+
+    GetStatus::GetStatus(const nlohmann::json &data) : BasePacket(data)
+    {
+
+    }
 }
