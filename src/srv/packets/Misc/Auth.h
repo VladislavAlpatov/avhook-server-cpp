@@ -2,7 +2,7 @@
 // Created by nullifiedvlad on 08.12.2022.
 //
 #pragma once
-#include "BasePacket.h"
+#include "../BasePacket.h"
 
 
 namespace Web::Packet

@@ -3,16 +3,17 @@
 //
 #include "Auth.h"
 
-#include "../../lib/sqlite/connection.h"
-#include "../../lib/sha256/sha256.h"
+#include <fmt/format.h>
 
-#include "fmt/format.h"
-#include "exceptions.h"
-#include "../ClientHandle/ClientHandle.h"
 
-#include "../DataBaseAPI/DataBase.h"
-#include "../DataBaseAPI/User.h"
+#include "../../../lib/sqlite/connection.h"
+#include "../../../lib/sha256/sha256.h"
 
+#include "../../ClientHandle/ClientHandle.h"
+#include "../../DataBaseAPI/DataBase.h"
+#include "../../DataBaseAPI/User.h"
+
+#include "../exceptions.h"
 
 namespace Web::Packet
 {

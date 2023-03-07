@@ -6,10 +6,10 @@
 
 namespace Web::Packet::Exception
 {
-	class BasePacketException : public std::exception
-	{
+    class BasePacketException : public std::exception
+    {
 
-	};
+    };
     class AuthFailedWrongPassword final : public BasePacketException
     {
     public:
@@ -26,13 +26,13 @@ namespace Web::Packet::Exception
             return "Accepted package was corrupted";
         }
     };
-	class InValidUserName final : public BasePacketException
-	{
-		[[nodiscard]] const char *what() const noexcept override
-		{
-			return "Invalid username, it must not contain newlines or tabs";
-		}
-	};
+    class InValidUserName final : public BasePacketException
+    {
+        [[nodiscard]] const char *what() const noexcept override
+        {
+            return "Invalid username, it must not contain newlines or tabs";
+        }
+    };
     class UserInfoNotFound final  : public BasePacketException
     {
     public:
@@ -49,14 +49,14 @@ namespace Web::Packet::Exception
             return "Failed to find avhook config";
         }
     };
-	class ExceptedAutPacket final : public BasePacketException
-	{
-	public:
-		[[nodiscard]] const char *what() const noexcept override
-		{
-			return "Expected Auth packet";
-		}
-	};
+    class ExceptedAutPacket final : public BasePacketException
+    {
+    public:
+        [[nodiscard]] const char *what() const noexcept override
+        {
+            return "Expected Auth packet";
+        }
+    };
     class ChatDoesNotExist final : public BasePacketException
     {
     public:

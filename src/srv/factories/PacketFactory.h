@@ -3,7 +3,6 @@
 //
 #pragma once
 #include "../packets/BasePacket.h"
-#include "../decorators/BaseDecorator.h"
 #include <memory>
 
 namespace Web

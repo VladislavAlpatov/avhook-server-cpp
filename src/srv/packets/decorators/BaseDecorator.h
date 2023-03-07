@@ -2,8 +2,8 @@
 // Created by alpat on 20.01.2023.
 //
 #pragma once
-#include "../packets/BasePacket.h"
-#include "../ClientHandle/ClientHandle.h"
+#include "../BasePacket.h"
+#include "../../ClientHandle/ClientHandle.h"
 
 #include <memory>
 namespace Web::Packet::Decorator

@@ -2,7 +2,7 @@
 // Created by alpat on 26.01.2023.
 //
 #pragma once
-#include "../packets/exceptions.h"
+#include "../exceptions.h"
 namespace Web::Packet::Decorator::Exception
 {
     class UserNotRegistered final : public Packet::Exception::BasePacketException

@@ -6,11 +6,6 @@
 
 namespace Web {class ClientHandle;}
 
-#define FLAG_PACKET_ENCRYPTED_IN  (1<<0)
-#define FLAG_PACKET_ENCRYPTED_OUT (1<<1)
-#define FLAG_PACKET_RAW_DATA      (1<<2)
-
-
 namespace Web::Packet
 {
     class BasePacket
@@ -18,7 +13,6 @@ namespace Web::Packet
     public:
         virtual ~BasePacket() = default;
         virtual nlohmann::json ExecutePayload(ClientHandle &clientHandle) = 0;
-
     protected:
         nlohmann::json m_Data;
         BasePacket() = default;
