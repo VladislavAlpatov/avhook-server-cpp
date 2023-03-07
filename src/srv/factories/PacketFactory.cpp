@@ -1,6 +1,8 @@
 //
 // Created by nullifiedvlad on 07.12.2022.
 //
+// Purpose: Create Packet based on JSON data.
+//
 #include "PacketFactory.h"
 
 #include "../packets/SetUserName.h"
@@ -19,7 +21,7 @@
 
 #include "../exceptions.h"
 
-// Purpose: Define packet unique ids for factory
+// Unique ids of each packet
 
 #define PACKET_SET_USERNAME              0
 #define PACKET_AUTH                      1
