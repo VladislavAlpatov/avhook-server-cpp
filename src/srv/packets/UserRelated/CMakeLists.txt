@@ -1,1 +1,1 @@
-target_sources(server PRIVATE GetName.cpp)
+target_sources(server PRIVATE GetName.cpp GetStatus.cpp)

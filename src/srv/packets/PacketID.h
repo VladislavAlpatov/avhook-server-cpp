@@ -8,6 +8,8 @@ enum PacketID : int
 {
     BasePacket,
     UserGetName,
+    UserGetStatus,
+    UserGetChatList,
     Auth,
 
 };
