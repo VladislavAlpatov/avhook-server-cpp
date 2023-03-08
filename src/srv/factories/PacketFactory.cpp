@@ -9,12 +9,11 @@
 #include "../packets/UserRelated/GetName.h"
 #include "../packets/UserRelated/GetStatus.h"
 #include "../packets/UserRelated/GetChatList.h"
-
 #include "../packets/Misc/Auth.h"
+#include "../packets/PacketID.h"
 
 #include "../packets/decorators/RegisteredOnly.h"
 
-#include "../packets/PacketID.h"
 
 #include "../exceptions.h"
 

@@ -5,7 +5,7 @@
 #include <string>
 #include <vector>
 #include "packets/BasePacket.h"
-#include "ObservableObject.h"
+#include "observers/ObservableObject.h"
 #include "network/Socket.h"
 
 namespace Web

@@ -2,7 +2,7 @@
 // Created by nullifiedvlad on 27.12.2022.
 //
 #pragma once
-#include "../ObservableObject.h"
+#include "../observers/ObservableObject.h"
 #include "../packets/BasePacket.h"
 #include "../network/Socket.h"
 #include "../DataBaseAPI/User.h"

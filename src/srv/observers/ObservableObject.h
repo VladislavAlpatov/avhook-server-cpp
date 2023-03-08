@@ -4,7 +4,7 @@
 #pragma once
 #include <list>
 #include <memory>
-#include "observers/IBaseObserver.h"
+#include "IBaseObserver.h"
 
 
 class ObservableObject

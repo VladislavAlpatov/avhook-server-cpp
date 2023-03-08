@@ -5,7 +5,7 @@
 
 #include <any>
 #include "IBaseObserver.h"
-#include "../ObservableObject.h"
+#include "ObservableObject.h"
 
 namespace Observers
 {

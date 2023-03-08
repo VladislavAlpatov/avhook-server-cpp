@@ -3,7 +3,7 @@
 //
 #pragma once
 #include "IBaseObserver.h"
-#include "../ObservableObject.h"
+#include "ObservableObject.h"
 
 namespace Observers
 {
