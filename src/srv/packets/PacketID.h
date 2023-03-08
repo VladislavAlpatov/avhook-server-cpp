@@ -10,6 +10,7 @@ enum PacketID : int
     UserGetName,
     UserGetStatus,
     UserGetChatList,
+    UserSetName,
     Auth,
 
 };

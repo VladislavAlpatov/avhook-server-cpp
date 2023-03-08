@@ -146,4 +146,14 @@ namespace DBAPI
 
         };
     }
+
+    bool User::operator==(const User &other) const
+    {
+        return m_iID == other.m_iID;
+    }
+
+    bool User::operator!=(const User &other) const
+    {
+        return !(*this == other);
+    }
 } // DBAPI

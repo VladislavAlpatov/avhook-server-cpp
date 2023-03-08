@@ -30,8 +30,10 @@ namespace DBAPI
         [[nodiscard]] std::string              GetPassword()                                       const;
         [[nodiscard]] std::string              GetEmail()                                          const;
         [[nodiscard]] std::vector<Config>      GetConfigs()                                        const;
-        [[nodiscard]] static bool              IsUserNameAcceptable(const std::string& name);
         [[nodiscard]] std::vector<Chat>        GetChatList()                                       const;
+
+
+        [[nodiscard]] static bool              IsUserNameAcceptable(const std::string& name);
         [[nodiscard]] bool                     IsValid() const {return m_iID != INVALID_USER_ID;};
 
 
@@ -40,6 +42,11 @@ namespace DBAPI
         void SetType(int iType);
         void SetEmail(std::string sEmail);
         void CreateChat(const std::string& sName);
+
+
+        bool operator==(const User& other) const;
+        bool operator!=(const User& other) const;
+
 
         nlohmann::json ToJson() const override;
 

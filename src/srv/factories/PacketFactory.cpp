@@ -9,6 +9,8 @@
 #include "../packets/UserRelated/GetName.h"
 #include "../packets/UserRelated/GetStatus.h"
 #include "../packets/UserRelated/GetChatList.h"
+#include "../packets/UserRelated/SetName.h"
+
 #include "../packets/Misc/Auth.h"
 #include "../packets/PacketID.h"
 
@@ -31,6 +33,8 @@ namespace Web
             case PacketID::UserGetName:         return MutipleDecoration(new Packet::User::GetName(data),     new RegisteredOnly());
             case PacketID::UserGetChatList:     return MutipleDecoration(new Packet::User::GetChatList(data), new RegisteredOnly());
             case PacketID::UserGetStatus:       return MutipleDecoration(new Packet::User::GetStatus(data),   new RegisteredOnly());
+            case PacketID::UserSetName:         return MutipleDecoration(new Packet::User::SetName(data),     new RegisteredOnly());
+
             case PacketID::Auth:                return MutipleDecoration(new Packet::Auth(data));
         }
         throw Exception::InvalidPacketType();
