@@ -7,6 +7,9 @@
 #include "../../DataBaseAPI/DataBase.h"
 #include "../../DataBaseAPI/User.h"
 
+
+#include "../exceptions.h"
+
 namespace Web::Packet::User
 {
 
@@ -16,11 +19,18 @@ namespace Web::Packet::User
 
         const auto user = pDataBase->GetUserById(m_iUserId);
 
-        return {{"Status", user.GetStatus()}};
+        return {{"status", user.GetStatus()}};
     }
 
     GetStatus::GetStatus(const nlohmann::json &data) : BasePacket(data)
     {
-
+        try
+        {
+            m_iUserId = data["id"].get<int>();
+        }
+        catch (...)
+        {
+            throw Exception::CorruptedPacket();
+        }
     }
 }

@@ -16,7 +16,7 @@ namespace Web::Packet::User
 
         const auto user = pDataBase->GetUserById(m_iUserId);
 
-        return {{"Name", user.GetName()}};
+        return {{"name", user.GetName()}};
     }
 
     GetName::GetName(const nlohmann::json &data) : BasePacket(data)
