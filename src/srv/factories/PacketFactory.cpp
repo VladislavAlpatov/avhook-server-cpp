@@ -30,11 +30,14 @@ namespace Web
     {
         switch (data["type"].get<int>())
         {
+            // Put User related packets here:
             case PacketID::UserGetName:         return MutipleDecoration(new Packet::User::GetName(data),     new RegisteredOnly());
             case PacketID::UserGetChatList:     return MutipleDecoration(new Packet::User::GetChatList(data), new RegisteredOnly());
             case PacketID::UserGetStatus:       return MutipleDecoration(new Packet::User::GetStatus(data),   new RegisteredOnly());
             case PacketID::UserSetName:         return MutipleDecoration(new Packet::User::SetName(data),     new RegisteredOnly());
 
+
+            // Put Misc related packets here:
             case PacketID::Auth:                return MutipleDecoration(new Packet::Auth(data));
         }
         throw Exception::InvalidPacketType();
