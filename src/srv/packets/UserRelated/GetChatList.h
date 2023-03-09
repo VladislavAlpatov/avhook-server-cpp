@@ -5,19 +5,16 @@
 #pragma once
 
 
-#include "../BasePacket.h"
+#include "UserRelated.h"
+
 
 namespace Web::Packet::User
 {
-    class GetChatList final : public BasePacket
+    class GetChatList final : public UserRelated
     {
     public:
-        explicit GetChatList(const nlohmann::json &data);
-
+        explicit GetChatList(const nlohmann::json &data) : UserRelated(data) {};
         nlohmann::json ExecutePayload(ClientHandle &clientHandle) override;
-
-    private:
-        int m_iUserId = 0;
     };
 
 }

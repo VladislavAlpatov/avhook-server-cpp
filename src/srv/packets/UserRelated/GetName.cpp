@@ -6,12 +6,12 @@
 
 
 #include "../../DataBaseAPI/DataBase.h"
-#include "../../DataBaseAPI/User.h"
 
 namespace Web::Packet::User
 {
     nlohmann::json GetName::ExecutePayload(ClientHandle &clientHandle)
     {
+
         auto pDataBase = DBAPI::DataBase::Get();
 
         const auto user = pDataBase->GetUserById(m_iUserId);
@@ -19,15 +19,8 @@ namespace Web::Packet::User
         return {{"name", user.GetName()}};
     }
 
-    GetName::GetName(const nlohmann::json &data) : BasePacket(data)
+    GetName::GetName(const nlohmann::json &data) : UserRelated(data)
     {
-        try
-        {
-            m_iUserId = data["id"].get<int>();
-        }
-        catch (...)
-        {
 
-        }
     }
 } // User

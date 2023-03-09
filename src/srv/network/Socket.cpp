@@ -51,7 +51,7 @@ namespace Web::Network
         {
             return Web::PacketFactory::Create(RecvJson());
         }
-        catch (const nlohmann::json::exception& ex)
+        catch (...)
         {
             throw Web::Packet::Exception::CorruptedPacket();
         }
@@ -159,7 +159,7 @@ namespace Web::Network
 
     void Socket::SendBytes(const void *pBytes, int iSize) const
     {
-        ::send(*m_pRawSocket, (const char*)&iSize, sizeof(iSize), NULL);
-        ::send(*m_pRawSocket, (const char*)pBytes, iSize, NULL);
+        ::send(*m_pRawSocket, (const char*)&iSize, sizeof(iSize), MSG_NOSIGNAL);
+        ::send(*m_pRawSocket, (const char*)pBytes, iSize, MSG_NOSIGNAL);
     }
 }

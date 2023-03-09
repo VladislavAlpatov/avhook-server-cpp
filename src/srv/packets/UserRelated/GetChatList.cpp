@@ -3,36 +3,18 @@
 //
 
 #include "GetChatList.h"
-
-#include "../../DataBaseAPI/DataBase.h"
-#include "../../DataBaseAPI/User.h"
 #include "../../DataBaseAPI/Chat.h"
-
-
-#include "../exceptions.h"
-
+#include "../../ClientHandle/ClientHandle.h"
 
 
 namespace Web::Packet::User
 {
-
-    GetChatList::GetChatList(const nlohmann::json &data) : BasePacket(data)
-    {
-        try
-        {
-            m_iUserId = data["id"].get<int>();
-        }
-        catch (...)
-        {
-            throw Exception::CorruptedPacket();
-        }
-    }
-
     nlohmann::json GetChatList::ExecutePayload(ClientHandle &clientHandle)
     {
-        auto pDataBase = DBAPI::DataBase::Get();
-        const auto user = pDataBase->GetUserById(m_iUserId);
-        const auto chatList = user.GetChatList();
+        if (clientHandle.m_dbUser != m_userFromPacket)
+            throw std::runtime_error("You cant get packet list of different user");
+
+        const auto chatList = m_userFromPacket.GetChatList();
 
 
         std::vector<nlohmann::json> jsnChatList;

@@ -23,8 +23,8 @@ class User:
         self.id = id
 
     def GetName(self) -> str:
-        data = req(soc, {"type": 1, "id": self.id})
-
+        data = req(soc, {"type": 1, "g": self.id})
+        print(data)
         return json.loads(data)["name"]
 
     def GetStatus(self) -> str:
@@ -35,4 +35,6 @@ class User:
 
 usr = User(1)
 
-print(f"My username is '{usr.GetName()}', and my status is `{usr.GetStatus()}`")
+for i in range(99999):
+    print(usr.GetName())
+    print(i)

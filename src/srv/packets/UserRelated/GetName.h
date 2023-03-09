@@ -3,16 +3,15 @@
 //
 
 #pragma once
-#include "../BasePacket.h"
-
+#include "UserRelated.h"
 
 namespace Web::Packet::User
 {
-    class GetName final : public BasePacket
+    class GetName final : public UserRelated
     {
     public:
         nlohmann::json ExecutePayload(ClientHandle &clientHandle) override;
-        explicit GetName(const nlohmann::json &data);
+        explicit GetName(const nlohmann::json &data) ;
     private:
         int m_iUserId = 0;
     };
