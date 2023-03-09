@@ -23,7 +23,7 @@ class User:
         self.id = id
 
     def GetName(self) -> str:
-        data = req(soc, {"type": 1, "g": self.id})
+        data = req(soc, {"type": 1, "id": self.id})
         print(data)
         return json.loads(data)["name"]
 
@@ -34,7 +34,5 @@ class User:
 
 
 usr = User(1)
-
-for i in range(99999):
-    print(usr.GetName())
-    print(i)
+print(usr.GetName())
+soc.close()

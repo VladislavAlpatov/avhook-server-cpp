@@ -47,14 +47,7 @@ namespace Web::Network
 
     std::unique_ptr<Web::Packet::BasePacket> Socket::RecvPacket() const
     {
-        try
-        {
-            return Web::PacketFactory::Create(RecvJson());
-        }
-        catch (...)
-        {
-            throw Web::Packet::Exception::CorruptedPacket();
-        }
+        return Web::PacketFactory::Create(RecvJson());
     }
 
     Socket::Socket(int af, int type, int protocol)

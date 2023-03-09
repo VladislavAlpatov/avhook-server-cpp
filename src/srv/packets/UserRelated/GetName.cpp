@@ -12,11 +12,7 @@ namespace Web::Packet::User
     nlohmann::json GetName::ExecutePayload(ClientHandle &clientHandle)
     {
 
-        auto pDataBase = DBAPI::DataBase::Get();
-
-        const auto user = pDataBase->GetUserById(m_iUserId);
-
-        return {{"name", user.GetName()}};
+        return {{"name", m_userFromPacket.GetName()}};
     }
 
     GetName::GetName(const nlohmann::json &data) : UserRelated(data)
