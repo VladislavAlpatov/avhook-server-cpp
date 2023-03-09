@@ -2,12 +2,12 @@
 // Created by vladislav on 07.03.23.
 //
 #pragma once
-#include "../BasePacket.h"
+#include "UserRelated.h"
 
 
 namespace Web::Packet::User
 {
-    class GetStatus final : public BasePacket
+    class GetStatus final : public UserRelated
     {
     public:
         nlohmann::json ExecutePayload(ClientHandle &clientHandle) override;

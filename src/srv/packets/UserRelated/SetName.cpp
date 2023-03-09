@@ -6,17 +6,15 @@
 #include "../exceptions.h"
 
 #include "../../DataBaseAPI/DataBase.h"
-#include "../../DataBaseAPI/User.h"
 #include "../../ClientHandle/ClientHandle.h"
 
 namespace Web::Packet::User
 {
-    SetName::SetName(const nlohmann::json &data) : BasePacket(data)
+    SetName::SetName(const nlohmann::json &data) : UserRelated(data)
     {
         try
         {
-            m_iUserID      = data["id"].get<int>();
-            m_sNewUserName = data["name"].get<std::string>();
+            m_sNewUserName = data.at("name");
         }
         catch (...)
         {
@@ -25,14 +23,10 @@ namespace Web::Packet::User
     }
     nlohmann::json SetName::ExecutePayload(Web::ClientHandle &clientHandle)
     {
-        auto pDataBase = DBAPI::DataBase::Get();
-
-        auto targetUser = pDataBase->GetUserById(m_iUserID);
-
-        if (targetUser != clientHandle.m_dbUser)
+        if (m_userFromPacket != clientHandle.m_dbUser)
             throw std::runtime_error("You cant change other user data without admin rights");
 
-        targetUser.SetName(m_sNewUserName);
+        m_userFromPacket.SetName(m_sNewUserName);
 
         return {};
     }
