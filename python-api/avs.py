@@ -24,15 +24,16 @@ class User:
 
     def GetName(self) -> str:
         data = req(soc, {"type": 1, "id": self.id})
-        print(data)
         return json.loads(data)["name"]
 
     def GetStatus(self) -> str:
         data = req(soc, {"type": 2, "id": self.id})
-
         return json.loads(data)["status"]
 
 
-usr = User(1)
-print(usr.GetName())
+try:
+    usr = User(1)
+    print(usr.GetName())
+except Exception:
+    pass
 soc.close()

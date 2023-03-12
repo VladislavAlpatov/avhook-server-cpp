@@ -11,10 +11,7 @@ namespace Web::Packet::User
 {
     nlohmann::json GetChatList::ExecutePayload(ClientHandle &clientHandle)
     {
-        if (clientHandle.m_dbUser != m_userFromPacket)
-            throw std::runtime_error("You cant get packet list of different user");
-
-        const auto chatList = m_userFromPacket.GetChatList();
+        const auto chatList = m_pUserFromPacket.GetChatList();
 
 
         std::vector<nlohmann::json> jsnChatList;

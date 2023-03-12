@@ -13,6 +13,8 @@ namespace Web::Packet::Decorator
     public:
         explicit BaseDecorator(std::unique_ptr<BasePacket> &pPacket);
         BaseDecorator() = default;
+        ~BaseDecorator() override = default;
+
         nlohmann::json ExecutePayload(ClientHandle &clientHandle) override;
 
         template<class... Args>
@@ -20,6 +22,24 @@ namespace Web::Packet::Decorator
 
     protected:
         std::unique_ptr<BasePacket> m_pDecoratedPacket;
+
+        template<class Type>
+        Type* GetOriginalPacket()
+        {
+            BasePacket* pPrevObj = m_pDecoratedPacket.get();
+
+            while (true)
+            {
+
+                if(dynamic_cast<Type*>(pPrevObj))
+                    return (Type*)pPrevObj;
+
+                if (!dynamic_cast<BaseDecorator*>(pPrevObj))
+                    throw std::runtime_error("not found packet");
+
+                pPrevObj = ((BaseDecorator*)pPrevObj)->m_pDecoratedPacket.get();
+            }
+        }
     };
 
     template<class... Args>
@@ -36,4 +56,5 @@ namespace Web::Packet::Decorator
 
         return pDecoratedPacket;
     }
+
 }

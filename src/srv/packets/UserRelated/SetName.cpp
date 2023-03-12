@@ -23,10 +23,10 @@ namespace Web::Packet::User
     }
     nlohmann::json SetName::ExecutePayload(Web::ClientHandle &clientHandle)
     {
-        if (m_userFromPacket != clientHandle.m_dbUser)
+        if (m_pUserFromPacket != clientHandle.m_dbUser)
             throw std::runtime_error("You cant change other user data without admin rights");
 
-        m_userFromPacket.SetName(m_sNewUserName);
+        m_pUserFromPacket.SetName(m_sNewUserName);
 
         return {};
     }

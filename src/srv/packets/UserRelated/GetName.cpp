@@ -12,7 +12,7 @@ namespace Web::Packet::User
     nlohmann::json GetName::ExecutePayload(ClientHandle &clientHandle)
     {
 
-        return {{"name", m_userFromPacket.GetName()}};
+        return {{"name", m_pUserFromPacket.GetName()}};
     }
 
     GetName::GetName(const nlohmann::json &data) : UserRelated(data)

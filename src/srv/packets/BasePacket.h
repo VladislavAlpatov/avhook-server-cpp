@@ -8,6 +8,7 @@ namespace Web {class ClientHandle;}
 
 namespace Web::Packet
 {
+
     class BasePacket
     {
     public:
@@ -17,6 +18,8 @@ namespace Web::Packet
         nlohmann::json m_Data;
         BasePacket() = default;
         explicit BasePacket(const nlohmann::json& data);
+    private:
+
     };
 
 } // packet

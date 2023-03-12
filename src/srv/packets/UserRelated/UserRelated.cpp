@@ -15,7 +15,7 @@ namespace Web::Packet::User
         {
             auto pDataBase = DBAPI::DataBase::Get();
 
-            m_userFromPacket = pDataBase->GetUserById(data.at("id"));
+            m_pUserFromPacket = pDataBase->GetUserById(data.at("id"));
         }
         catch (...)
         {

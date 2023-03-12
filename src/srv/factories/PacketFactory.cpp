@@ -15,6 +15,7 @@
 #include "../packets/PacketID.h"
 
 #include "../packets/decorators/RegisteredOnly.h"
+#include "../packets/decorators/CantModifyOtherUsers.h"
 
 
 #include "../exceptions.h"
@@ -31,7 +32,7 @@ namespace Web
         switch (data["type"].get<int>())
         {
             // Put User related packets here:
-            case PacketID::UserGetName:         return MutipleDecoration(new Packet::User::GetName(data),     new RegisteredOnly());
+            case PacketID::UserGetName:         return MutipleDecoration(new Packet::User::GetName(data),     new RegisteredOnly(), new CantModifyOtherUsers());
             case PacketID::UserGetChatList:     return MutipleDecoration(new Packet::User::GetChatList(data), new RegisteredOnly());
             case PacketID::UserGetStatus:       return MutipleDecoration(new Packet::User::GetStatus(data),   new RegisteredOnly());
             case PacketID::UserSetName:         return MutipleDecoration(new Packet::User::SetName(data),     new RegisteredOnly());
