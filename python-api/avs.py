@@ -3,7 +3,7 @@ import json
 
 print("started")
 soc = socket(AF_INET, SOCK_STREAM)
-soc.connect(("127.0.0.1", 7777))
+soc.connect(("192.168.111.128", 7777))
 
 
 def req(sct: socket, jsn):
@@ -15,7 +15,7 @@ def req(sct: socket, jsn):
     return sct.recv(1024).decode('utf-8')
 
 
-req(soc, {"type": 5, "email": "1@mail.ru", "password": "1235"})
+print(req(soc, {"type": 5, "email": "1@mail.ru", "password": "1235"}))
 
 
 class User:
@@ -31,9 +31,6 @@ class User:
         return json.loads(data)["status"]
 
 
-try:
-    usr = User(1)
-    print(usr.GetName())
-except Exception:
-    pass
-soc.close()
+usr = User(1)
+print(usr.GetName())
+print("end")

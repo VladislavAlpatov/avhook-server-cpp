@@ -22,7 +22,7 @@ namespace Web::Network
 
     [[maybe_unused]] SOCKET Socket::GetRawSocket() const
     {
-        return *m_pRawSocket;
+        return m_pRawSocket;
     }
 
     std::string Socket::RecvString() const
@@ -52,16 +52,7 @@ namespace Web::Network
 
     Socket::Socket(int af, int type, int protocol)
     {
-        m_pRawSocket = std::shared_ptr<SOCKET>(new SOCKET, [](SOCKET* pSocket)
-        {
-#ifdef _WIN32
-            closesocket(*pSocket);
-#else
-            close(*pSocket);
-#endif
-        });
-
-        *m_pRawSocket = socket(af, type, protocol);
+        m_pRawSocket = socket(af, type, protocol);
     }
 
     void Socket::Bind(const std::string &ip, int iPort)
@@ -80,15 +71,15 @@ namespace Web::Network
         addr.sin_port = htons(iPort);
         addr.sin_family = AF_INET;
 
-        bind(*m_pRawSocket, (sockaddr*)&addr, sizeof(addr));
+        bind(m_pRawSocket, (sockaddr*)&addr, sizeof(addr));
 #endif
     }
 
     Socket Socket::Listen()
     {
-        listen(*m_pRawSocket, SOMAXCONN);
+        listen(m_pRawSocket, SOMAXCONN);
 
-        auto connectionSocket = accept(*m_pRawSocket, NULL, NULL);
+        auto connectionSocket = accept(m_pRawSocket, NULL, NULL);
 
         if (!connectionSocket) throw Exception::SocketAcceptionFaild();
 
@@ -97,40 +88,18 @@ namespace Web::Network
 
     Socket::Socket(::SOCKET socket)
     {
-        m_pRawSocket = std::shared_ptr<SOCKET>(new SOCKET, [](const SOCKET* pSocket)
-        {
-#ifdef _WIN32
-            closesocket(*pSocket);
-#else // Linux
-            close(*pSocket);
-#endif
-            delete pSocket;
-        });
-        *m_pRawSocket = socket;
-
+        m_pRawSocket = socket;
     }
 
     Socket::Socket()
     {
-        // AF_INET, SOCK_STREAM, IPPROTO_TCP
-        m_pRawSocket = std::shared_ptr<SOCKET>(new SOCKET, [](const SOCKET* pSocket)
-        {
-
-#ifdef _WIN32
-            closesocket(*pSocket);
-#else // Linux
-            close(*pSocket);
-#endif
-            delete pSocket;
-        });
-
-        *m_pRawSocket = socket(AF_INET, SOCK_STREAM, IPPROTO_TCP);
+        m_pRawSocket = -1;
     }
 
     std::unique_ptr<uint8_t> Socket::RecvBytes() const
     {
         int iSize = 0;
-        ::recv(*m_pRawSocket, (char*)&iSize, 4, NULL);
+        ::recv(m_pRawSocket, (char*)&iSize, 4, NULL);
 
         if (iSize <= 0 || iSize > MAX_ACCEPTABLE_PACKET_SIZE)
             throw Exception::RecvFailed();
@@ -141,7 +110,7 @@ namespace Web::Network
         int iRecvdBytes = 0;
         while (iRecvdBytes < iSize)
         {
-            const auto tmp = ::recv(*m_pRawSocket, (char*)pBuff.get()+iRecvdBytes, iSize-iRecvdBytes, NULL);
+            const auto tmp = ::recv(m_pRawSocket, (char*)pBuff.get()+iRecvdBytes, iSize-iRecvdBytes, NULL);
 
             if (!tmp) throw Exception::RecvFailed();
             iRecvdBytes += tmp;
@@ -152,7 +121,13 @@ namespace Web::Network
 
     void Socket::SendBytes(const void *pBytes, int iSize) const
     {
-        ::send(*m_pRawSocket, (const char*)&iSize, sizeof(iSize), MSG_NOSIGNAL);
-        ::send(*m_pRawSocket, (const char*)pBytes, iSize, MSG_NOSIGNAL);
+        ::send(m_pRawSocket, (const char*)&iSize, sizeof(iSize), MSG_NOSIGNAL);
+        ::send(m_pRawSocket, (const char*)pBytes, iSize, MSG_NOSIGNAL);
+    }
+
+    void Socket::Close()
+    {
+        close(m_pRawSocket);
+        m_pRawSocket = -1;
     }
 }

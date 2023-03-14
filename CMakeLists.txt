@@ -33,14 +33,8 @@ target_link_libraries(server PRIVATE SQLite::SQLite3)
 add_subdirectory(src/lib/json)
 target_link_libraries( server PRIVATE nlohmann_json )
 
-find_package(fmt CONFIG REQUIRED)
+find_package(fmt)
 target_link_libraries(server PRIVATE fmt::fmt)
-
-
-find_package(Crypto++ REQUIRED)
-target_link_libraries(server PRIVATE cryptopp)
-
-
 if (WIN32)
     target_link_libraries(server PRIVATE ws2_32)
 endif()

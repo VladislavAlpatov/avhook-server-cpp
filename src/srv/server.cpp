@@ -13,13 +13,14 @@
 #include "observers/OnUserDisconnected.h"
 #include "observers/OnUserAuth.h"
 #include "observers/OnPacket.h"
-
-
+#include <sys/socket.h>
+#include <netinet/in.h>
 
 namespace Web
 {
     Server::Server(const std::string &ip, const int port)
     {
+        m_sListen = Network::Socket(AF_INET, SOCK_STREAM, IPPROTO_TCP);
         m_sListen.Bind(ip, port);
     }
 
@@ -27,7 +28,7 @@ namespace Web
     {
         static std::unique_ptr<Server> pServer;
         if (!pServer)
-            pServer = std::unique_ptr<Server>(new Server("127.0.0.1", 7777));
+            pServer = std::unique_ptr<Server>(new Server("0.0.0.0", 7777));
 
         return pServer.get();
     }
@@ -45,9 +46,10 @@ namespace Web
             NotifyObserver<Observers::OnUserConnected>();
             m_iConnectedCount++;
 
-			std::thread([this, connectionSocket]
+			std::thread([this, &connectionSocket]
 			{
-				auto clientHandle = ClientHandle(connectionSocket);
+                auto con = connectionSocket;
+				auto clientHandle = ClientHandle(con);
 
 #ifdef _DEBUG
 				clientHandle.AddObserver(new Observers::OnUserAuth());
@@ -57,6 +59,8 @@ namespace Web
                 clientHandle.Listen();
                 NotifyObserver<Observers::OnUserDisconnected>();
                 m_iConnectedCount--;
+                con.Close();
+
 			}).detach();
 
         }

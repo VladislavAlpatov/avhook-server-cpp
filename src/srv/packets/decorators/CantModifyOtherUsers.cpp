@@ -11,7 +11,7 @@ namespace Web::Packet::Decorator
 
     nlohmann::json CantModifyOtherUsers::ExecutePayload(ClientHandle &clientHandle)
     {
-        auto ptr = GetOriginalPacket<Packet::Auth>();
+        // auto ptr = GetOriginalPacket<Packet::Auth>();
         return m_pDecoratedPacket->ExecutePayload(clientHandle);
     }
 }
