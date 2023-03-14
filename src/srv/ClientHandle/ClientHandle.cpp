@@ -35,7 +35,9 @@ void Web::ClientHandle::Listen()
 }
 
 Web::ClientHandle::~ClientHandle()
-= default;;
+{
+    m_clientSocket.Close();
+}
 
 void Web::ClientHandle::OnPacket(const std::unique_ptr<Web::Packet::BasePacket>& pPacket)
 {

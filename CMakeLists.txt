@@ -27,13 +27,13 @@ add_subdirectory(src)
 find_package(Boost REQUIRED)
 target_link_libraries(server PRIVATE ${Boost_LIBRARIES})
 
-find_package(SQLite3)
+find_package(SQLite3 REQUIRED)
 target_link_libraries(server PRIVATE SQLite::SQLite3)
 
 add_subdirectory(src/lib/json)
 target_link_libraries( server PRIVATE nlohmann_json )
 
-find_package(fmt)
+find_package(fmt REQUIRED)
 target_link_libraries(server PRIVATE fmt::fmt)
 if (WIN32)
     target_link_libraries(server PRIVATE ws2_32)
