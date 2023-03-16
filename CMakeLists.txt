@@ -34,7 +34,13 @@ add_subdirectory(src/lib/json)
 target_link_libraries( server PRIVATE nlohmann_json )
 
 find_package(fmt REQUIRED)
+# Adding fmt manually path and libs, since clion cant see em
+# if fmt::fmt used in some reason, maybe they will patch it
+# but for now leave it here!
+target_include_directories(server PRIVATE ${FMT_INCLUDE_DIR})
 target_link_libraries(server PRIVATE fmt::fmt)
+
+
 if (WIN32)
     target_link_libraries(server PRIVATE ws2_32)
 endif()

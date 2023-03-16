@@ -11,6 +11,6 @@ namespace Observers
 	{
 	public:
 		virtual void HandleEvent(const ObservableObject *pContext) = 0;
-		virtual ~IBaseObserver() {};
+		virtual ~IBaseObserver() = default;
 	};
 }

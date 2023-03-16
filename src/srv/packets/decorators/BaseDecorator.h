@@ -34,7 +34,7 @@ namespace Web::Packet::Decorator
                 if(dynamic_cast<Type*>(pPrevObj))
                     return (Type*)pPrevObj;
 
-                if (!dynamic_cast<BaseDecorator*>(pPrevObj))
+                if (dynamic_cast<BaseDecorator*>(pPrevObj) != nullptr)
                     throw std::runtime_error("not found packet");
 
                 pPrevObj = ((BaseDecorator*)pPrevObj)->m_pDecoratedPacket.get();
