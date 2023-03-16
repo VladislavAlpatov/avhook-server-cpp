@@ -4,14 +4,18 @@
 
 #include "CantModifyOtherUsers.h"
 #include "../UserRelated/UserRelated.h"
-#include "../Misc/Auth.h"
 namespace Web::Packet::Decorator
 {
 
 
     nlohmann::json CantModifyOtherUsers::ExecutePayload(ClientHandle &clientHandle)
     {
-        // auto ptr = GetOriginalPacket<Packet::Auth>();
+        auto pPacket = GetOriginalPacket<Packet::User::UserRelated>();
+
+        if (pPacket->m_pUserFromPacket != clientHandle.m_dbUser)
+            throw std::runtime_error("You cant modify data of other users");
+
+
         return m_pDecoratedPacket->ExecutePayload(clientHandle);
     }
 }

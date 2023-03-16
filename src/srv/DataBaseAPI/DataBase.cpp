@@ -32,7 +32,7 @@ namespace DBAPI
 
     DataBase* DataBase::Get()
     {
-        static auto pDataBase = std::unique_ptr<DataBase>(new DataBase("db.db"));
+        static auto pDataBase = std::unique_ptr<DataBase>(new DataBase("/home/vlad/Desktop/db.db"));
 
         return pDataBase.get();
     }

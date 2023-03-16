@@ -86,11 +86,10 @@ namespace DBAPI
     {
         auto pDataBase = DataBase::Get();
 
-        if (IsUserNameAcceptable(sName))
+        if (!IsUserNameAcceptable(sName))
             throw std::runtime_error("Username is invalid");
 
         boost::replace_all(sName, "'", "''");
-        boost::replace_all(sName, "\"", "\"\"");
 
         pDataBase->Query(fmt::format("UPDATE `users` SET `name` = '{}' WHERE `id` = {}",sName, m_iID));
 
@@ -109,8 +108,6 @@ namespace DBAPI
         auto pDataBase = DataBase::Get();
 
         boost::replace_all(sEmail, "'", "''");
-        boost::replace_all(sEmail, "\"", "\"\"");
-
         pDataBase->Query(fmt::format("UPDATE `users` SET `email` = '{}' WHERE `id` = {}", sEmail, m_iID));
     }
 
