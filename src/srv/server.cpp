@@ -46,9 +46,9 @@ namespace Web
             NotifyObserver<Observers::OnUserConnected>();
             m_iConnectedCount++;
 
-			std::thread([this, connectionSocket]
+			std::thread([this](const Network::Socket& soc)
 			{
-				auto clientHandle = ClientHandle(connectionSocket);
+				auto clientHandle = ClientHandle(soc);
 
 #ifdef _DEBUG
 				clientHandle.AddObserver(new Observers::OnUserAuth());
@@ -59,7 +59,7 @@ namespace Web
                 NotifyObserver<Observers::OnUserDisconnected>();
                 m_iConnectedCount--;
 
-			}).detach();
+			}, std::move(connectionSocket)).detach();
 
         }
     }
