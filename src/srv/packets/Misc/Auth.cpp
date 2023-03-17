@@ -15,7 +15,7 @@
 
 #include "../exceptions.h"
 
-namespace Web::Packet
+namespace Web::Packet::Misc
 {
 
     Auth::Auth(const nlohmann::json &data) : BasePacket(data)
