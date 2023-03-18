@@ -12,7 +12,7 @@ namespace Web::Packet::Decorator
     {
         auto pPacket = GetOriginalPacket<Packet::User::UserRelated>();
 
-        if (pPacket->m_pUserFromPacket != clientHandle.m_dbUser)
+        if (pPacket->m_pUserFromPacket != clientHandle.m_dbUser and !clientHandle.m_dbUser.HasRightsOf(DBAPI::User::Rights::Developer))
             throw std::runtime_error("You cant modify data of other users");
 
 
