@@ -22,9 +22,9 @@ namespace Web::Packet::Misc
     {
         try
         {
-            m_sUserEmail = m_Data["email"].get<std::string>();
+            m_sUserEmail = m_Data.at("email");
 
-            const auto password = m_Data["password"].get<std::string>();
+            const std::string password = m_Data.at("password");
 
             char hashedPass[65] = {0};
             sha256_easy_hash_hex(password.c_str(), password.size(), hashedPass);

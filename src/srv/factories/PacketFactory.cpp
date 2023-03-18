@@ -47,7 +47,13 @@ namespace Web
 
     std::unique_ptr<BasePacket> PacketFactory::Create(const nlohmann::json &data)
     {
+
+        if (!data.contains("route"))
+            throw std::runtime_error("\"route\" filed seems does not exist");
+
+
         const std::string route = data["route"];
+
         if (!packetRoutMap.contains(route))
             throw Exception::InvalidPacketType();
 

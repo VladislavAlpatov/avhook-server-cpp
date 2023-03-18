@@ -14,7 +14,10 @@ def req(sct: socket, jsn):
     return sct.recv(1024).decode('utf-8')
 
 
-req(soc, {"type": 5, "email": "1@mail.ru", "password": "1235"})
+data = req(soc, {"route": "/auth",
+                 "email": "1@mail.ru",
+                 "password": "1235"})
+print(data)
 
 
 class User:
@@ -22,7 +25,7 @@ class User:
         self.id = id
 
     def GetName(self) -> str:
-        data = req(soc, {"type": 1, "id": self.id})
+        data = req(soc, {"route": "/user/get/name", "id": self.id})
         return json.loads(data)["name"]
 
     def GetStatus(self) -> str:
@@ -30,7 +33,7 @@ class User:
         return json.loads(data)["status"]
 
     def SetName(self, name: str) -> None:
-        data = req(soc, {"type": 4, "id": self.id, "name": name})
+        data = req(soc, {"/user/set/name": 4, "id": self.id, "name": name})
 
 
 usr = User(2)

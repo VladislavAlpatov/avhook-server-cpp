@@ -153,4 +153,29 @@ namespace DBAPI
     {
         return !(*this == other);
     }
+
+    int User::GetRights() const
+    {
+        auto pDataBase = DataBase::Get();
+
+        const auto data = pDataBase->Query(fmt::format("SELECT `type` FROM `users` WHERE `id` = {}", m_iID));
+        const auto iRights =  std::stoi(data[0][0]);
+
+        return iRights;
+    }
+
+    bool User::HasRightsOf(int iRights) const
+    {
+        return GetRights() & iRights;
+    }
+
+    void User::SetRights(int iRights) const
+    {
+        DataBase::Get()->Query(fmt::format("UPDATE `users` SET `type` = {} WHERE `id` = {}", iRights, m_iID));
+    }
+
+    void User::AddRights(int iRights) const
+    {
+        SetRights(GetRights() | iRights);
+    }
 } // DBAPI

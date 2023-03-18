@@ -22,6 +22,8 @@ namespace DBAPI
     {
         friend class DataBase;
         friend class Chat;
+
+
     public:
         User() = default;
         [[nodiscard]] std::string              GetName()                                           const;
@@ -31,7 +33,12 @@ namespace DBAPI
         [[nodiscard]] std::string              GetEmail()                                          const;
         [[nodiscard]] std::vector<Config>      GetConfigs()                                        const;
         [[nodiscard]] std::vector<Chat>        GetChatList()                                       const;
+        [[nodiscard]] int                      GetRights()                                         const;
+        [[nodiscard]] bool                     HasRightsOf(int iRights)                            const;
 
+
+        void                                   SetRights(int iRights)                              const;
+        void                                   AddRights(int iRights)                              const;
 
         [[nodiscard]] static bool              IsUserNameAcceptable(const std::string& name);
         [[nodiscard]] bool                     IsValid() const {return m_iID != INVALID_USER_ID;};
@@ -50,6 +57,14 @@ namespace DBAPI
 
         nlohmann::json ToJson() const override;
 
+
+        enum Rights : int
+        {
+            Basic,
+            BetaTester,
+            Admin,
+            Developer,
+        };
     private:
         User(int iUserId);
     };
