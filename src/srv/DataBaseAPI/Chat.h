@@ -20,16 +20,22 @@ namespace DBAPI
     public:
         friend class User;
         friend class DataBase;
+        Chat() = default;
         void SendMessage(const User& user, std::string text);
-        [[nodiscard]] std::vector<User> GetMembers() const;
-        [[nodiscard]] User              GetOwner() const;
-        void AddUser(const User& user);
-        void RemoveUser(const User& user);
+
+
+        [[nodiscard]] std::vector<User> GetMembers()      const;
+        [[nodiscard]] User              GetOwner()        const;
         [[nodiscard]] bool IsUserInChat(const User& user) const;
-        [[nodiscard]] std::string GetName() const;
-        [[nodiscard]] std::string GetInviteLink() const;
+        [[nodiscard]] std::string GetName()               const;
+        [[nodiscard]] std::string GetInviteLink()         const;
+        [[nodiscard]] bool HasUser(const User& user)      const;
+
 
         nlohmann::json ToJson() const override;
+
+        void AddUser(const User& user);
+        void RemoveUser(const User& user);
 
     private:
         Chat(int iId) {m_iID = iId;}

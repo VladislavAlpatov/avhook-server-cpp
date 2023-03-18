@@ -11,10 +11,15 @@
 #include "../packets/UserRelated/GetChatList.h"
 #include "../packets/UserRelated/SetName.h"
 
+#include "../packets/ChatRelated/GetName.h"
+
+
 #include "../packets/Misc/Auth.h"
 
 #include "../packets/decorators/RegisteredOnly.h"
 #include "../packets/decorators/CantModifyOtherUsers.h"
+#include "../packets/decorators/ChatMembersOnly.h"
+
 
 #include <functional>
 
@@ -26,6 +31,9 @@ using namespace Web::Packet::Decorator;
 
 static std::map<std::string,  std::function<std::unique_ptr<BasePacket>(const nlohmann::json&)>> packetRoutMap
         {
+                // ==================
+                // User related packets
+                // ==================
                 {"/user/get/name",[](const nlohmann::json& data) -> auto
                 { return MutipleDecoration(new User::GetName(data), new RegisteredOnly());}},
 
@@ -38,6 +46,16 @@ static std::map<std::string,  std::function<std::unique_ptr<BasePacket>(const nl
                 {"/user/set/name",[](const nlohmann::json& data) -> auto
                 { return MutipleDecoration(new User::SetName(data), new RegisteredOnly(), new CantModifyOtherUsers());}},
 
+                // ==================
+                // Chat related packets
+                // ==================
+                {"/chat/get/name",[](const nlohmann::json& data) -> auto
+                { return MutipleDecoration(new Chat::GetName(data), new RegisteredOnly(), new ChatMembersOnly());}},
+
+
+                // ==================
+                // Misc packets
+                // ==================
                 {"/auth",[](const nlohmann::json& data) -> auto
                 { return MutipleDecoration(new Misc::Auth(data));}},
         };

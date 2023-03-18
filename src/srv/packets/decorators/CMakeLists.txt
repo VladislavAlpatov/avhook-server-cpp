@@ -3,4 +3,5 @@ target_sources(server PRIVATE
         RegisteredOnly.cpp
         exceptions.h
         CantModifyOtherUsers.cpp
-        AdminOnly.cpp)
+        AdminOnly.cpp
+        ChatMembersOnly.cpp)

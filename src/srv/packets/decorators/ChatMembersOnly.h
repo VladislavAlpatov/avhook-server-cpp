@@ -1,22 +1,16 @@
 //
-// Created by vladislav on 10.03.23.
+// Created by Vladislav on 3/18/2023.
 //
 
 #pragma once
 #include "BaseDecorator.h"
 
-namespace DBAPI
-{
-    class User;
-}
 
 namespace Web::Packet::Decorator
 {
-    class CantModifyOtherUsers final : public BaseDecorator
+    class ChatMembersOnly final : public BaseDecorator
     {
     public:
-        CantModifyOtherUsers() = default;
-
         nlohmann::json ExecutePayload(ClientHandle &clientHandle) override;
     };
 

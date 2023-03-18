@@ -95,4 +95,13 @@ namespace DBAPI
 
         return data;
     }
+
+    bool Chat::HasUser(const User &user) const
+    {
+
+        for (const auto& chatMember : GetMembers())
+            if (user == chatMember)
+                return true;
+        return false;
+    }
 } // DBAP
