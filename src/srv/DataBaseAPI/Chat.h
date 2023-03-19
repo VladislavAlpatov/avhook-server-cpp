@@ -11,10 +11,10 @@
 #include "IJsonExportable.h"
 
 
-
 namespace DBAPI
 {
     class User;
+    class ChatMessage;
     class Chat final : public Object, public IJsonExportable
     {
     public:
@@ -24,13 +24,13 @@ namespace DBAPI
         void SendMessage(const User& user, std::string text);
 
 
-        [[nodiscard]] std::vector<User> GetMembers()      const;
-        [[nodiscard]] User              GetOwner()        const;
-        [[nodiscard]] bool IsUserInChat(const User& user) const;
-        [[nodiscard]] std::string GetName()               const;
-        [[nodiscard]] std::string GetInviteLink()         const;
-        [[nodiscard]] bool HasUser(const User& user)      const;
-
+        [[nodiscard]] std::vector<User>        GetMembers()                     const;
+        [[nodiscard]] User                     GetOwner()                       const;
+        [[nodiscard]] bool                     IsUserInChat(const User& user)   const;
+        [[nodiscard]] std::string              GetName()                        const;
+        [[nodiscard]] std::string              GetInviteLink()                  const;
+        [[nodiscard]] bool                     HasUser(const User& user)        const;
+        [[nodiscard]] std::vector<ChatMessage> GetHistory()                     const;
 
         nlohmann::json ToJson() const override;
 
@@ -38,7 +38,7 @@ namespace DBAPI
         void RemoveUser(const User& user);
 
     private:
-        Chat(int iId) {m_iID = iId;}
+        Chat(int iId) : Object(iId){}
     };
 
 } // DBAP

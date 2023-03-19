@@ -11,7 +11,7 @@ namespace DBAPI
 {
     class User;
     class Chat;
-
+    class ChatMessage;
     class DataBase : public sql::Connection
     {
     public:
@@ -20,8 +20,9 @@ namespace DBAPI
         bool        IsUserExist(int iUserId);
         bool        IsChatExist(int iChatId);
         bool        IsPrivateChatLinkTaken(uint64_t link);
+        bool        IsChatMessageExist(int iMessageId);
         Chat        GetChatById(int iChatId);
-
+        ChatMessage GetChatMessageById(int iChatMessage);
         User        GetUserByEmail(std::string sEmail);
 
         void AddNewUser(const std::string& sName, const std::string& sStatus,const std::string& sPassword, const std::string sEmail, int iType);

@@ -3,14 +3,17 @@
 //
 
 #include "DataBase.h"
-#include <memory>
-#include <fmt/format.h>
+
 #include "exceptions.h"
 #include "User.h"
 #include "Chat.h"
+#include "ChatMessage.h"
+
+
 #include <boost/algorithm/string.hpp>
 #include <random>
-
+#include <memory>
+#include <fmt/format.h>
 uint64_t GeneratePublicId()
 {
     std::random_device rd;
@@ -91,5 +94,20 @@ namespace DBAPI
     bool DataBase::IsPrivateChatLinkTaken(uint64_t link)
     {
         return !Query(fmt::format("SELECT `id` FROM `chats` WHERE `public_id` = {}", link)).empty();
+    }
+
+    ChatMessage DataBase::GetChatMessageById(int iChatMessage)
+    {
+        if (!IsChatMessageExist(iChatMessage))
+            throw Exception::ChatMessageNotFound();
+
+        const auto data = Query(fmt::format("SELECT `id` FROM `chats-messages` WHERE `id` = {}", iChatMessage));
+
+        return {std::stoi(data[0][0])};
+    }
+
+    bool DataBase::IsChatMessageExist(int iMessageId)
+    {
+        return !Query(fmt::format("SELECT `id` FROM `chats-messages` WHERE `id` = {}", iMessageId)).empty();
     }
 } // DBAP

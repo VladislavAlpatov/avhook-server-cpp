@@ -13,9 +13,9 @@
 
 namespace DBAPI
 {
-    User::User(int iUserId)
+    User::User(int iUserId) : Object(iUserId)
     {
-        m_iID = iUserId;
+
     }
 
     std::string User::GetName() const

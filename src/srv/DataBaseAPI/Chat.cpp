@@ -9,6 +9,8 @@
 #include <boost/algorithm/string.hpp>
 #include "../../lib/base64/base64.h"
 
+
+#include "ChatMessage.h"
 #include "User.h"
 
 namespace DBAPI
@@ -98,10 +100,21 @@ namespace DBAPI
 
     bool Chat::HasUser(const User &user) const
     {
-
         for (const auto& chatMember : GetMembers())
             if (user == chatMember)
                 return true;
         return false;
+    }
+
+    std::vector<ChatMessage> Chat::GetHistory() const
+    {
+        std::vector<ChatMessage> out;
+        const auto data = DataBase::Get()->Query(fmt::format("SELECT `id` FROM `chats-messages` WHERE `chat_id` = {}", m_iID));
+        out.reserve(data.size());
+
+        for (const auto& row : data)
+            out.push_back({std::stoi(row[0])});
+
+        return out;
     }
 } // DBAP

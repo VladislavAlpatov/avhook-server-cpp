@@ -10,6 +10,7 @@ namespace DBAPI
     {
     public:
         Object() = default;
+        Object(int id) {m_iID = id;}
         int GetID() const {return  m_iID;}
     protected:
         int m_iID = -1;
