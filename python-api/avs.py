@@ -69,4 +69,17 @@ class Chat:
 
     def get_history(self):
         data = self.connection.send_json({"route": "/chat/get/history", "id": self.id})
+        return [Message(self.connection, jsn["id"]) for jsn in data["messages"]]
+
+    def send_message(self, text: str):
+        data = self.connection.send_json({"route": "/chat/send/message", "id": self.id, "message": text})
         print(data)
+
+
+class Message:
+    def __init__(self, con: Connection, id: int):
+        self.connection = con
+        self.id = id
+
+    def get_text(self):
+        return self.connection.send_json({"route": "/chat/message/text", "id": self.id})['text']

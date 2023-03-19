@@ -77,7 +77,7 @@ static std::map<std::string,  std::function<std::unique_ptr<BasePacket>(const nl
                 // Chat message related packets
                 // ==================
                 {"/chat/message/text",[](const nlohmann::json& data) -> auto
-                { return MutipleDecoration(new ChatMessage::GetText(data), new RegisteredOnly(), new ChatMembersOnly());}},
+                { return MutipleDecoration(new ChatMessage::GetText(data), new RegisteredOnly());}},
 
 
                 // ==================

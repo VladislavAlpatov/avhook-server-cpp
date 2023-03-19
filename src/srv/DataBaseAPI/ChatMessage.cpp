@@ -30,7 +30,8 @@ DBAPI::Chat DBAPI::ChatMessage::GetChat() const
 std::string DBAPI::ChatMessage::GetText() const
 {
     const auto pDataBase = DataBase::Get();
-    return pDataBase->Query(fmt::format("SELECT `text` FROM `chats-messages` WHERE `id` = {}", m_iID))[0][0];
+    const auto data = pDataBase->Query(fmt::format("SELECT `text` FROM `chats-messages` WHERE `id` = {}", m_iID));
+    return data[0][0];
 }
 
 void DBAPI::ChatMessage::SetText(std::string text)
