@@ -66,3 +66,7 @@ class Chat:
     def get_invite(self) -> str:
         data = self.connection.send_json({"route": "/chat/get/invite", "id": self.id})
         return data["invite"]
+
+    def get_history(self):
+        data = self.connection.send_json({"route": "/chat/get/history", "id": self.id})
+        print(data)

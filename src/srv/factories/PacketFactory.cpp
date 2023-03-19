@@ -16,6 +16,11 @@
 #include "../packets/ChatRelated/GetName.h"
 #include "../packets/ChatRelated/SendMessage.h"
 #include "../packets/ChatRelated/GetInvite.h"
+#include "../packets/ChatRelated/GetHistory.h"
+
+
+#include "../packets/ChatMessageRelated/GetText.h"
+
 
 
 #include "../packets/Misc/Auth.h"
@@ -62,8 +67,18 @@ static std::map<std::string,  std::function<std::unique_ptr<BasePacket>(const nl
                 {"/chat/get/invite",[](const nlohmann::json& data) -> auto
                 { return MutipleDecoration(new Chat::GetInvite(data), new RegisteredOnly(), new ChatMembersOnly());}},
 
+                {"/chat/get/history",[](const nlohmann::json& data) -> auto
+                { return MutipleDecoration(new Chat::GetHistory(data), new RegisteredOnly(), new ChatMembersOnly());}},
+
                 {"/chat/send/message",[](const nlohmann::json& data) -> auto
                 { return MutipleDecoration(new Chat::SendMessage(data), new RegisteredOnly(), new ChatMembersOnly());}},
+
+                // ==================
+                // Chat message related packets
+                // ==================
+                {"/chat/message/text",[](const nlohmann::json& data) -> auto
+                { return MutipleDecoration(new ChatMessage::GetText(data), new RegisteredOnly(), new ChatMembersOnly());}},
+
 
                 // ==================
                 // Misc packets

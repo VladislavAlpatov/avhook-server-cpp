@@ -13,7 +13,8 @@ namespace Web::Packet::ChatMessage
     {
     public:
         explicit ChatMessageRelated(const nlohmann::json &data);
-    private:
+
+    protected:
         DBAPI::ChatMessage m_messageFromPacket;
     };
 
