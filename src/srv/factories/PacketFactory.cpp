@@ -10,6 +10,7 @@
 #include "../packets/UserRelated/GetStatus.h"
 #include "../packets/UserRelated/GetChatList.h"
 #include "../packets/UserRelated/SetName.h"
+#include "../packets/UserRelated/SetStatus.h"
 
 
 #include "../packets/ChatRelated/GetName.h"
@@ -48,6 +49,9 @@ static std::map<std::string,  std::function<std::unique_ptr<BasePacket>(const nl
 
                 {"/user/set/name",[](const nlohmann::json& data) -> auto
                 { return MutipleDecoration(new User::SetName(data), new RegisteredOnly(), new CantModifyOtherUsers());}},
+
+                {"/user/set/status",[](const nlohmann::json& data) -> auto
+                { return MutipleDecoration(new User::SetStatus(data), new RegisteredOnly(), new CantModifyOtherUsers());}},
 
                 // ==================
                 // Chat related packets

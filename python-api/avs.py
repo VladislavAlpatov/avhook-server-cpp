@@ -39,3 +39,6 @@ class User:
 
     def set_name(self, name: str):
         self.connection.send_json({"route": "/user/set/name", "id": self.id, "name": name})
+
+    def set_status(self, status: str):
+        self.connection.send_json({"route": "/user/set/status", "id": self.id, "status": status})
