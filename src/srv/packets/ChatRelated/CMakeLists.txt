@@ -1,4 +1,5 @@
 target_sources(server PRIVATE
         ChatRelated.cpp
         GetName.cpp
-        SendMessage.cpp)
+        SendMessage.cpp
+        GetInvite.cpp)

@@ -1,41 +1,41 @@
 from socket import *
 import json
 
-soc = socket(AF_INET, SOCK_STREAM)
-soc.connect(("192.168.111.128", 7777))
 
+class Connection:
+    def __init__(self, ip: str, port: int, email: str, password: str):
+        self.socket = socket(AF_INET, SOCK_STREAM)
+        self.socket.connect((ip, port))
 
-def req(sct: socket, jsn):
-    data = bytes(json.dumps(jsn), 'utf-8')
-    sct.send(len(data).to_bytes(4, byteorder='little'))
+        self.__user = User(self, self.send_json({"route": "/auth",
+                                                 "email": email,
+                                                 "password": password})["user_id"])
 
-    sct.sendall(data)
-    sct.recv(4)
-    return sct.recv(1024).decode('utf-8')
+    def get_logged_user(self):
+        return self.__user
 
+    def send_json(self, jsn: dict) -> dict:
+        data = bytes(json.dumps(jsn), 'utf-8')
+        self.socket.send(len(data).to_bytes(4, byteorder='little'))
 
-data = req(soc, {"route": "/auth",
-                 "email": "1@mail.ru",
-                 "password": "1235"})
-print(data)
+        self.socket.sendall(data)
+        self.socket.recv(4)
+
+        return json.loads(self.socket.recv(1024).decode('utf-8'))
 
 
 class User:
-    def __init__(self, id: int):
+    def __init__(self, con: Connection, id: int):
+        self.connection = con
         self.id = id
 
-    def GetName(self) -> str:
-        data = req(soc, {"route": "/user/get/name", "id": self.id})
-        return json.loads(data)["name"]
+    def get_name(self):
+        data = self.connection.send_json({"route": "/user/get/name", "id": self.id})
+        return data["name"]
 
-    def GetStatus(self) -> str:
-        data = req(soc, {"type": 2, "id": self.id})
-        return json.loads(data)["status"]
+    def get_status(self):
+        data = self.connection.send_json({"route": "/user/get/status", "id": self.id})
+        return data["status"]
 
-    def SetName(self, name: str) -> None:
-        data = req(soc, {"/user/set/name": 4, "id": self.id, "name": name})
-
-
-usr = User(2)
-usr.SetName("vlad")
-print(usr.GetName())
+    def set_name(self, name: str):
+        self.connection.send_json({"route": "/user/set/name", "id": self.id, "name": name})
