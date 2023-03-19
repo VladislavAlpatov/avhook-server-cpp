@@ -13,7 +13,7 @@ namespace Web::Packet::Chat
     {
         try
         {
-            DBAPI::DataBase::Get()->GetChatById(data["id"]);
+            m_chatFromPacket = DBAPI::DataBase::Get()->GetChatById(data["id"]);
         }
         catch (const nlohmann::json::exception& ex )
         {

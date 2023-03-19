@@ -17,6 +17,14 @@ namespace DBAPI::Exception
             return "User not found";
         }
     };
+    class ChatNotFound final : public std::exception
+    {
+    public:
+        const char *what() const noexcept override
+        {
+            return "Chat not found";
+        }
+    };
     class UserNotInChat final : public std::exception
     {
     public:

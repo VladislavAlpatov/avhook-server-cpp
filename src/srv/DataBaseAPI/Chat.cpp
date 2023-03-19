@@ -39,7 +39,7 @@ namespace DBAPI
     {
         auto pDataBase = DataBase::Get();
         std::vector<User> out;
-        const auto str = fmt::format("SELECT `user_id` FROM `chats-members` WHERE `user_id` = {}", m_iID);
+        const auto str = fmt::format("SELECT `user_id` FROM `chats-members` WHERE `chat_id` = {}", m_iID);
         const auto ids = pDataBase->Query(str);
 
         out.reserve(ids.size());

@@ -29,16 +29,40 @@ class User:
         self.connection = con
         self.id = id
 
-    def get_name(self):
+    def get_name(self) -> str:
         data = self.connection.send_json({"route": "/user/get/name", "id": self.id})
         return data["name"]
 
-    def get_status(self):
+    def get_status(self) -> str:
         data = self.connection.send_json({"route": "/user/get/status", "id": self.id})
         return data["status"]
 
-    def set_name(self, name: str):
+    def set_name(self, name: str) -> None:
         self.connection.send_json({"route": "/user/set/name", "id": self.id, "name": name})
 
-    def set_status(self, status: str):
+    def set_status(self, status: str) -> None:
         self.connection.send_json({"route": "/user/set/status", "id": self.id, "status": status})
+
+    def get_chats(self):
+        chats = []
+
+        data = self.connection.send_json({"route": "/user/get/chat_list", "id": self.id})["chats"]
+        for chatJson in data:
+            chats.append(Chat(self.connection, chatJson["id"]))
+
+        return chats
+
+
+
+class Chat:
+    def __init__(self, con: Connection, id: int):
+        self.connection = con
+        self.id = id
+
+    def get_name(self) -> str:
+        data = self.connection.send_json({"route": "/chat/get/name", "id": self.id})
+        return data["name"]
+
+    def get_invite(self) -> str:
+        data = self.connection.send_json({"route": "/chat/get/invite", "id": self.id})
+        return data["invite"]

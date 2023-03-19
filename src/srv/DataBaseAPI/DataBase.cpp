@@ -54,7 +54,11 @@ namespace DBAPI
 
     Chat DataBase::GetChatById(int iChatId)
     {
-        return {0};
+        if (!IsChatExist(iChatId))
+            throw Exception::ChatNotFound();
+
+        int id = std::stoi(Query(fmt::format("SELECT `id` FROM `chats` WHERE `id` = {}", iChatId))[0][0]);
+        return {id};
     }
 
     User DataBase::GetUserByEmail(std::string sEmail)
