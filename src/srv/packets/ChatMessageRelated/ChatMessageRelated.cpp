@@ -22,4 +22,9 @@ namespace Web::Packet::ChatMessage
         }
         m_messageFromPacket = DBAPI::DataBase::Get()->GetChatMessageById(iChatId);
     }
+
+    DBAPI::Chat ChatMessageRelated::GetChat()
+    {
+        return m_messageFromPacket.GetChat();
+    }
 }

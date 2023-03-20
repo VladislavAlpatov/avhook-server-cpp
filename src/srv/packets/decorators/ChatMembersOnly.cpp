@@ -11,9 +11,9 @@ namespace Web::Packet::Decorator
     {
         using namespace Web::Packet::Chat;
 
-        const auto pPacket = GetOriginalPacket<ChatRelated>();
+        const auto pPacket = GetOriginalPacket<IChatAccessible>();
 
-        if (!pPacket->m_chatFromPacket.HasUser(clientHandle.m_dbUser))
+        if (!pPacket->GetChat().HasUser(clientHandle.m_dbUser))
             throw std::runtime_error("You are not in this chat.");
 
         return m_pDecoratedPacket->ExecutePayload(clientHandle);

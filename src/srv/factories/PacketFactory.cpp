@@ -80,7 +80,7 @@ static std::map<std::string,  std::function<std::unique_ptr<IPayloadExecutable>(
                 { return MutipleDecoration(new ChatMessage::GetText(data), new RegisteredOnly());}},
 
                 {"/chat/message/owner",[](const nlohmann::json& data) -> auto
-                { return MutipleDecoration(new ChatMessage::GetOwner(data), new RegisteredOnly());}},
+                { return MutipleDecoration(new ChatMessage::GetOwner(data), new RegisteredOnly(),  new ChatMembersOnly());}},
 
                 // ==================
                 // Misc packets

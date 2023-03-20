@@ -20,4 +20,9 @@ namespace Web::Packet::Chat
             throw Packet::Exception::CorruptedPacket();
         }
     }
+
+    DBAPI::Chat ChatRelated::GetChat()
+    {
+        return m_chatFromPacket;
+    }
 }

@@ -14,11 +14,13 @@ namespace Web::Packet::Decorator
 
 namespace Web::Packet::Chat
 {
-    class ChatRelated : public BasePacket
+    class ChatRelated : public BasePacket, public IChatAccessible
     {
         friend Web::Packet::Decorator::ChatMembersOnly;
     public:
         explicit ChatRelated(const nlohmann::json &data);
+
+        DBAPI::Chat GetChat() override;
 
     protected:
         DBAPI::Chat m_chatFromPacket;

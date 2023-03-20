@@ -83,3 +83,8 @@ class Message:
 
     def get_text(self):
         return self.connection.send_json({"route": "/chat/message/text", "id": self.id})['text']
+
+    def get_owner(self):
+        id: int = self.connection.send_json({"route": "/chat/message/owner", "id": self.id})['id']
+
+        return User(self.connection, id)
