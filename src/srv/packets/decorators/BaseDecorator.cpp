@@ -4,7 +4,7 @@
 namespace Web::Packet::Decorator
 {
 
-    BaseDecorator::BaseDecorator(std::unique_ptr<BasePacket> &pPacket)
+    BaseDecorator::BaseDecorator(std::unique_ptr<IPayloadExecutable> &pPacket)
     {
         m_pDecoratedPacket = std::move(pPacket);
     }

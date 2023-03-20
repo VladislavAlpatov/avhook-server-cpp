@@ -20,6 +20,6 @@ namespace Web
 		~ClientHandle() override;
         Network::Socket m_clientSocket;
 		DBAPI::User m_dbUser;
-		void OnPacket(const std::unique_ptr<Web::Packet::BasePacket>& pPacket);
+		void OnPacket(const std::unique_ptr<IPayloadExecutable>& pPacket);
 	};
 }

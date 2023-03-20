@@ -20,7 +20,7 @@
 
 
 #include "../packets/ChatMessageRelated/GetText.h"
-
+#include "../packets/ChatMessageRelated/GetOwner.h"
 
 
 #include "../packets/Misc/Auth.h"
@@ -38,7 +38,7 @@ using namespace Web;
 using namespace Web::Packet;
 using namespace Web::Packet::Decorator;
 
-static std::map<std::string,  std::function<std::unique_ptr<BasePacket>(const nlohmann::json&)>> packetRoutMap
+static std::map<std::string,  std::function<std::unique_ptr<IPayloadExecutable>(const nlohmann::json&)>> packetRoutMap
         {
                 // ==================
                 // User related packets
@@ -79,6 +79,8 @@ static std::map<std::string,  std::function<std::unique_ptr<BasePacket>(const nl
                 {"/chat/message/text",[](const nlohmann::json& data) -> auto
                 { return MutipleDecoration(new ChatMessage::GetText(data), new RegisteredOnly());}},
 
+                {"/chat/message/owner",[](const nlohmann::json& data) -> auto
+                { return MutipleDecoration(new ChatMessage::GetOwner(data), new RegisteredOnly());}},
 
                 // ==================
                 // Misc packets
@@ -90,7 +92,7 @@ static std::map<std::string,  std::function<std::unique_ptr<BasePacket>(const nl
 namespace Web
 {
 
-    std::unique_ptr<BasePacket> PacketFactory::Create(const nlohmann::json &data)
+    std::unique_ptr<IPayloadExecutable> PacketFactory::Create(const nlohmann::json &data)
     {
 
         if (!data.contains("route"))

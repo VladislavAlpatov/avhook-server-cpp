@@ -3,17 +3,16 @@
 //
 #pragma once
 #include <nlohmann/json.hpp>
-
+#include "IPayloadExecutable.h"
 namespace Web {class ClientHandle;}
 
 namespace Web::Packet
 {
 
-    class BasePacket
+    class BasePacket : public IPayloadExecutable
     {
     public:
-        virtual ~BasePacket() = default;
-        virtual nlohmann::json ExecutePayload(ClientHandle &clientHandle) = 0;
+        ~BasePacket() override = default;
     protected:
         nlohmann::json m_Data;
         BasePacket() = default;

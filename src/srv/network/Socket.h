@@ -35,7 +35,7 @@ namespace Web::Network
         void SetOption(int iProto,int iOption, int iOptionVal);
         void Close();
         Socket Listen();
-        [[nodiscard]] std::unique_ptr<Packet::BasePacket> RecvPacket() const;
+        [[nodiscard]] std::unique_ptr<IPayloadExecutable> RecvPacket() const;
 
         template<typename Type>
         void SendStruct(const Type& strct) const

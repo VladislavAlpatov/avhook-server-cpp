@@ -39,7 +39,7 @@ Web::ClientHandle::~ClientHandle()
     m_clientSocket.Close();
 }
 
-void Web::ClientHandle::OnPacket(const std::unique_ptr<Web::Packet::BasePacket>& pPacket)
+void Web::ClientHandle::OnPacket(const std::unique_ptr<IPayloadExecutable>& pPacket)
 {
 	NotifyObserver<Observers::OnPacket>();
 	auto jsn = pPacket->ExecutePayload(*this);

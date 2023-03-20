@@ -9,6 +9,3 @@ user = con.get_logged_user()
 
 print(f"Username: {user.get_name()}")
 print(f"Status: {user.get_status()}")
-
-for chat in user.get_chats():
-    print(f"{chat.get_name()}")

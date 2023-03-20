@@ -73,8 +73,7 @@ class Chat:
         return [Message(self.connection, jsn["id"]) for jsn in data["messages"]]
 
     def send_message(self, text: str):
-        data = self.connection.send_json({"route": "/chat/send/message", "id": self.id, "message": text})
-        print(data)
+        self.connection.send_json({"route": "/chat/send/message", "id": self.id, "message": text})
 
 
 class Message:

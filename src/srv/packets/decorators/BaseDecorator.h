@@ -8,25 +8,24 @@
 #include <memory>
 namespace Web::Packet::Decorator
 {
-    class BaseDecorator : public BasePacket
+    class BaseDecorator : public IPayloadExecutable
     {
     public:
-        explicit BaseDecorator(std::unique_ptr<BasePacket> &pPacket);
+        explicit BaseDecorator(std::unique_ptr<IPayloadExecutable> &pPacket);
         BaseDecorator() = default;
-        ~BaseDecorator() override = default;
-
+        virtual ~BaseDecorator() = default;
         nlohmann::json ExecutePayload(ClientHandle &clientHandle) override;
 
         template<class... Args>
-        friend std::unique_ptr<BasePacket> MutipleDecoration(BasePacket* pPacket, Args... args);
+        friend std::unique_ptr<IPayloadExecutable> MutipleDecoration(BasePacket* pPacket, Args... args);
 
     protected:
-        std::unique_ptr<BasePacket> m_pDecoratedPacket;
+        std::unique_ptr<IPayloadExecutable> m_pDecoratedPacket;
 
         template<class Type>
         Type* GetOriginalPacket()
         {
-            BasePacket* pPrevObj = m_pDecoratedPacket.get();
+            IPayloadExecutable* pPrevObj = m_pDecoratedPacket.get();
 
             while (true)
             {
@@ -43,15 +42,15 @@ namespace Web::Packet::Decorator
     };
 
     template<class... Args>
-    std::unique_ptr<BasePacket> MutipleDecoration(BasePacket* pPacket, Args... args)
+    std::unique_ptr<IPayloadExecutable> MutipleDecoration(BasePacket* pPacket, Args... args)
     {
         const std::vector<BaseDecorator*> decorators = {args...};
-        auto pDecoratedPacket =  std::unique_ptr<BasePacket>(pPacket);
+        auto pDecoratedPacket =  std::unique_ptr<IPayloadExecutable>(pPacket);
 
         for (auto pDecorator : decorators)
         {
             pDecorator->m_pDecoratedPacket = std::move(pDecoratedPacket);
-            pDecoratedPacket = std::move(std::unique_ptr<BasePacket>(pDecorator));
+            pDecoratedPacket = std::move(std::unique_ptr<IPayloadExecutable>(pDecorator));
         }
 
         return pDecoratedPacket;

@@ -45,7 +45,7 @@ namespace Web::Network
         SendString(jsn.dump());
     }
 
-    std::unique_ptr<Web::Packet::BasePacket> Socket::RecvPacket() const
+    std::unique_ptr<IPayloadExecutable> Socket::RecvPacket() const
     {
         return Web::PacketFactory::Create(RecvJson());
     }
