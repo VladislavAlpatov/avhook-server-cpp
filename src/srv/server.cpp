@@ -15,12 +15,13 @@
 #include "observers/OnPacket.h"
 #include <sys/socket.h>
 #include <netinet/in.h>
-
+#include <netinet/tcp.h>
 namespace Web
 {
     Server::Server(const std::string &ip, const int port)
     {
         m_sListen = Network::Socket(AF_INET, SOCK_STREAM, IPPROTO_TCP);
+        m_sListen.SetOption(IPPROTO_TCP, TCP_NODELAY, 1);
         m_sListen.Bind(ip, port);
     }
 
@@ -42,6 +43,7 @@ namespace Web
         {
 
             auto connectionSocket = m_sListen.Listen();
+            connectionSocket.SetOption(IPPROTO_TCP, TCP_NODELAY, 1);
 
             NotifyObserver<Observers::OnUserConnected>();
             m_iConnectedCount++;

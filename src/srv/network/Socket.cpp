@@ -130,4 +130,13 @@ namespace Web::Network
         close(m_pRawSocket);
         m_pRawSocket = -1;
     }
+
+    void Socket::SetOption(int iProto, int iOption, int iOptionVal)
+    {
+        const auto res = setsockopt(m_pRawSocket, iProto, iOption, &iOptionVal, sizeof(iOptionVal));
+
+        if (res == -1)
+            throw std::runtime_error("Failed to set opt to socket");
+    }
+
 }

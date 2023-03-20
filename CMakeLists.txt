@@ -3,7 +3,7 @@ cmake_minimum_required(VERSION 3.20)
 set(CMAKE_CXX_STANDARD 23)
 set(CMAKE_CXX_COMPILER clang++)
 set(CMAKE_C_COMPILER   clang)
-
+set(CMAKE_POSITION_INDEPENDENT_CODE TRUE)
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH}${CMAKE_CURRENT_SOURCE_DIR}/cmake-scripts)
 
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "../../../out/${CMAKE_BUILD_TYPE}")
@@ -14,6 +14,7 @@ if (CMAKE_BUILD_TYPE MATCHES Debug)
     add_compile_definitions(_DEBUG)
 else()
     add_link_options(-s)
+
 endif()
 
 
@@ -21,7 +22,6 @@ project(server)
 add_executable(server src/main.cpp)
 
 add_compile_definitions(WIN32_LEAN_AND_MEAN)
-
 add_subdirectory(src)
 
 find_package(Boost REQUIRED)
@@ -36,6 +36,7 @@ target_link_libraries( server PRIVATE nlohmann_json )
 find_package(fmt REQUIRED)
 # Adding fmt headers manually path and libs, since clion cant see them
 # maybe they will patch it but for now leave it here!
+
 target_include_directories(server PRIVATE ${FMT_INCLUDE_DIR})
 target_link_libraries(server PRIVATE fmt::fmt)
 

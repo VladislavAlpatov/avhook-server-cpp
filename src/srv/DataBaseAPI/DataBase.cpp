@@ -35,8 +35,11 @@ namespace DBAPI
 
     DataBase* DataBase::Get()
     {
+#ifndef NDEBUG
+        static auto pDataBase = std::unique_ptr<DataBase>(new DataBase("/home/vlad/databases/db.db"));
+#else
         static auto pDataBase = std::unique_ptr<DataBase>(new DataBase("/databases/db.db"));
-
+#endif
         return pDataBase.get();
     }
 

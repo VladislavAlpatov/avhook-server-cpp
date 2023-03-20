@@ -32,6 +32,7 @@ namespace Web::Network
         void SendString(const std::string& str) const;
         void SendJson(const nlohmann::json& jsn) const;
         void Bind(const std::string& ip, int iPort);
+        void SetOption(int iProto,int iOption, int iOptionVal);
         void Close();
         Socket Listen();
         [[nodiscard]] std::unique_ptr<Packet::BasePacket> RecvPacket() const;

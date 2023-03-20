@@ -5,6 +5,7 @@ import json
 class Connection:
     def __init__(self, ip: str, port: int, email: str, password: str):
         self.socket = socket(AF_INET, SOCK_STREAM)
+        self.socket.setsockopt(IPPROTO_TCP, TCP_NODELAY, 1)
         self.socket.connect((ip, port))
 
         self.__user = User(self, self.send_json({"route": "/auth",
