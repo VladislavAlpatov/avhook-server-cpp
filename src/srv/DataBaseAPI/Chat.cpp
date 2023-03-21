@@ -122,6 +122,6 @@ namespace DBAPI
 
     bool Chat::IsMessageTextValid(const std::string& msg) const
     {
-        return msg.empty() or msg.length() > 2048 or std::all_of(msg.begin(), msg.end(),[](const char chr) {return chr == '\n';});
+        return !(msg.empty() or msg.length() > 2048 or std::all_of(msg.begin(), msg.end(),[](const char chr) {return chr == '\n';}));
     }
 } // DBAP
