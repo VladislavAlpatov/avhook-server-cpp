@@ -24,8 +24,9 @@ class Connection:
 
         self.socket.sendall(data)
         self.socket.recv(4)
-
-        return json.loads(self.socket.recv(1024).decode('utf-8'))
+        data = self.socket.recv(4096).decode('utf-8')
+        print(data)
+        return json.loads(data)
 
 
 class User:

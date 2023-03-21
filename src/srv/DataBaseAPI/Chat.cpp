@@ -26,11 +26,13 @@ namespace DBAPI
 
     void Chat::SendMessage(const User &user, std::string text)
     {
+        if (!IsMessageTextValid(text))
+            throw Exception::ChatMessageIsNotValid();
+
         if (!IsUserInChat(user))
             throw Exception::UserNotInChat();
 
         auto pDataBase = DataBase::Get();
-
         // Fix string for SQLite if it contains ' or "
         boost::replace_all(text, "'", "''");
         const auto str = fmt::format("INSERT INTO `chats-messages` (`owner_id`, `chat_id`, `text`) VALUES({},{},'{}')", user.GetID(), m_iID, text);
@@ -116,5 +118,10 @@ namespace DBAPI
             out.push_back({std::stoi(row[0])});
 
         return out;
+    }
+
+    bool Chat::IsMessageTextValid(const std::string& msg) const
+    {
+        return msg.empty() or msg.length() > 2048 or std::all_of(msg.begin(), msg.end(),[](const char chr) {return chr == '\n';});
     }
 } // DBAP

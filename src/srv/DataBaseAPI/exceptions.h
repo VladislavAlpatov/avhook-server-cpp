@@ -25,6 +25,14 @@ namespace DBAPI::Exception
             return "Chat not found";
         }
     };
+    class ChatMessageIsNotValid final : public std::exception
+    {
+    public:
+        const char *what() const noexcept override
+        {
+            return "Message is wierd lol";
+        }
+    };
     class ChatMessageNotFound final : public std::exception
     {
     public:
