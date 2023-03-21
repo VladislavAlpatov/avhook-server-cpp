@@ -13,9 +13,9 @@ namespace DBAPI
     class Config final : public Object
     {
     public:
-        Config(int iId);
+        Config(uint64_t iId);
         void SetData(const nlohmann::json& data);
-        nlohmann::json GetData() const;
+        [[nodiscard]] nlohmann::json GetData() const;
 
     };
 

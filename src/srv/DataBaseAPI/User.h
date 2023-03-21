@@ -66,7 +66,7 @@ namespace DBAPI
             Developer,
         };
     private:
-        User(int iUserId);
+        User(uint64_t iUserId);
     };
 
 } // DBAPI

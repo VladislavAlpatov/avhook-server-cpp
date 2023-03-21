@@ -23,7 +23,7 @@ namespace DBAPI
         [[nodiscard]] std::string GetText() const;
         void SetText(std::string text);
     private:
-        ChatMessage(int id);
+        ChatMessage(uint64_t id);
     };
 
 }

@@ -11,11 +11,10 @@
 
 namespace DBAPI
 {
-    Config::Config(int iId)
+    Config::Config(uint64_t iId) : Object(iId)
     {
-        m_iID = iId;
-    }
 
+    }
     void Config::SetData(const nlohmann::json &data)
     {
         auto pDataBase = DBAPI::DataBase::Get();

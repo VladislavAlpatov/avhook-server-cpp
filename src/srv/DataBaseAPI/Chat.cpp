@@ -74,7 +74,7 @@ namespace DBAPI
 
         const auto data = pDataBase->Query(fmt::format("SELECT `owner_id` FROM `chats` WHERE `id` = {}", m_iID));
 
-        return {std::stoi(data[0][0])};
+        return {std::stoull(data[0][0])};
     }
 
     void Chat::AddUser(const User &user)
@@ -115,7 +115,7 @@ namespace DBAPI
         out.reserve(data.size());
 
         for (const auto& row : data)
-            out.push_back({std::stoi(row[0])});
+            out.push_back({std::stoull(row[0])});
 
         return out;
     }

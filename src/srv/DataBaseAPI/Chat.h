@@ -38,7 +38,7 @@ namespace DBAPI
         void RemoveUser(const User& user);
 
     private:
-        Chat(int iId) : Object(iId){}
+        Chat(uint64_t iId) : Object(iId){}
     };
 
 } // DBAP

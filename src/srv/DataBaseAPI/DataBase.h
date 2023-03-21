@@ -16,13 +16,13 @@ namespace DBAPI
     {
     public:
         static DataBase* Get();
-        DBAPI::User GetUserById(int iUserId);
-        bool        IsUserExist(int iUserId);
-        bool        IsChatExist(int iChatId);
+        DBAPI::User GetUserById(uint64_t iUserId);
+        bool        IsUserExist(uint64_t iUserId);
+        bool        IsChatExist(uint64_t iChatId);
         bool        IsPrivateChatLinkTaken(uint64_t link);
-        bool        IsChatMessageExist(int iMessageId);
-        Chat        GetChatById(int iChatId);
-        ChatMessage GetChatMessageById(int iChatMessage);
+        bool        IsChatMessageExist(uint64_t iMessageId);
+        Chat        GetChatById(uint64_t iChatId);
+        ChatMessage GetChatMessageById(uint64_t iChatMessage);
         User        GetUserByEmail(std::string sEmail);
 
         void AddNewUser(const std::string& sName, const std::string& sStatus,const std::string& sPassword, const std::string sEmail, int iType);

@@ -25,7 +25,7 @@ uint64_t GeneratePublicId()
 
 namespace DBAPI
 {
-    DBAPI::User DataBase::GetUserById(int iUserId)
+    DBAPI::User DataBase::GetUserById(uint64_t iUserId)
     {
         if (!IsUserExist(iUserId))
             throw Exception::UserNotFound();
@@ -48,22 +48,22 @@ namespace DBAPI
 
     }
 
-    bool DataBase::IsUserExist(int iUserId)
+    bool DataBase::IsUserExist(uint64_t iUserId)
     {
         return !Query(fmt::format("SELECT `id` FROM `users` WHERE `id` = {}", iUserId)).empty();
     }
 
-    bool DataBase::IsChatExist(int iChatId)
+    bool DataBase::IsChatExist(uint64_t iChatId)
     {
         return !Query(fmt::format("SELECT `id` FROM `chats` WHERE `id` = {}", iChatId)).empty();
     }
 
-    Chat DataBase::GetChatById(int iChatId)
+    Chat DataBase::GetChatById(uint64_t iChatId)
     {
         if (!IsChatExist(iChatId))
             throw Exception::ChatNotFound();
 
-        int id = std::stoi(Query(fmt::format("SELECT `id` FROM `chats` WHERE `id` = {}", iChatId))[0][0]);
+        auto id = std::stoull(Query(fmt::format("SELECT `id` FROM `chats` WHERE `id` = {}", iChatId))[0][0]);
         return {id};
     }
 
@@ -78,7 +78,7 @@ namespace DBAPI
             throw Exception::UserNotFound();
 
 
-        return {std::stoi(data[0][0])};
+        return {std::stoull(data[0][0])};
     }
 
     void DataBase::CreateChat(const User &owner, const std::string &sName)
@@ -99,17 +99,17 @@ namespace DBAPI
         return !Query(fmt::format("SELECT `id` FROM `chats` WHERE `public_id` = {}", link)).empty();
     }
 
-    ChatMessage DataBase::GetChatMessageById(int iChatMessage)
+    ChatMessage DataBase::GetChatMessageById(uint64_t iChatMessage)
     {
         if (!IsChatMessageExist(iChatMessage))
             throw Exception::ChatMessageNotFound();
 
         const auto data = Query(fmt::format("SELECT `id` FROM `chats-messages` WHERE `id` = {}", iChatMessage));
 
-        return {std::stoi(data[0][0])};
+        return {std::stoull(data[0][0])};
     }
 
-    bool DataBase::IsChatMessageExist(int iMessageId)
+    bool DataBase::IsChatMessageExist(uint64_t iMessageId)
     {
         return !Query(fmt::format("SELECT `id` FROM `chats-messages` WHERE `id` = {}", iMessageId)).empty();
     }

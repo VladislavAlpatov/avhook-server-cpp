@@ -13,7 +13,7 @@
 
 namespace DBAPI
 {
-    User::User(int iUserId) : Object(iUserId)
+    User::User(uint64_t iUserId) : Object(iUserId)
     {
 
     }
@@ -77,7 +77,7 @@ namespace DBAPI
         chats.reserve(chatIds.size());
 
         for (const auto& data : chatIds)
-            chats.push_back({std::stoi(data[0])});
+            chats.push_back({std::stoull(data[0])});
 
         return chats;
     }

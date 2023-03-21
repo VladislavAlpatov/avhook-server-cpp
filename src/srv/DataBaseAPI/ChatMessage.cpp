@@ -16,7 +16,7 @@ DBAPI::User DBAPI::ChatMessage::GetOwner() const
     const auto pDataBase = DataBase::Get();
     auto data = pDataBase->Query(fmt::format("SELECT `owner_id` FROM `chats-messages` WHERE `id` = {}", m_iID));
 
-    return pDataBase->GetUserById(std::stoi(data[0][0]));
+    return pDataBase->GetUserById(std::stoull(data[0][0]));
 }
 
 DBAPI::Chat DBAPI::ChatMessage::GetChat() const
@@ -24,7 +24,7 @@ DBAPI::Chat DBAPI::ChatMessage::GetChat() const
     const auto pDataBase = DataBase::Get();
     auto data = pDataBase->Query(fmt::format("SELECT `chat_id` FROM `chats-messages` WHERE `id` = {}", m_iID));
 
-    return pDataBase->GetChatById(std::stoi(data[0][0]));
+    return pDataBase->GetChatById(std::stoull(data[0][0]));
 }
 
 std::string DBAPI::ChatMessage::GetText() const
@@ -42,7 +42,7 @@ void DBAPI::ChatMessage::SetText(std::string text)
     pDataBase->Query(fmt::format("UPDATE `chats-messages` SET `text` = '{}' FROM  WHERE `id` = {}",text, m_iID));
 }
 
-DBAPI::ChatMessage::ChatMessage(int id) : Object(id)
+DBAPI::ChatMessage::ChatMessage(uint64_t id) : Object(id)
 {
 
 }
