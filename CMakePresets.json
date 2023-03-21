@@ -6,7 +6,12 @@
       "hidden": true,
       "generator": "Ninja",
       "binaryDir": "${sourceDir}/cmake-build/build/${presetName}",
-      "installDir": "${sourceDir}/cmake-build/install/${presetName}"
+      "installDir": "${sourceDir}/cmake-build/install/${presetName}",
+      "vendor": {
+        "jetbrains.com/clion": {
+          "toolchain": "remote-linux-system"
+        }
+      }
     },
     {
       "name": "x64-debug",

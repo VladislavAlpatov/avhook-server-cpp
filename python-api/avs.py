@@ -12,6 +12,9 @@ class Connection:
                                                  "email": email,
                                                  "password": password})["user_id"])
 
+    def __del__(self):
+        self.socket.close()
+
     def get_logged_user(self):
         return self.__user
 
@@ -52,7 +55,6 @@ class User:
             chats.append(Chat(self.connection, chatJson["id"]))
 
         return chats
-
 
 
 class Chat:
