@@ -10,6 +10,8 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "../../../out/${CMAKE_BUILD_TYPE}")
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "../../../out/${CMAKE_BUILD_TYPE}")
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "../../../out/${CMAKE_BUILD_TYPE}")
 
+option(BUILD_SERVER_TEST "Build GTests for server" ON)
+
 if (CMAKE_BUILD_TYPE MATCHES Debug)
     add_compile_definitions(_DEBUG)
 else()
@@ -38,4 +40,6 @@ target_link_libraries(server PRIVATE fmt::fmt)
 find_package(OpenSSL REQUIRED)
 target_link_libraries(server PRIVATE OpenSSL::Crypto)
 
-add_subdirectory(tests)
+if(BUILD_SERVER_TEST)
+    add_subdirectory(tests)
+endif()

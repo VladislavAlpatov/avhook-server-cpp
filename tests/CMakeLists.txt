@@ -6,10 +6,8 @@ add_executable(dbapi_test dbapitest.cpp)
 
 
 file(GLOB dbapitest_SRC "../src/srv/DataBaseAPI/*.cpp" "../src/lib/sqlite/*.cpp" "../src/lib/base64/*.cpp")
-file(GLOB dbapitest_HEADERS "../src/srv/DataBaseAPI/*.h")
-
 target_sources(dbapi_test PRIVATE ${dbapitest_SRC})
-target_include_directories(dbapi_test PRIVATE ${dbapitest_HEADERS})
+target_include_directories(dbapi_test PRIVATE ../src/srv/DataBaseAPI)
 
 find_package(GTest REQUIRED)
 target_link_libraries(dbapi_test      PRIVATE GTest::GTest GTest::Main)
