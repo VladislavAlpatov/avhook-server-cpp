@@ -1,4 +1,5 @@
 # AVhook Server Repository
+![banner](https://i.imgur.com/2AVGRge.png)
 Welcome to the README.md file for our C++ server project!
 
 This project is designed to provide a high-performance, efficient server implementation written in C++. Our server is designed to handle a large number of concurrent connections, while still providing fast response times and low latency.
