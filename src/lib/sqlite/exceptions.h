@@ -15,6 +15,14 @@ namespace sql::exception
         }
 
     };
+class DataBaseFileNotFound : public std::exception
+{
+public:
+    const char *what() const noexcept override
+    {
+        return ".db file was not found";
+    }
+};
     class SyntaxError : public std::exception
     {
     public:

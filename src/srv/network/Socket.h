@@ -6,11 +6,8 @@
 
 
 
-#if defined(_WIN32)
-typedef unsigned long long SOCKET;
-#else
 typedef int SOCKET;
-#endif
+
 
 
 namespace Web::Network

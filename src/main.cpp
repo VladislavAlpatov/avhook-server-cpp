@@ -5,17 +5,10 @@
 #include "srv/observers/OnServerStartup.h"
 #include "srv/observers/OnUserConnected.h"
 #include "srv/observers/OnUserDisconnected.h"
-
-#if defined(_WIN32) and __has_include("winsock2.h")
-#include <winsock.h>
-#endif
+#include <openssl/rsa.h>
 
 int main()
 {
-#if defined(_WIN32) and __has_include("winsock2.h")
-    WSAData data;
-    WSAStartup(MAKEWORD(2, 2), &data);
-#endif
 	const auto pServer = Web::Server::Get();
 
 #ifdef _DEBUG

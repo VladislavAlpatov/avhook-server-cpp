@@ -21,7 +21,6 @@ endif()
 project(server)
 add_executable(server src/main.cpp)
 
-add_compile_definitions(WIN32_LEAN_AND_MEAN)
 add_subdirectory(src)
 
 find_package(Boost REQUIRED)
@@ -34,13 +33,9 @@ add_subdirectory(src/lib/json)
 target_link_libraries( server PRIVATE nlohmann_json )
 
 find_package(fmt REQUIRED)
-# Adding fmt headers manually path and libs, since clion cant see them
-# maybe they will patch it but for now leave it here!
-
-target_include_directories(server PRIVATE ${FMT_INCLUDE_DIR})
 target_link_libraries(server PRIVATE fmt::fmt)
 
+find_package(OpenSSL REQUIRED)
+target_link_libraries(server PRIVATE OpenSSL::Crypto)
 
-if (WIN32)
-    target_link_libraries(server PRIVATE ws2_32)
-endif()
+add_subdirectory(tests)

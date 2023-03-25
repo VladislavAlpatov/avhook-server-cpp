@@ -20,7 +20,7 @@ namespace Observers
             printf("[LOG] Accepted packet from unknow user\n");
             return;
         }
-		printf("[LOG] Accepted packet from (%s#%d)\n",
+		printf("[LOG] Accepted packet from (%s#%lu)\n",
                pClientContext->m_dbUser.GetName().c_str(),
                pClientContext->m_dbUser.GetID());
 	}

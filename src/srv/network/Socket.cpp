@@ -4,16 +4,10 @@
 #include "../factories/PacketFactory.h"
 #include "../packets/exceptions.h"
 
-#if defined(_WIN32)
-#include <winsock2.h>
-#include <ws2tcpip.h>
-
-#else
 #include <sys/types.h>
 #include <sys/socket.h>
 #include <netinet/in.h>
 #include <arpa/inet.h>
-#endif
 
 #define MAX_ACCEPTABLE_PACKET_SIZE 10485760
 
@@ -57,14 +51,6 @@ namespace Web::Network
 
     void Socket::Bind(const std::string &ip, int iPort)
     {
-#if defined(_WIN32) // Windows
-        SOCKADDR_IN addr;
-        inet_pton(AF_INET, ip.c_str(), &addr.sin_addr.S_un.S_addr);
-        addr.sin_port = htons(iPort);
-        addr.sin_family = AF_INET;
-
-        bind(*m_pRawSocket, (SOCKADDR *) &addr, sizeof(addr));
-#else // Linux
         sockaddr_in addr{};
 
         inet_pton(AF_INET, ip.c_str(), &addr.sin_addr.s_addr);
@@ -72,7 +58,6 @@ namespace Web::Network
         addr.sin_family = AF_INET;
 
         bind(m_pRawSocket, (sockaddr*)&addr, sizeof(addr));
-#endif
     }
 
     Socket Socket::Listen()

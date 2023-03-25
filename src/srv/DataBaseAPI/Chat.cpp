@@ -124,4 +124,25 @@ namespace DBAPI
     {
         return !(msg.empty() or msg.length() > 2048 or std::all_of(msg.begin(), msg.end(),[](const char chr) {return chr == '\n';}));
     }
+
+    std::vector<ChatMessage> Chat::GetMessagesAfter(const ChatMessage &msg, uint64_t limit) const
+    {
+        const auto queryStr = fmt::format("SELECT `id` FROM `chats-messages` WHERE `id` < {} AND `chat_id` = {} ORDER BY `timestamp` ASC LIMIT {}",
+                                          msg.GetID(), GetID(), limit);
+
+        const auto data = DataBase::Get()->Query(queryStr);
+
+        std::vector<ChatMessage> vecFetchedChatHistory;
+        vecFetchedChatHistory.reserve(data.size());
+
+        for (const auto& row : data)
+            vecFetchedChatHistory.push_back({std::stoull(row[0])});
+
+        return vecFetchedChatHistory;
+    }
+
+    ChatMessage Chat::GetLastMessage() const
+    {
+        return ChatMessage();
+    }
 } // DBAP

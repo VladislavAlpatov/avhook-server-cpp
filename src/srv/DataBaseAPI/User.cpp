@@ -10,7 +10,6 @@
 #include "Config.h"
 #include "exceptions.h"
 
-
 namespace DBAPI
 {
     User::User(uint64_t iUserId) : Object(iUserId)

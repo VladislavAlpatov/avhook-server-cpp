@@ -23,14 +23,17 @@ namespace DBAPI
         Chat() = default;
         void SendMessage(const User& user, std::string text);
 
-        [[nodiscard]] bool                     IsMessageTextValid(const std::string& msg)           const;
-        [[nodiscard]] std::vector<User>        GetMembers()                                         const;
-        [[nodiscard]] User                     GetOwner()                                           const;
-        [[nodiscard]] bool                     IsUserInChat(const User& user)                       const;
-        [[nodiscard]] std::string              GetName()                                            const;
-        [[nodiscard]] std::string              GetInviteLink()                                      const;
-        [[nodiscard]] bool                     HasUser(const User& user)                            const;
-        [[nodiscard]] std::vector<ChatMessage> GetHistory()                                         const;
+        [[nodiscard]] bool                     IsMessageTextValid(const std::string& msg)                      const;
+        [[nodiscard]] std::vector<User>        GetMembers()                                                    const;
+        [[nodiscard]] User                     GetOwner()                                                      const;
+        [[nodiscard]] bool                     IsUserInChat(const User& user)                                  const;
+        [[nodiscard]] std::string              GetName()                                                       const;
+        [[nodiscard]] std::string              GetInviteLink()                                                 const;
+        [[nodiscard]] bool                     HasUser(const User& user)                                       const;
+        [[nodiscard]] std::vector<ChatMessage> GetHistory()                                                    const;
+        [[nodiscard]] std::vector<ChatMessage> GetMessagesAfter(const ChatMessage& msg, uint64_t limit)        const;
+        [[nodiscard]] ChatMessage              GetLastMessage()                                                const;
+        
 
         nlohmann::json ToJson() const override;
 

@@ -3,14 +3,17 @@
 //
 #include "connection.h"
 #include "exceptions.h"
-#include <memory>
 #include "../../consts.h"
 #include <sqlite3.h>
+#include <filesystem>
 
 namespace sql
 {
     Connection::Connection(const std::string &path)
     {
+        if (!std::filesystem::exists(path))
+            throw exception::DataBaseFileNotFound();
+
         if (sqlite3_open(path.c_str(), &m_pDataBase) != SQLITE_OK)
             throw exception::FailedConnectToDataBase();
     }
@@ -21,7 +24,7 @@ namespace sql
 
         sqlite3_stmt* pSqliteStatement = nullptr;
 
-        sqlite3_prepare_v2(m_pDataBase, str.c_str(), str.size(), &pSqliteStatement, nullptr);
+        sqlite3_prepare_v2(m_pDataBase, str.c_str(), (int)str.size(), &pSqliteStatement, nullptr);
 
         if (!pSqliteStatement)
             throw exception::SyntaxError();
