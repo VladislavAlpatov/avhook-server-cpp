@@ -11,7 +11,7 @@ namespace Web::Packet::Config
 {
     DBAPI::User ConfigRelated::GetUser()
     {
-        return {};
+        return m_configFromPacket.GetOwner();
     }
 
     ConfigRelated::ConfigRelated(const nlohmann::json &data) : BasePacket(data)

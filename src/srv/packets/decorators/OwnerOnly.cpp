@@ -3,16 +3,16 @@
 //
 
 #include "OwnerOnly.h"
-#include "../UserRelated/UserRelated.h"
+#include "../interfaces/IUserAccessible.h"
 namespace Web::Packet::Decorator
 {
 
 
     nlohmann::json OwnerOnly::ExecutePayload(ClientHandle &clientHandle)
     {
-        auto pPacket = GetOriginalPacket<Packet::User::UserRelated>();
+        auto pPacket = GetOriginalPacket<IUserAccessible>();
 
-        if (pPacket->m_pUserFromPacket != clientHandle.m_dbUser and !clientHandle.m_dbUser.HasRightsOf(DBAPI::User::Rights::Developer))
+        if (pPacket->GetUser() != clientHandle.m_dbUser and !clientHandle.m_dbUser.HasRightsOf(DBAPI::User::Rights::Developer))
             throw std::runtime_error("You cant modify data of other users");
 
 

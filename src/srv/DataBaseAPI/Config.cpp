@@ -4,6 +4,9 @@
 
 #include "Config.h"
 #include "DataBase.h"
+#include "User.h"
+
+
 #include <string>
 #include <boost/algorithm/string.hpp>
 #include <fmt/format.h>
@@ -28,5 +31,12 @@ namespace DBAPI
         const auto data = pDataBase->Query(fmt::format("SELECT `data` FROM `configs` WHERE `id` = {}", m_iID));
 
         return nlohmann::json::parse(data[0][0]);
+    }
+
+    User Config::GetOwner() const
+    {
+        auto pDataBase = DBAPI::DataBase::Get();
+        const auto data = pDataBase->Query(fmt::format("SELECT `owner_id` FROM `configs` WHERE `id` = {}", m_iID));
+        return {std::stoull(data[0][0])};
     }
 } // DBAPI

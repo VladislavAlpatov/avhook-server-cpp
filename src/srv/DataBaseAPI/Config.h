@@ -9,7 +9,7 @@
 
 namespace DBAPI
 {
-
+    class User;
     class Config final : public Object
     {
     public:
@@ -17,6 +17,7 @@ namespace DBAPI
         Config(uint64_t iId);
         void SetData(const nlohmann::json& data);
         [[nodiscard]] nlohmann::json GetData() const;
+        [[nodiscard]] User GetOwner() const;
 
     };
 

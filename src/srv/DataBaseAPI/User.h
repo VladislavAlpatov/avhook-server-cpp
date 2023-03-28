@@ -20,6 +20,7 @@ namespace DBAPI
     {
         friend class DataBase;
         friend class Chat;
+        friend class Config;
 
 
     public:
@@ -53,7 +54,7 @@ namespace DBAPI
         bool operator!=(const User& other) const;
 
 
-        nlohmann::json ToJson() const override;
+        [[nodiscard]] nlohmann::json ToJson() const override;
 
 
         enum Rights : int
