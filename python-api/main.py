@@ -5,7 +5,7 @@ con = Connection("192.168.111.129", 7777, "1@mail.ru", "1235")
 
 
 user = con.get_logged_user()
-
+print(user.get_configs())
 print(f"Username: {user.get_name()}")
 print(f"Status: {user.get_status()}")
 
