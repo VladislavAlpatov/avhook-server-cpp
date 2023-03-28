@@ -4,4 +4,6 @@ target_sources(server PRIVATE
         GetChatList.cpp
         SetName.cpp
         UserRelated.cpp
-        SetStatus.cpp)
+        SetStatus.cpp
+        GetConfigs.cpp
+        )

@@ -27,3 +27,8 @@ TEST(DBAPI, GetUserName)
 {
     EXPECT_NO_THROW(pDataBase->GetUserById(USER_ID_FOR_TESTS).GetName());
 }
+
+TEST(DBAPI, DBAPI_FindUserById_Test)
+{
+
+}

@@ -3,7 +3,7 @@
 //
 
 #pragma once
-#include "../DataBaseAPI/Chat.h"
+#include "../../DataBaseAPI/Chat.h"
 
 // Inherit Web::IPayloadExecutable to resolve calling of wrong virtual method
 class IChatAccessible

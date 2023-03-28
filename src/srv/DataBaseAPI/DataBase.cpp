@@ -8,6 +8,7 @@
 #include "User.h"
 #include "Chat.h"
 #include "ChatMessage.h"
+#include "Config.h"
 
 
 #include <boost/algorithm/string.hpp>
@@ -99,18 +100,29 @@ namespace DBAPI
         return !Query(fmt::format("SELECT `id` FROM `chats` WHERE `public_id` = {}", link)).empty();
     }
 
-    ChatMessage DataBase::GetChatMessageById(uint64_t iChatMessage)
+    ChatMessage DataBase::GetChatMessageById(uint64_t id)
     {
-        if (!IsChatMessageExist(iChatMessage))
+        if (!IsChatMessageExist(id))
             throw Exception::ChatMessageNotFound();
 
-        const auto data = Query(fmt::format("SELECT `id` FROM `chats-messages` WHERE `id` = {}", iChatMessage));
-
-        return {std::stoull(data[0][0])};
+        return {id};
     }
 
     bool DataBase::IsChatMessageExist(uint64_t iMessageId)
     {
         return !Query(fmt::format("SELECT `id` FROM `chats-messages` WHERE `id` = {}", iMessageId)).empty();
+    }
+
+    Config DataBase::GetConfigById(uint64_t id)
+    {
+        if (IsConfigExist(id))
+            throw  Exception::ConfigNotFound();
+
+        return {id };
+    }
+
+    bool DataBase::IsConfigExist(uint64_t id)
+    {
+        return !Query(fmt::format("SELECT `id` FROM `configs` WHERE `id` = '{}'", id)).empty();
     }
 } // DBAP

@@ -57,5 +57,13 @@ namespace DBAPI::Exception
             return "User already in chat, impossible to add twice";
         }
     };
+    class ConfigNotFound final : public std::exception
+    {
+    public:
+        const char *what() const noexcept override
+        {
+            return "Failed to get config by id";
+        }
+    };
 }
 

@@ -5,7 +5,7 @@
 #pragma once
 #include "../BasePacket.h"
 #include "../../DataBaseAPI/Chat.h"
-#include "../IChatAccessible.h"
+#include "../interfaces/IChatAccessible.h"
 
 namespace Web::Packet::Decorator
 {

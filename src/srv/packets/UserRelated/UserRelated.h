@@ -8,14 +8,14 @@
 
 namespace Web::Packet::Decorator
 {
-    class CantModifyOtherUsers;
+    class OwnerOnly;
 }
 
 namespace Web::Packet::User
 {
     class UserRelated : public BasePacket
     {
-    friend Decorator::CantModifyOtherUsers;
+    friend Decorator::OwnerOnly;
 
     public:
         explicit UserRelated(const nlohmann::json &data);

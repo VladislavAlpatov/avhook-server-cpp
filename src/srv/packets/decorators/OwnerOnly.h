@@ -12,10 +12,10 @@ namespace DBAPI
 
 namespace Web::Packet::Decorator
 {
-    class CantModifyOtherUsers final : public BaseDecorator
+    class OwnerOnly final : public BaseDecorator
     {
     public:
-        CantModifyOtherUsers() = default;
+        OwnerOnly() = default;
 
         nlohmann::json ExecutePayload(ClientHandle &clientHandle) override;
     };

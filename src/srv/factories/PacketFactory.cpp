@@ -26,7 +26,7 @@
 #include "../packets/Misc/Auth.h"
 
 #include "../packets/decorators/RegisteredOnly.h"
-#include "../packets/decorators/CantModifyOtherUsers.h"
+#include "../packets/decorators/OwnerOnly.h"
 #include "../packets/decorators/ChatMembersOnly.h"
 
 
@@ -53,10 +53,10 @@ static std::map<std::string,  std::function<std::unique_ptr<IPayloadExecutable>(
                 { return MutipleDecoration(new User::GetChatList(data), new RegisteredOnly());}},
 
                 {"/user/set/name",[](const nlohmann::json& data) -> auto
-                { return MutipleDecoration(new User::SetName(data), new RegisteredOnly(), new CantModifyOtherUsers());}},
+                { return MutipleDecoration(new User::SetName(data), new RegisteredOnly(), new OwnerOnly());}},
 
                 {"/user/set/status",[](const nlohmann::json& data) -> auto
-                { return MutipleDecoration(new User::SetStatus(data), new RegisteredOnly(), new CantModifyOtherUsers());}},
+                { return MutipleDecoration(new User::SetStatus(data), new RegisteredOnly(), new OwnerOnly());}},
 
                 // ==================
                 // Chat related packets

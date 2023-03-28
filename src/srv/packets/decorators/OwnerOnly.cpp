@@ -2,13 +2,13 @@
 // Created by vladislav on 10.03.23.
 //
 
-#include "CantModifyOtherUsers.h"
+#include "OwnerOnly.h"
 #include "../UserRelated/UserRelated.h"
 namespace Web::Packet::Decorator
 {
 
 
-    nlohmann::json CantModifyOtherUsers::ExecutePayload(ClientHandle &clientHandle)
+    nlohmann::json OwnerOnly::ExecutePayload(ClientHandle &clientHandle)
     {
         auto pPacket = GetOriginalPacket<Packet::User::UserRelated>();
 
