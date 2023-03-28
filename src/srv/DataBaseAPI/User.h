@@ -40,7 +40,7 @@ namespace DBAPI
         void                                   AddRights(int iRights)                              const;
 
         [[nodiscard]] static bool              IsUserNameAcceptable(const std::string& name);
-        [[nodiscard]] bool                     IsValid() const {return m_iID != 0;};
+        [[nodiscard]] bool                     IsValid() const {return m_iID != INVALID_DATABASE_OBJECT_ID;};
 
 
         void SetName(std::string sName);

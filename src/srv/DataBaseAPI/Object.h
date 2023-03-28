@@ -5,6 +5,8 @@
 #pragma once
 #include <cstdint>
 
+#define INVALID_DATABASE_OBJECT_ID 0
+
 namespace DBAPI
 {
     class Object
