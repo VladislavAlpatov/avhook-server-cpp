@@ -10,6 +10,9 @@ namespace Web::Packet::User
     class GetConfigs : public UserRelated
     {
     public:
+        explicit GetConfigs(const nlohmann::json &data);
+
+    public:
         nlohmann::json ExecutePayload(ClientHandle &clientHandle) override;
     };
 

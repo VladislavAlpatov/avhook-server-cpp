@@ -1,0 +1,1 @@
+target_sources(server PRIVATE ConfigRelated.cpp GetData.cpp SetData.cpp)

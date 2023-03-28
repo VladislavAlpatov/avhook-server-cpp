@@ -10,8 +10,6 @@
 #include "Object.h"
 #include "IJsonExportable.h"
 
-#define INVALID_USER_ID (-1)
-
 
 namespace DBAPI
 {
@@ -41,7 +39,7 @@ namespace DBAPI
         void                                   AddRights(int iRights)                              const;
 
         [[nodiscard]] static bool              IsUserNameAcceptable(const std::string& name);
-        [[nodiscard]] bool                     IsValid() const {return m_iID != INVALID_USER_ID;};
+        [[nodiscard]] bool                     IsValid() const {return m_iID != 0;};
 
 
         void SetName(std::string sName);

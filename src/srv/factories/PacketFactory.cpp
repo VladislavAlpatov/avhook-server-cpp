@@ -5,24 +5,29 @@
 //
 #include "PacketFactory.h"
 
-
+// User
 #include "../packets/UserRelated/GetName.h"
 #include "../packets/UserRelated/GetStatus.h"
 #include "../packets/UserRelated/GetChatList.h"
 #include "../packets/UserRelated/SetName.h"
 #include "../packets/UserRelated/SetStatus.h"
+#include "../packets/UserRelated/GetConfigs.h"
 
-
+// Chat
 #include "../packets/ChatRelated/GetName.h"
 #include "../packets/ChatRelated/SendMessage.h"
 #include "../packets/ChatRelated/GetInvite.h"
 #include "../packets/ChatRelated/GetHistory.h"
 
-
+// Chat message
 #include "../packets/ChatMessageRelated/GetText.h"
 #include "../packets/ChatMessageRelated/GetOwner.h"
 
+// Config
+#include "../packets/ConfigRelated/GetData.h"
 
+
+// Misc
 #include "../packets/Misc/Auth.h"
 
 #include "../packets/decorators/RegisteredOnly.h"
@@ -51,6 +56,9 @@ static std::map<std::string,  std::function<std::unique_ptr<IPayloadExecutable>(
 
                 {"/user/get/chat_list",[](const nlohmann::json& data) -> auto
                 { return MutipleDecoration(new User::GetChatList(data), new RegisteredOnly());}},
+
+                {"/user/get/configs",[](const nlohmann::json& data) -> auto
+                { return MutipleDecoration(new User::GetConfigs(data), new RegisteredOnly());}},
 
                 {"/user/set/name",[](const nlohmann::json& data) -> auto
                 { return MutipleDecoration(new User::SetName(data), new RegisteredOnly(), new OwnerOnly());}},
@@ -82,11 +90,16 @@ static std::map<std::string,  std::function<std::unique_ptr<IPayloadExecutable>(
                 {"/chat/message/owner",[](const nlohmann::json& data) -> auto
                 { return MutipleDecoration(new ChatMessage::GetOwner(data), new RegisteredOnly(),  new ChatMembersOnly());}},
 
+                {"/config/get/data",[](const nlohmann::json& data) -> auto
+                { return MutipleDecoration(new Config::GetData(data), new RegisteredOnly(),  new OwnerOnly());}},
+
                 // ==================
                 // Misc packets
                 // ==================
                 {"/auth",[](const nlohmann::json& data) -> auto
-                { return MutipleDecoration(new Misc::Auth(data));}},
+                {
+                    return MutipleDecoration(new Misc::Auth(data));
+                }},
         };
 
 namespace Web
@@ -94,7 +107,6 @@ namespace Web
 
     std::unique_ptr<IPayloadExecutable> PacketFactory::Create(const nlohmann::json &data)
     {
-
         if (!data.contains("route"))
             throw std::runtime_error("\"route\" filed seems does not exist");
 

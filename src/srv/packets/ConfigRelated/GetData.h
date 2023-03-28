@@ -4,8 +4,16 @@
 
 #pragma once
 
+#include "ConfigRelated.h"
 
-class GetData
+namespace Web::Packet::Config
 {
+    class GetData final : public ConfigRelated
+    {
+    public:
+        nlohmann::json ExecutePayload(ClientHandle &clientHandle) override;
 
-};
+        explicit GetData(const nlohmann::json &data);
+    };
+
+}

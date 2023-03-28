@@ -3,3 +3,18 @@
 //
 
 #include "GetData.h"
+
+
+namespace Web::Packet::Config
+{
+    GetData::GetData(const nlohmann::json &data) : ConfigRelated(data)
+    {
+
+    }
+
+    nlohmann::json GetData::ExecutePayload(ClientHandle &clientHandle)
+    {
+        return {{"data", m_configFromPacket.GetData()}};
+    }
+
+}

@@ -20,4 +20,9 @@ namespace Web::Packet::User
         return {{"configs", jsnCfgList}};
     }
 
+    GetConfigs::GetConfigs(const nlohmann::json &data) : UserRelated(data)
+    {
+
+    }
+
 }

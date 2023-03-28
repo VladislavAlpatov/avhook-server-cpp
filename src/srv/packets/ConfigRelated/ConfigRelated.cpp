@@ -4,6 +4,7 @@
 
 #include "ConfigRelated.h"
 #include "../../DataBaseAPI/DataBase.h"
+#include "../exceptions.h"
 
 
 namespace Web::Packet::Config
@@ -15,7 +16,14 @@ namespace Web::Packet::Config
 
     ConfigRelated::ConfigRelated(const nlohmann::json &data) : BasePacket(data)
     {
-        m_configFromPacket = DBAPI::DataBase::Get()->GetConfigById(data.at("id"));
+        try
+        {
+            m_configFromPacket = DBAPI::DataBase::Get()->GetConfigById(data.at("id"));
+        }
+        catch (...)
+        {
+            throw Exception::CorruptedPacket();
+        }
     }
 
 }
