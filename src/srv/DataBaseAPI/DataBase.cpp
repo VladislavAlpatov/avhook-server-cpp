@@ -115,7 +115,7 @@ namespace DBAPI
 
     Config DataBase::GetConfigById(uint64_t id)
     {
-        if (IsConfigExist(id))
+        if (!IsConfigExist(id))
             throw  Exception::ConfigNotFound();
 
         return {id };
@@ -123,6 +123,6 @@ namespace DBAPI
 
     bool DataBase::IsConfigExist(uint64_t id)
     {
-        return !Query(fmt::format("SELECT `id` FROM `configs` WHERE `id` = '{}'", id)).empty();
+        return !Query(fmt::format("SELECT `id` FROM `configs` WHERE `id` = {}", id)).empty();
     }
 } // DBAP

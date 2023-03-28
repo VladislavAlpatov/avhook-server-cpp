@@ -57,7 +57,8 @@ class User:
         return chats
 
     def get_configs(self):
-        return self.connection.send_json({"route": "/user/get/configs", "id": self.id})['configs']
+        data = self.connection.send_json({"route": "/user/get/configs", "id": self.id})['configs']
+        return [Config(self.connection, x["id"]) for x in data]
 class Chat:
     def __init__(self, con: Connection, id: int):
         self.connection = con
@@ -101,4 +102,5 @@ class Config:
         self.id = id
 
     def get_data(self):
+        print(self.connection.send_json({"route": "/config/get/data", "id": self.id}))
         return self.connection.send_json({"route": "/config/get/data", "id": self.id})["data"]
