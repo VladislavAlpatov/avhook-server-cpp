@@ -1,0 +1,1 @@
+target_sources(server PRIVATE RSA.cpp Xor.cpp)
