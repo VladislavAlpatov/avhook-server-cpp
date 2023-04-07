@@ -16,8 +16,12 @@ int main()
 #endif
 	printf("[LOG] Generating RSA keys....\n");
 	Encryption::RSA rsa(2048);
-	const std::vector<uint8_t> data = {'h', 'e', 'l', 'l','o', '!'};
+
+
+	const std::vector<uint8_t> data = {'h', 'e', 'l', 'l','o', '!', '\0'};
 	auto encData = rsa.Encrypt(data);
+	auto decrypted= rsa.Decrypt(encData);
+	printf("decrypted: %s\n", decrypted.data());
 	printf("[LOG] RSA done!\n");
 	const auto pServer = Web::Server::Get();
 

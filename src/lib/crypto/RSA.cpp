@@ -26,6 +26,7 @@ namespace Encryption
 	{
 		const auto szStep = m_szKeySize / 8;
 		const auto szDataSize = data.size();
+
 		std::vector<uint8_t> encryptedData;
 		encryptedData.reserve((data.size() / szStep + 1) * (szStep*2+1) );
 
@@ -37,6 +38,8 @@ namespace Encryption
 			import_bits(number, data.data()+i, data.data() + i + szSizeOfData);
 
 			cpp_int encryptedNumber = powm<cpp_int>(number, m_NumberEncrypt, m_NumberN);
+
+			std::cout << encryptedNumber << '\n';
 
 			std::vector<uint8_t> encBytes;
 			export_bits(encryptedNumber, std::back_inserter(encBytes), 8);
@@ -75,11 +78,42 @@ namespace Encryption
 		m_NumberN       = n;
 		m_NumberDecrypt = d;
 		m_NumberEncrypt = e;
+		// printf("n = %s\nd = %s\ne = %s\n", m_NumberN.str().c_str(), m_NumberDecrypt.str().c_str(), m_NumberEncrypt.str().c_str());
 	}
 
 	std::vector<uint8_t> RSA::Decrypt(const std::vector<uint8_t>& encData) const
 	{
+		const auto szEncryptedChunkSize = CalcChunkSize();
 
+		// Check if encrypted data is corrupted
+		if (encData.size() % szEncryptedChunkSize)
+			throw std::runtime_error("ENCRYPTED DATA CORRUPTED");
+
+
+		std::vector<uint8_t> decryptedData;
+		decryptedData.reserve(CalcDecryptedDataSize(encData));
+
+		for (size_t i = 0; i < encData.size(); i += szEncryptedChunkSize)
+		{
+			cpp_int encNumber;
+			import_bits(encNumber, encData.data()+i+1, encData.data()+i+szEncryptedChunkSize);
+
+			std::cout << encNumber << '\n';
+
+			cpp_int decryptedNumber = powm<cpp_int>(encNumber, m_NumberDecrypt, m_NumberN);
+			std::vector<uint8_t> decryptedBytes;
+			export_bits(decryptedNumber, std::back_inserter(decryptedBytes), 8);
+
+			for (const auto& byte : decryptedBytes)
+				decryptedData.push_back(byte);
+
+
+			int iMissingBytes = (uint8_t)encData[i] - decryptedData.size();
+
+			for (int i = 0; i < iMissingBytes; i++)
+				decryptedData.push_back(0);
+		}
+		return decryptedData;
 	}
 
 	cpp_int RSA::GeneratePrimeNumber() const
@@ -90,15 +124,13 @@ namespace Encryption
 
 		auto threadFunc = [&](bool* pFound, cpp_int* pNumber, int id)
 		{
-			printf("[%d] Started\n", id);
 			uniform_int_distribution<cpp_int> ui(0, cpp_int(1) << (m_szKeySize-1) );
 			while (!*pFound)
 			{
 				auto val =  ui(mt) | (cpp_int(1) << (m_szKeySize-1) ) | 1 ;
 
-				if (miller_rabin_test(val,5))
+				if (miller_rabin_test(val,25))
 				{
-					printf("[%d] Found number: %s",id, val.str().c_str());
 					*pFound = true;
 					*pNumber = val;
 					return;
@@ -121,6 +153,17 @@ namespace Encryption
 	{
 		m_szKeySize = szKeySize;
 		GenerateKeys();
+	}
+
+	size_t RSA::CalcDecryptedDataSize(const std::vector<uint8_t>& data) const
+	{
+		size_t size = 0;
+		const auto szChunkSize = data.size();
+
+		for (size_t i = 0; i < data.size(); i += szChunkSize)
+			size += data[i];
+
+		return size;
 	}
 
 }
