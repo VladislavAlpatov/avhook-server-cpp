@@ -39,8 +39,6 @@ namespace Encryption
 
 			cpp_int encryptedNumber = powm<cpp_int>(number, m_NumberEncrypt, m_NumberN);
 
-			std::cout << encryptedNumber << '\n';
-
 			std::vector<uint8_t> encBytes;
 			export_bits(encryptedNumber, std::back_inserter(encBytes), 8);
 
@@ -97,8 +95,6 @@ namespace Encryption
 		{
 			cpp_int encNumber;
 			import_bits(encNumber, encData.data()+i+1, encData.data()+i+szEncryptedChunkSize);
-
-			std::cout << encNumber << '\n';
 
 			cpp_int decryptedNumber = powm<cpp_int>(encNumber, m_NumberDecrypt, m_NumberN);
 			std::vector<uint8_t> decryptedBytes;

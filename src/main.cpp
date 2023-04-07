@@ -15,7 +15,7 @@ int main()
 	setbuf(stdout, 0);
 #endif
 	printf("[LOG] Generating RSA keys....\n");
-	Encryption::RSA rsa(2048);
+	Encryption::RSA rsa(1024);
 
 
 	const std::vector<uint8_t> data = {'h', 'e', 'l', 'l','o', '!', '\0'};
