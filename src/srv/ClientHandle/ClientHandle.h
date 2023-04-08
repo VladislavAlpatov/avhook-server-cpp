@@ -21,5 +21,11 @@ namespace Web
         Network::Socket m_clientSocket;
 		DBAPI::User m_dbUser;
 		void OnPacket(const std::unique_ptr<IPayloadExecutable>& pPacket);
+	private:
+		void SendString(const std::string& str);
+		void SendJson(const nlohmann::json& jsn);
+		[[nodiscard]] std::string RecvString();
+		[[nodiscard]] nlohmann::json RecvJson();
+		[[nodiscard]] std::unique_ptr<IPayloadExecutable> RecvPacket();
 	};
 }

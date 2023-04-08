@@ -162,4 +162,28 @@ namespace Encryption
 		return size;
 	}
 
+	size_t RSA::CalcEncryptedDataSize(size_t szSize)
+	{
+		return szSize / m_szKeySize / 8 ;
+	}
+
+	RSA::RSA(const nlohmann::json& data)
+	{
+		try
+		{
+			m_NumberN       = cpp_int(data.at("n").get<std::string>());
+			m_NumberEncrypt = cpp_int(data.at("e").get<std::string>());
+			m_NumberDecrypt = cpp_int(data.at("d").get<std::string>());
+
+		}
+		catch (...)
+		{
+			throw RSAInitializeError();
+		}
+	}
+
+	const char* RSAInitializeError::what() const noexcept
+	{
+		return "Failed to create RSA class";
+	}
 }

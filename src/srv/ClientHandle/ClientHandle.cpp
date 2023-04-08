@@ -8,7 +8,7 @@
 #include "../network/exceptions.h"
 
 #include <fmt/format.h>
-
+#include "../factories/PacketFactory.h"
 
 void Web::ClientHandle::Listen()
 {
@@ -16,7 +16,7 @@ void Web::ClientHandle::Listen()
     {
         try
         {
-            OnPacket(m_clientSocket.RecvPacket());
+            OnPacket(RecvPacket());
         }
         catch (const Network::Exception::RecvFailed& ex)
         {
@@ -29,7 +29,7 @@ void Web::ClientHandle::Listen()
             jsn["success"]    = false;
             jsn["error_code"] = ex.what();
 
-            m_clientSocket.SendJson(jsn);
+            SendJson(jsn);
         }
     }
 }
@@ -45,10 +45,38 @@ void Web::ClientHandle::OnPacket(const std::unique_ptr<IPayloadExecutable>& pPac
 	auto jsn = pPacket->ExecutePayload(*this);
 	jsn["success"] = true;
 
-    m_clientSocket.SendJson(jsn);
+    SendJson(jsn);
 }
 
 Web::ClientHandle::ClientHandle(Network::Socket soc)
 {
 	m_clientSocket = soc;
 }
+
+void Web::ClientHandle::SendString(const std::string& str)
+{
+	m_clientSocket.SendBytes(str.data(), str.size());
+}
+
+void Web::ClientHandle::SendJson(const nlohmann::json& jsn)
+{
+	SendString(jsn.dump());
+}
+
+std::string Web::ClientHandle::RecvString()
+{
+	auto data = m_clientSocket.RecvBytes();
+	data.push_back('\0');
+	return (char*)data.data();
+}
+
+nlohmann::json Web::ClientHandle::RecvJson()
+{
+	return nlohmann::json::parse(RecvString());
+}
+
+std::unique_ptr<Web::IPayloadExecutable> Web::ClientHandle::RecvPacket()
+{
+	return PacketFactory::Create(RecvJson());
+}
+

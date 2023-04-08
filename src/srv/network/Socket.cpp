@@ -1,7 +1,5 @@
 #include "Socket.h"
 #include "exceptions.h"
-
-#include "../factories/PacketFactory.h"
 #include "../packets/exceptions.h"
 
 #include <sys/types.h>
@@ -18,32 +16,6 @@ namespace Web::Network
     {
         return m_pRawSocket;
     }
-
-    std::string Socket::RecvString() const
-    {
-        return (char*)RecvBytes().get();
-    }
-
-    nlohmann::json Socket::RecvJson() const
-    {
-        return nlohmann::json::parse(RecvString());
-    }
-
-    void Socket::SendString(const std::string &str) const
-    {
-        SendBytes(str.c_str(), str.size());
-    }
-
-    void Socket::SendJson(const nlohmann::json &jsn) const
-    {
-        SendString(jsn.dump());
-    }
-
-    std::unique_ptr<IPayloadExecutable> Socket::RecvPacket() const
-    {
-        return Web::PacketFactory::Create(RecvJson());
-    }
-
     Socket::Socket(int af, int type, int protocol)
     {
         m_pRawSocket = socket(af, type, protocol);
@@ -81,7 +53,7 @@ namespace Web::Network
         m_pRawSocket = -1;
     }
 
-    std::unique_ptr<uint8_t> Socket::RecvBytes() const
+	std::vector<uint8_t> Socket::RecvBytes() const
     {
         int iSize = 0;
         ::recv(m_pRawSocket, (char*)&iSize, 4, NULL);
@@ -89,13 +61,11 @@ namespace Web::Network
         if (iSize <= 0 || iSize > MAX_ACCEPTABLE_PACKET_SIZE)
             throw Exception::RecvFailed();
 
-        auto pBuff = std::unique_ptr<uint8_t>(new uint8_t[iSize+1]);
-
-        pBuff.get()[iSize] = '\0';
+        auto pBuff = std::vector<uint8_t>(iSize, 0);
         int iRecvdBytes = 0;
         while (iRecvdBytes < iSize)
         {
-            const auto tmp = ::recv(m_pRawSocket, (char*)pBuff.get()+iRecvdBytes, iSize-iRecvdBytes, NULL);
+            const auto tmp = ::recv(m_pRawSocket, (char*)pBuff.data()+iRecvdBytes, iSize-iRecvdBytes, NULL);
 
             if (!tmp) throw Exception::RecvFailed();
             iRecvdBytes += tmp;

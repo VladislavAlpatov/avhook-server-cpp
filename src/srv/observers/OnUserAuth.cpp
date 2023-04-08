@@ -18,7 +18,7 @@ namespace Observers
 		if (!pClientContext)
 			return;
 
-		printf("[LOG] A new user (%s#%d) has been authorized\n", pClientContext->m_dbUser.GetName().c_str(),
+		printf("[LOG] A new user (%s#%lu) has been authorized\n", pClientContext->m_dbUser.GetName().c_str(),
                pClientContext->m_dbUser.GetID());
 
 	}

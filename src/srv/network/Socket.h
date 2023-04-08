@@ -22,17 +22,13 @@ namespace Web::Network
         [[maybe_unused]] SOCKET GetRawSocket() const;
 
         Socket(int af, int type, int protocol);
-        virtual std::unique_ptr<uint8_t> RecvBytes() const;
+        virtual std::vector<uint8_t> RecvBytes() const;
         virtual void SendBytes(const void* pBytes, int iSize) const;
-        [[nodiscard]] std::string RecvString() const;
-        [[nodiscard]] nlohmann::json RecvJson() const;
-        void SendString(const std::string& str) const;
-        void SendJson(const nlohmann::json& jsn) const;
+		void SendBytes(const std::vector<uint8_t>& bytes) const { SendBytes(bytes.data(), (int)bytes.size()); };
         void Bind(const std::string& ip, int iPort);
         void SetOption(int iProto,int iOption, int iOptionVal);
         void Close();
         Socket Listen();
-        [[nodiscard]] std::unique_ptr<IPayloadExecutable> RecvPacket() const;
 
         template<typename Type>
         void SendStruct(const Type& strct) const

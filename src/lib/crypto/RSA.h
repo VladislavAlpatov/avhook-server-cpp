@@ -5,7 +5,7 @@
 #pragma once
 
 #include <boost/multiprecision/cpp_int.hpp>
-
+#include <nlohmann/json.hpp>
 
 namespace Encryption
 {
@@ -15,6 +15,7 @@ namespace Encryption
 		explicit RSA(size_t szKeySize);
 		[[nodiscard]] std::vector<uint8_t> Encrypt(const std::vector<uint8_t>& data)    const;
 		[[nodiscard]] std::vector<uint8_t> Decrypt(const std::vector<uint8_t>& encData) const;
+		explicit RSA(const nlohmann::json& data);
 
 		void GenerateKeys();
 	private:
@@ -30,5 +31,9 @@ namespace Encryption
 		boost::multiprecision::cpp_int m_NumberEncrypt;
 	};
 
-
+	class RSAInitializeError : public std::exception
+	{
+	public:
+		const char* what() const _GLIBCXX_TXN_SAFE_DYN _GLIBCXX_NOTHROW override;
+	};
 } // Encryption
