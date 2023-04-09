@@ -76,7 +76,6 @@ namespace Encryption
 		m_NumberN       = n;
 		m_NumberDecrypt = d;
 		m_NumberEncrypt = e;
-		// printf("n = %s\nd = %s\ne = %s\n", m_NumberN.str().c_str(), m_NumberDecrypt.str().c_str(), m_NumberEncrypt.str().c_str());
 	}
 
 	std::vector<uint8_t> RSA::Decrypt(const std::vector<uint8_t>& encData) const
@@ -91,7 +90,7 @@ namespace Encryption
 		std::vector<uint8_t> decryptedData;
 		decryptedData.reserve(CalcDecryptedDataSize(encData));
 
-		for (size_t i = 0; i < encData.size(); i += szEncryptedChunkSize)
+		for (size_t i = 0; i < encData.size()-szEncryptedChunkSize; i += szEncryptedChunkSize)
 		{
 			cpp_int encNumber;
 			import_bits(encNumber, encData.data()+i+1, encData.data()+i+szEncryptedChunkSize);
@@ -120,11 +119,10 @@ namespace Encryption
 
 		auto threadFunc = [&](bool* pFound, cpp_int* pNumber, int id)
 		{
-			uniform_int_distribution<cpp_int> ui(0, cpp_int(1) << (m_szKeySize-1) );
+			uniform_int_distribution<cpp_int> ui(cpp_int(1) << (m_szKeySize-1), pow(cpp_int(2), m_szKeySize)-1);
 			while (!*pFound)
 			{
-				auto val =  ui(mt) | (cpp_int(1) << (m_szKeySize-1) ) | 1 ;
-
+				cpp_int val =  ui(mt) | 1;
 				if (miller_rabin_test(val,25))
 				{
 					*pFound = true;
@@ -174,7 +172,9 @@ namespace Encryption
 			m_NumberN       = cpp_int(data.at("n").get<std::string>());
 			m_NumberEncrypt = cpp_int(data.at("e").get<std::string>());
 			m_NumberDecrypt = cpp_int(data.at("d").get<std::string>());
-			m_szKeySize     = std::max(msb(m_NumberEncrypt), msb(m_NumberDecrypt));
+			m_szKeySize     = std::ceil((msb(m_NumberN) + 1) / 8) * 4;
+
+			printf("%zu\n", m_szKeySize);
 		}
 		catch (...)
 		{

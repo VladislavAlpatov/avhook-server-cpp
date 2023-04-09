@@ -50,7 +50,7 @@ void Web::ClientHandle::OnPacket(const std::unique_ptr<IPayloadExecutable>& pPac
 Web::ClientHandle::ClientHandle(Network::Socket soc)
 {
 	m_clientSocket = soc;
-	m_RsaOut = Encryption::RSA(1024);
+	m_RsaIn = Encryption::RSA(1024);
 }
 
 void Web::ClientHandle::SendString(const std::string& str)

@@ -6,7 +6,7 @@ from avs import *
 con = Connection("192.168.234.128", 7777, "1@mail.ru", "1235")
 
 
-user = con.get_logged_user()
-print(user.get_name())
+#user = con.get_logged_user()
+#print(user.get_name())
 a: int = 1337
 print(ceil(a.bit_length() / 8))
