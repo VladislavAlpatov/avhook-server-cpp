@@ -27,7 +27,7 @@ namespace Web
 		Encryption::RSA m_RsaIn;
 		void SendString(const std::string& str);
 		void SendJson(const nlohmann::json& jsn);
-		void ExchangeRsaKeys();
+		[[nodiscard]] bool ExchangeRsaKeys();
 		[[nodiscard]] std::string RecvString();
 		[[nodiscard]] nlohmann::json RecvJson();
 		[[nodiscard]] std::unique_ptr<IPayloadExecutable> RecvPacket();

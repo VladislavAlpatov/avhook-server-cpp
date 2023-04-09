@@ -14,15 +14,6 @@ int main()
 #ifdef _DEBUG
 	setbuf(stdout, 0);
 #endif
-	printf("[LOG] Generating RSA keys....\n");
-	Encryption::RSA rsa(1024);
-
-
-	const std::vector<uint8_t> data = {'h', 'e', 'l', 'l','o', '!', '\0'};
-	auto encData = rsa.Encrypt(data);
-	auto decrypted= rsa.Decrypt(encData);
-	printf("decrypted: %s\n", decrypted.data());
-	printf("[LOG] RSA done!\n");
 	const auto pServer = Web::Server::Get();
 
 #ifdef _DEBUG

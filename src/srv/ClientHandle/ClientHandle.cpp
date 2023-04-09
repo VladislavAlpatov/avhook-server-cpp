@@ -8,6 +8,9 @@
 
 void Web::ClientHandle::Listen()
 {
+	if (!ExchangeRsaKeys())
+		return;
+
     while (true)
     {
         try
@@ -52,7 +55,9 @@ Web::ClientHandle::ClientHandle(Network::Socket soc)
 
 void Web::ClientHandle::SendString(const std::string& str)
 {
-	m_clientSocket.SendBytes(str.data(), str.size());
+	std::vector<uint8_t> data(str.begin(), str.end());
+	const auto encData = m_RsaOut.Encrypt(data);
+	m_clientSocket.SendBytes(encData.data(), encData.size());
 }
 
 void Web::ClientHandle::SendJson(const nlohmann::json& jsn)
@@ -62,7 +67,7 @@ void Web::ClientHandle::SendJson(const nlohmann::json& jsn)
 
 std::string Web::ClientHandle::RecvString()
 {
-	auto data = m_clientSocket.RecvBytes();
+	auto data = m_RsaIn.Decrypt(m_clientSocket.RecvBytes());
 	data.push_back('\0');
 	return (char*)data.data();
 }
@@ -77,20 +82,30 @@ std::unique_ptr<Web::IPayloadExecutable> Web::ClientHandle::RecvPacket()
 	return PacketFactory::Create(RecvJson());
 }
 
-void Web::ClientHandle::ExchangeRsaKeys()
+bool Web::ClientHandle::ExchangeRsaKeys()
 {
-	auto data = m_clientSocket.RecvBytes();
-	data.push_back('\0');
+	try
+	{
+		auto data = m_clientSocket.RecvBytes();
+		data.push_back('\0');
 
-	m_RsaOut = Encryption::RSA(nlohmann::json::parse(data.data()));
+		m_RsaOut = Encryption::RSA(nlohmann::json::parse(data.data()));
 
-	nlohmann::json rsaInJsn;
-	rsaInJsn["n"] = m_RsaIn.GetModulus().str();
-	rsaInJsn["e"] = m_RsaIn.GetPublicKey().str();
-	rsaInJsn["d"] = "0";
+		nlohmann::json rsaInJsn;
+		rsaInJsn["n"] = m_RsaIn.GetModulus().str();
+		rsaInJsn["e"] = m_RsaIn.GetPublicKey().str();
+		rsaInJsn["d"] = "0";
 
-	const auto jsnStr = rsaInJsn.dump();
-	m_clientSocket.SendBytes(jsnStr.data(), jsnStr.size());
+		const auto jsnStr = rsaInJsn.dump();
+		m_clientSocket.SendBytes(jsnStr.data(), jsnStr.size());
+
+		return true;
+	}
+	catch (...)
+	{
+		return false;
+	}
+
 
 }
 

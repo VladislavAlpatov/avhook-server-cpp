@@ -174,7 +174,7 @@ namespace Encryption
 			m_NumberN       = cpp_int(data.at("n").get<std::string>());
 			m_NumberEncrypt = cpp_int(data.at("e").get<std::string>());
 			m_NumberDecrypt = cpp_int(data.at("d").get<std::string>());
-			m_szKeySize     = msb(m_NumberN) / 2;
+			m_szKeySize     = std::max(msb(m_NumberEncrypt), msb(m_NumberDecrypt));
 		}
 		catch (...)
 		{
