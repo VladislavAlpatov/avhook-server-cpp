@@ -6,6 +6,7 @@
 #include "../packets/BasePacket.h"
 #include "../network/Socket.h"
 #include "../DataBaseAPI/User.h"
+#include "../../lib/crypto/RSA.h"
 
 #include <memory>
 
@@ -22,8 +23,11 @@ namespace Web
 		DBAPI::User m_dbUser;
 		void OnPacket(const std::unique_ptr<IPayloadExecutable>& pPacket);
 	private:
+		Encryption::RSA m_RsaOut;
+		Encryption::RSA m_RsaIn;
 		void SendString(const std::string& str);
 		void SendJson(const nlohmann::json& jsn);
+		void ExchangeRsaKeys();
 		[[nodiscard]] std::string RecvString();
 		[[nodiscard]] nlohmann::json RecvJson();
 		[[nodiscard]] std::unique_ptr<IPayloadExecutable> RecvPacket();

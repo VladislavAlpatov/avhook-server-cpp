@@ -2,12 +2,8 @@
 // Created by Vlad on 27.12.2022.
 //
 #include "ClientHandle.h"
-
-#include <utility>
 #include "../observers/OnPacket.h"
 #include "../network/exceptions.h"
-
-#include <fmt/format.h>
 #include "../factories/PacketFactory.h"
 
 void Web::ClientHandle::Listen()
@@ -51,6 +47,7 @@ void Web::ClientHandle::OnPacket(const std::unique_ptr<IPayloadExecutable>& pPac
 Web::ClientHandle::ClientHandle(Network::Socket soc)
 {
 	m_clientSocket = soc;
+	m_RsaOut = Encryption::RSA(1024);
 }
 
 void Web::ClientHandle::SendString(const std::string& str)
@@ -78,5 +75,22 @@ nlohmann::json Web::ClientHandle::RecvJson()
 std::unique_ptr<Web::IPayloadExecutable> Web::ClientHandle::RecvPacket()
 {
 	return PacketFactory::Create(RecvJson());
+}
+
+void Web::ClientHandle::ExchangeRsaKeys()
+{
+	auto data = m_clientSocket.RecvBytes();
+	data.push_back('\0');
+
+	m_RsaOut = Encryption::RSA(nlohmann::json::parse(data.data()));
+
+	nlohmann::json rsaInJsn;
+	rsaInJsn["n"] = m_RsaIn.GetModulus().str();
+	rsaInJsn["e"] = m_RsaIn.GetPublicKey().str();
+	rsaInJsn["d"] = "0";
+
+	const auto jsnStr = rsaInJsn.dump();
+	m_clientSocket.SendBytes(jsnStr.data(), jsnStr.size());
+
 }
 
