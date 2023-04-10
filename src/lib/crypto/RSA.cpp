@@ -90,7 +90,7 @@ namespace Encryption
 		std::vector<uint8_t> decryptedData;
 		decryptedData.reserve(CalcDecryptedDataSize(encData));
 
-		for (size_t i = 0; i < encData.size()-szEncryptedChunkSize; i += szEncryptedChunkSize)
+		for (size_t i = 0; i < encData.size(); i += szEncryptedChunkSize)
 		{
 			cpp_int encNumber;
 			import_bits(encNumber, encData.data()+i+1, encData.data()+i+szEncryptedChunkSize);
@@ -123,7 +123,7 @@ namespace Encryption
 			while (!*pFound)
 			{
 				cpp_int val =  ui(mt) | 1;
-				if (miller_rabin_test(val,25))
+				if (miller_rabin_test(val,50))
 				{
 					*pFound = true;
 					*pNumber = val;
