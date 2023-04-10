@@ -55,27 +55,42 @@ namespace Encryption
 	}
 	void RSA::GenerateKeys()
 	{
-		auto p = GeneratePrimeNumber();
-		auto q = GeneratePrimeNumber();
-
-		auto n = p*q;
-
-		auto phi = (p - 1) * (q - 1);
-		cpp_int e;
-
-		mt19937 mt(time(nullptr));
-		uniform_int_distribution<cpp_int> ui(2, phi-1);
-
-		do
+		while (true)
 		{
-			e = ui(mt);
-		}
-		while (gcd(e, phi) != 1);
-		auto d = boost::integer::mod_inverse<cpp_int>(e, phi);
+			auto p = GeneratePrimeNumber();
+			auto q = GeneratePrimeNumber();
 
-		m_NumberN       = n;
-		m_NumberDecrypt = d;
-		m_NumberEncrypt = e;
+			auto n = p*q;
+
+			auto phi = (p - 1) * (q - 1);
+			cpp_int e;
+
+			mt19937 mt(time(nullptr));
+			uniform_int_distribution<cpp_int> ui(2, phi-1);
+
+			do
+			{
+				e = ui(mt);
+			}
+			while (gcd(e, phi) != 1);
+			auto d = boost::integer::mod_inverse<cpp_int>(e, phi);
+
+			m_NumberN       = n;
+			m_NumberDecrypt = d;
+			m_NumberEncrypt = e;
+
+			if (EncryptionDecryptionCheck())
+				return;
+		}
+	}
+
+	bool RSA::EncryptionDecryptionCheck() const
+	{
+		std::string original= "We live in a twilight world and there are no friends in the dusk";
+		const auto encrypted     = Encrypt({ original.begin(), original.end()});
+		const auto decrypted     = Decrypt(encrypted);
+
+		return  original == std::string(decrypted.begin(), decrypted.end());
 	}
 
 	std::vector<uint8_t> RSA::Decrypt(const std::vector<uint8_t>& encData) const
@@ -122,8 +137,8 @@ namespace Encryption
 			uniform_int_distribution<cpp_int> ui(cpp_int(1) << (m_szKeySize-1), pow(cpp_int(2), m_szKeySize)-1);
 			while (!*pFound)
 			{
-				cpp_int val =  ui(mt) | 1;
-				if (miller_rabin_test(val,50))
+				cpp_int val =  ui(mt);
+				if (miller_rabin_test(val,25))
 				{
 					*pFound = true;
 					*pNumber = val;

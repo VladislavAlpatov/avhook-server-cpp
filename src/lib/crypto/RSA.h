@@ -37,6 +37,8 @@ namespace Encryption
 		boost::multiprecision::cpp_int m_NumberN;
 		boost::multiprecision::cpp_int m_NumberDecrypt;
 		boost::multiprecision::cpp_int m_NumberEncrypt;
+
+		bool EncryptionDecryptionCheck() const;
 	};
 
 	class RSAInitializeError : public std::exception

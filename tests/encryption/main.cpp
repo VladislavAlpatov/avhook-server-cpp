@@ -2,8 +2,22 @@
 // Created by alpat on 10.04.2023.
 //
 #include <gtest/gtest.h>
+#include <RSA.h>
 
-TEST(DBAPI, DBAPI_FindUserById_Test)
+
+TEST(DBAPI, RSA_ValidEncryptionAndDecryption)
 {
+
+	for (int i = 0 ; i < 100; i++)
+	{
+		auto rsa = Encryption::RSA(128);
+
+		std::string original = "We live in a twilight world and there are no friends in the dusk";
+		const auto encrypted = rsa.Encrypt({original.begin(), original.end()});
+		const auto decrypted = rsa.Decrypt(encrypted);
+		const auto decrypted_str = std::string(decrypted.begin(), decrypted.end());
+
+		EXPECT_TRUE(original == decrypted_str);
+	}
 
 }

@@ -6,7 +6,7 @@ file(GLOB dbapi_SRC "../../src/srv/DataBaseAPI/*.cpp" "../../src/lib/sqlite/*.cp
 
 
 target_sources(dbapi PRIVATE ${dbapi_SRC})
-target_include_directories(dbapi PRIVATE ../src/srv/DataBaseAPI)
+target_include_directories(dbapi PRIVATE ../../src/srv/DataBaseAPI)
 
 find_package(GTest REQUIRED)
 target_link_libraries(dbapi PRIVATE GTest::GTest GTest::Main)
