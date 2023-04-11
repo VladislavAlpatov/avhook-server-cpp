@@ -8,10 +8,9 @@
 TEST(DBAPI, RSA_ValidEncryptionAndDecryption)
 {
 
-	for (int i = 0 ; i < 100; i++)
+	for (int i = 0 ; i < 20; i++)
 	{
-		auto rsa = Encryption::RSA(128);
-
+		auto rsa = Encryption::RSA(1024);
 		std::string original = "We live in a twilight world and there are no friends in the dusk";
 		const auto encrypted = rsa.Encrypt({original.begin(), original.end()});
 		const auto decrypted = rsa.Decrypt(encrypted);

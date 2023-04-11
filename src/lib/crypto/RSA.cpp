@@ -131,26 +131,24 @@ namespace Encryption
 		bool bFound = false;
 		cpp_int foundNumber;
 		mt19937 mt(std::time(nullptr));
+		uniform_int_distribution<cpp_int> ui(cpp_int(1) << (m_szKeySize-1), pow(cpp_int(2), m_szKeySize)-1);
 
-		auto threadFunc = [&](bool* pFound, cpp_int* pNumber, int id)
+		auto payload = [&](bool* pFound, cpp_int* pNumber)
 		{
-			uniform_int_distribution<cpp_int> ui(cpp_int(1) << (m_szKeySize-1), pow(cpp_int(2), m_szKeySize)-1);
 			while (!*pFound)
 			{
 				cpp_int val =  ui(mt);
 				if (miller_rabin_test(val,25))
 				{
-					*pFound = true;
 					*pNumber = val;
-					return;
+					*pFound = true;
 				}
 			}
 		};
-		std::vector<std::thread> threads;
-		threads.reserve(4);
+		std::array<std::thread, 4> threads {};
 
-		for (int i = 0; i < 4; i++)
-			threads.emplace_back(threadFunc,&bFound,&foundNumber, i);
+		for (auto& thread : threads)
+			thread = std::thread(payload, &bFound,&foundNumber);
 
 		for (auto& thread : threads)
 			thread.join();
@@ -189,7 +187,6 @@ namespace Encryption
 			m_NumberDecrypt = cpp_int(data.at("d").get<std::string>());
 			m_szKeySize     = std::ceil((msb(m_NumberN) + 1) / 8) * 4;
 
-			printf("%zu\n", m_szKeySize);
 		}
 		catch (...)
 		{

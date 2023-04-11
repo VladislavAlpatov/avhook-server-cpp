@@ -16,6 +16,7 @@ if (CMAKE_BUILD_TYPE MATCHES Debug)
     add_compile_definitions(_DEBUG)
 else()
     add_link_options(-s)
+    add_compile_options(-Ofast)
 
 endif()
 
