@@ -20,16 +20,14 @@ namespace Encryption
 
 		explicit RSA(const nlohmann::json& data);
 
-		void GenerateKeys();
-
 		[[nodiscard]] boost::multiprecision::cpp_int GetModulus()    const {return m_NumberN;}
 		[[nodiscard]] boost::multiprecision::cpp_int GetPrivateKey() const {return m_NumberDecrypt;}
 		[[nodiscard]] boost::multiprecision::cpp_int GetPublicKey()  const {return m_NumberEncrypt;}
 
 	private:
-		[[nodiscard]] boost::multiprecision::cpp_int GeneratePrimeNumber() const;
-		size_t m_szKeySize = 0;
-
+		[[nodiscard]] boost::multiprecision::cpp_int GeneratePrimeNumber(size_t szBits) const;
+		[[nodiscard]] size_t GetModulusSize() const;
+		[[nodiscard]] inline size_t GetKeySize()const {return GetModulusSize() / 2;};
 		boost::multiprecision::cpp_int m_NumberN;
 		boost::multiprecision::cpp_int m_NumberDecrypt;
 		boost::multiprecision::cpp_int m_NumberEncrypt;
