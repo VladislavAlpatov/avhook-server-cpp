@@ -47,10 +47,10 @@ void Web::ClientHandle::OnPacket(const std::unique_ptr<IPayloadExecutable>& pPac
     SendJson(jsn);
 }
 
-Web::ClientHandle::ClientHandle(Network::Socket soc)
+Web::ClientHandle::ClientHandle(Network::Socket soc, const Encryption::RSA& rsa)
 {
 	m_clientSocket = soc;
-	m_RsaIn = Encryption::RSA(1024);
+	m_RsaIn = rsa;
 }
 
 void Web::ClientHandle::SendString(const std::string& str)

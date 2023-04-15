@@ -51,7 +51,7 @@ namespace Web
 
 			std::thread([this](const Network::Socket& soc)
 			{
-				auto clientHandle = ClientHandle(soc);
+				auto clientHandle = ClientHandle(soc, m_encryptionKeys);
 
 #ifdef _DEBUG
 				clientHandle.AddObserver(new Observers::OnUserAuth());

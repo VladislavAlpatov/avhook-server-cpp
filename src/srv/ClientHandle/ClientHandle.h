@@ -15,7 +15,7 @@ namespace Web
 	class ClientHandle final : public ObservableObject
 	{
 	public:
-		explicit ClientHandle(Network::Socket soc);
+		ClientHandle(Network::Socket soc, const Encryption::RSA& rsa);
 
 		void Listen();
 		~ClientHandle() override;

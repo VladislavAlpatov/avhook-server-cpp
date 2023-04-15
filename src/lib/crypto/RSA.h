@@ -5,7 +5,6 @@
 #pragma once
 
 #include <boost/multiprecision/cpp_int.hpp>
-#include <nlohmann/json.hpp>
 
 namespace Encryption
 {
@@ -13,7 +12,6 @@ namespace Encryption
 	{
 	public:
 		explicit RSA(size_t szKeySize);
-		explicit RSA(const nlohmann::json& data);
 		RSA() = default;
 
 		void SetPrivateKey(const boost::multiprecision::cpp_int& newPrivateKeyNumber);

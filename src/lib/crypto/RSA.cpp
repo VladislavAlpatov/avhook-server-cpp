@@ -120,22 +120,6 @@ namespace Encryption
 		m_NumberEncrypt = e;
 	}
 
-
-	[[maybe_unused]] RSA::RSA(const nlohmann::json& data)
-	{
-		try
-		{
-			m_NumberN       = cpp_int(data.at("n").get<std::string>());
-			m_NumberEncrypt = cpp_int(data.at("e").get<std::string>());
-			m_NumberDecrypt = cpp_int(data.at("d").get<std::string>());
-
-		}
-		catch (...)
-		{
-			throw RSAInitializeError();
-		}
-	}
-
 	size_t RSA::GetModulusSize() const
 	{
 		return GetCppIntSize(m_NumberN);
