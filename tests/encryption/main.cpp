@@ -15,6 +15,7 @@ TEST(DBAPI, RSA_ValidEncryptionAndDecryption)
 {
 	using namespace boost::multiprecision;
 	std::string str = "We live in twilight world, and there are no friends at dusk";
+
 	std::vector<uint8_t> data = {str.begin(), str.end()};
 
 	for (int i = 0 ; i < 200; i++)

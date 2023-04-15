@@ -19,7 +19,7 @@ using namespace boost::random;
 
 inline size_t GetCppIntSize(const cpp_int& number)
 {
-	return ceil((msb(number) + 1) / 8.f);
+	return ceil(( (float)msb(number) + 1) / 8.f);
 }
 
 
@@ -51,8 +51,6 @@ namespace Encryption
 
 			export_bits(encryptedNumber, std::back_inserter(encryptedData), 8);
 
-			if (encryptedData.size() % (m_szKeySize / 4 + 1) )
-				int x = 6;
 		}
 		return encryptedData;
 
