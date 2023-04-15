@@ -38,8 +38,6 @@ target_link_libraries( server PRIVATE nlohmann_json )
 find_package(fmt REQUIRED)
 target_link_libraries(server PRIVATE fmt::fmt)
 
-find_package(OpenSSL REQUIRED)
-target_link_libraries(server PRIVATE OpenSSL::Crypto)
 
 if(BUILD_SERVER_TEST)
     add_subdirectory(tests)
