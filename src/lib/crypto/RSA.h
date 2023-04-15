@@ -29,16 +29,10 @@ namespace Encryption
 	private:
 		[[nodiscard]] boost::multiprecision::cpp_int GeneratePrimeNumber() const;
 		size_t m_szKeySize = 0;
-		size_t CalcEncryptedDataSize(size_t szSize);
-		size_t CalcDecryptedDataSize(const std::vector<uint8_t>& data) const;
-
-		[[nodiscard]] size_t CalcChunkSize() const {return m_szKeySize / 4 + 1;}
 
 		boost::multiprecision::cpp_int m_NumberN;
 		boost::multiprecision::cpp_int m_NumberDecrypt;
 		boost::multiprecision::cpp_int m_NumberEncrypt;
-
-		bool EncryptionDecryptionCheck() const;
 	};
 
 	class RSAInitializeError : public std::exception

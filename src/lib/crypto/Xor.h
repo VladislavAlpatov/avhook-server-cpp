@@ -7,5 +7,5 @@
 
 namespace Encryption::Xor
 {
-    void ApplyXorEncryption(std::vector<u_int8_t>& data,const std::vector<u_int8_t>& key );
+	std::vector<u_int8_t> Encrypt(std::vector<u_int8_t> data,const std::vector<u_int8_t>& key );
 }

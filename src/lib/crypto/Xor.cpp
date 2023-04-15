@@ -6,13 +6,12 @@
 
 namespace Encryption::Xor
 {
-    void ApplyXorEncryption(std::vector<u_int8_t>& data,const std::vector<u_int8_t>& key )
+	std::vector<u_int8_t> Encrypt(std::vector<u_int8_t> data,const std::vector<u_int8_t>& key )
     {
-        const auto dataLength = data.size();
-        const auto keySize    = key.size();
+        for (auto& byte : data)
+			for (auto& keyByte : key)
+				byte ^= keyByte;
 
-
-        for (size_t i = 0; i < dataLength; i++)
-            data[i] ^= key[i % keySize];
+		return data;
     }
 }

@@ -3,20 +3,29 @@
 //
 #include <gtest/gtest.h>
 #include <RSA.h>
+#include <boost/integer/mod_inverse.hpp>
+#include <boost/random.hpp>
+#include <boost/integer.hpp>
 
+#include <iostream>
+
+// Generate a random prime number using the Miller-Rabin primality test
 
 TEST(DBAPI, RSA_ValidEncryptionAndDecryption)
 {
+	using namespace boost::multiprecision;
+	std::string str = "We live in twilight world, and there are no friends at dusk";
+	std::vector<uint8_t> data = {str.begin(), str.end()};
 
-	for (int i = 0 ; i < 20; i++)
+	for (int i = 0 ; i < 200; i++)
 	{
-		auto rsa = Encryption::RSA(1024);
-		std::string original = "We live in a twilight world and there are no friends in the dusk";
-		const auto encrypted = rsa.Encrypt({original.begin(), original.end()});
-		const auto decrypted = rsa.Decrypt(encrypted);
-		const auto decrypted_str = std::string(decrypted.begin(), decrypted.end());
+		auto rsa = Encryption::RSA(256);
+		auto enc = rsa.Encrypt(data);
+		auto dec = rsa.Decrypt(enc);
 
-		EXPECT_TRUE(original == decrypted_str);
+
+		EXPECT_TRUE(str == std::string(dec.begin(), dec.end()));
+
 	}
 
 }

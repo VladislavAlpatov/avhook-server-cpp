@@ -52,8 +52,10 @@ class RSA:
         return encrypted
 
 
+for _ in range(200):
+    rsa = RSA(128)
+    enc = pow(1337, rsa.number_e, rsa.number_n)
 
-rsa = RSA(1024)
-data = rsa.Encrypt("hello world!".encode('utf-8'))
-
-print("done")
+    if (1337 != pow(enc, rsa.number_d, rsa.number_n)):
+        print("failed")
+print("all done ")
