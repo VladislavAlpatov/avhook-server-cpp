@@ -196,12 +196,12 @@ namespace Encryption
 		return "RSA private key value is invalid";
 	}
 
-	const char* RSAInvalidPublicKey::what() const _GLIBCXX_TXN_SAFE_DYN _GLIBCXX_NOTHROW
+	const char* RSAInvalidPublicKey::what() const noexcept
 	{
 		return "RSA public key value is invalid";
 	}
 
-	const char* RSAInvalidModulus::what() const _GLIBCXX_TXN_SAFE_DYN _GLIBCXX_NOTHROW
+	const char* RSAInvalidModulus::what() const noexcept
 	{
 		return "RSA modulus key value is invalid";
 	}
