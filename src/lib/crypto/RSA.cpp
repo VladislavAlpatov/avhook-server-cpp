@@ -8,10 +8,8 @@
 #include <boost/integer/mod_inverse.hpp>
 #include <boost/random.hpp>
 
-
 #include <iostream>
 #include <array>
-#include <thread>
 
 using namespace boost::multiprecision;
 using namespace boost::random;
@@ -60,9 +58,9 @@ namespace Encryption
 	{
 		const auto szEncryptedChunkSize = GetModulusSize() + 1;
 
-		// Check if encrypted data is corrupted
-		if (encData.size() % szEncryptedChunkSize)
-			throw std::runtime_error("ENCRYPTED DATA CORRUPTED");
+		// Check if encrypted data is NOT corrupted
+		if (!ValidateDataPadding(encData))
+			throw RSADecryptionError();
 
 
 		std::vector<uint8_t> decryptedData;
@@ -71,6 +69,7 @@ namespace Encryption
 		{
 			cpp_int encNumber;
 			import_bits(encNumber, encData.data()+i+1, encData.data()+i+szEncryptedChunkSize);
+
 			cpp_int decryptedNumber = powm<cpp_int>(encNumber, m_NumberDecrypt, m_NumberN);
 			export_bits(decryptedNumber, std::back_inserter(decryptedData), 8);
 
@@ -93,7 +92,7 @@ namespace Encryption
 		{
 			p = dist(gen);
 		}
-		while (!miller_rabin_test(p, 50));
+		while (!miller_rabin_test(p, 25));
 		return p;
 	}
 
@@ -142,8 +141,68 @@ namespace Encryption
 		return GetCppIntSize(m_NumberN);
 	}
 
+	bool RSA::ValidateDataPadding(const std::vector<uint8_t>& encData) const
+	{
+		const auto szModulusSize = GetModulusSize();
+		const auto szEncryptedChunkSize = szModulusSize + 1;
+
+		if (encData.size() % szEncryptedChunkSize)
+			return false;
+
+		for (size_t i = 0; i < encData.size(); i += szEncryptedChunkSize)
+			if (!encData[i] or encData[i] > szModulusSize)
+				return false;
+
+		return true;
+
+	}
+
+	void RSA::SetPrivateKey(const cpp_int& newPrivateKeyNumber)
+	{
+		if (newPrivateKeyNumber <= 1)
+			throw RSAInvalidPrivateKey();
+
+		m_NumberDecrypt = newPrivateKeyNumber;
+	}
+
+	void RSA::SetPublicKey(const cpp_int& newPublicNumber)
+	{
+		if (newPublicNumber <= 1)
+			throw RSAInvalidPublicKey();
+
+		m_NumberEncrypt = newPublicNumber;
+	}
+
+	void RSA::SetModulus(const cpp_int& newModulusNumber)
+	{
+		if (newModulusNumber <= 1 or newModulusNumber <= m_NumberEncrypt or newModulusNumber <= m_NumberDecrypt)
+			throw RSAInvalidModulus();
+
+		m_NumberN = newModulusNumber;
+	}
+
 	const char* RSAInitializeError::what() const noexcept
 	{
 		return "Failed to create RSA class";
+	}
+
+	const char* RSADecryptionError::what() const noexcept
+	{
+		return "RSA decryption error";
+	}
+
+	const char* RSAInvalidPrivateKey::what() const noexcept
+	{
+		return "RSA private key value is invalid";
+	}
+
+	const char* RSAInvalidPublicKey::what() const _GLIBCXX_TXN_SAFE_DYN _GLIBCXX_NOTHROW
+	{
+		return "RSA public key value is invalid";
+	}
+
+	const char* RSAInvalidModulus::what() const _GLIBCXX_TXN_SAFE_DYN _GLIBCXX_NOTHROW
+	{
+		return "RSA modulus key value is invalid";
 	}
 }
