@@ -13,7 +13,13 @@ namespace DBAPI
 
 	class Product : public Object
 	{
-		std::string GetName() const;
+		friend class DataBase;
+	public:
+		[[nodiscard]] std::string GetName() const;
+		void SetName(const std::string& sNewName);
+
+	private:
+		explicit Product(uint64_t id);
 	};
 
 } // DBAPI
