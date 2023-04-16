@@ -13,8 +13,8 @@ namespace DBAPI
 	public:
 		explicit ActivationKey(uint64_t id);
 		// GetProduct() const;
-		// GetkeyData() const;
-		// bool IsActivated() const;
+		[[nodiscard]] uint64_t GetkeyData() const;
+		[[nodiscard]] bool IsActivated() const;
 
 	};
 

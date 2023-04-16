@@ -3,12 +3,17 @@
 //
 
 #pragma once
+
+#include "Object.h"
+#include <string>
+
+
 namespace DBAPI
 {
 
-	class Product
+	class Product : public Object
 	{
-
+		std::string GetName() const;
 	};
 
 } // DBAPI

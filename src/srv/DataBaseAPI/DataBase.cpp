@@ -125,4 +125,9 @@ namespace DBAPI
     {
         return !Query(fmt::format("SELECT `id` FROM `configs` WHERE `id` = {}", id)).empty();
     }
+
+	ActivationKey DataBase::GetActivationKeyById(uint64_t id)
+	{
+		return ActivationKey();
+	}
 } // DBAP

@@ -13,6 +13,7 @@ namespace DBAPI
     class Chat;
     class ChatMessage;
     class Config;
+	class ActivationKey;
     class DataBase : public sql::Connection
     {
     public:
@@ -26,6 +27,7 @@ namespace DBAPI
         ChatMessage GetChatMessageById(uint64_t id);
         User        GetUserByEmail(std::string sEmail);
         Config      GetConfigById(uint64_t id);
+		ActivationKey GetActivationKeyById(uint64_t id);
         bool        IsConfigExist(uint64_t id);
         void AddNewUser(const std::string& sName, const std::string& sStatus,const std::string& sPassword, const std::string sEmail, int iType);
         void CreateChat(const User& owner, const std::string& sName);
