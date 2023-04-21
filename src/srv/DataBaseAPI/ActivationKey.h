@@ -11,7 +11,7 @@ namespace DBAPI
 	class ActivationKey final : public Object
 	{
 	public:
-		explicit ActivationKey(uint64_t id);
+		ActivationKey(uint64_t id);
 		// GetProduct() const;
 		[[nodiscard]] uint64_t GetkeyData() const;
 		[[nodiscard]] bool IsActivated() const;

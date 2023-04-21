@@ -6,7 +6,7 @@
 #include "../packets/BasePacket.h"
 #include "../network/Socket.h"
 #include "../DataBaseAPI/User.h"
-#include "../../lib/crypto/RSA.h"
+#include <cstdint>
 
 #include <memory>
 
@@ -15,7 +15,7 @@ namespace Web
 	class ClientHandle final : public ObservableObject
 	{
 	public:
-		ClientHandle(Network::Socket soc, const Encryption::RSA& rsa);
+		ClientHandle(Network::Socket soc);
 
 		void Listen();
 		~ClientHandle() override;
@@ -23,13 +23,15 @@ namespace Web
 		DBAPI::User m_dbUser;
 		void OnPacket(const std::unique_ptr<IPayloadExecutable>& pPacket);
 	private:
-		Encryption::RSA m_RsaOut;
-		Encryption::RSA m_RsaIn;
+		std::vector<uint8_t> m_xorKey;
+		void SendBytes(const std::vector<uint8_t>& bytes);
 		void SendString(const std::string& str);
 		void SendJson(const nlohmann::json& jsn);
+
 		[[nodiscard]] bool ExchangeRsaKeys();
 		[[nodiscard]] std::string RecvString();
 		[[nodiscard]] nlohmann::json RecvJson();
+		[[nodiscard]] std::vector<uint8_t> RecvBytes();
 		[[nodiscard]] std::unique_ptr<IPayloadExecutable> RecvPacket();
 	};
 }

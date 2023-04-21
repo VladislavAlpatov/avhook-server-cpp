@@ -5,6 +5,9 @@
 #include "../observers/OnPacket.h"
 #include "../network/exceptions.h"
 #include "../factories/PacketFactory.h"
+#include "../../lib/crypto/Xor.h"
+#include "../../lib/crypto/RSA.h"
+
 
 void Web::ClientHandle::Listen()
 {
@@ -47,17 +50,15 @@ void Web::ClientHandle::OnPacket(const std::unique_ptr<IPayloadExecutable>& pPac
     SendJson(jsn);
 }
 
-Web::ClientHandle::ClientHandle(Network::Socket soc, const Encryption::RSA& rsa)
+Web::ClientHandle::ClientHandle(Network::Socket soc)
 {
 	m_clientSocket = soc;
-	m_RsaIn = rsa;
 }
 
 void Web::ClientHandle::SendString(const std::string& str)
 {
 	std::vector<uint8_t> data(str.begin(), str.end());
-	const auto encData = m_RsaOut.Encrypt(data);
-	m_clientSocket.SendBytes(encData.data(), encData.size());
+	SendBytes(data);
 }
 
 void Web::ClientHandle::SendJson(const nlohmann::json& jsn)
@@ -67,8 +68,9 @@ void Web::ClientHandle::SendJson(const nlohmann::json& jsn)
 
 std::string Web::ClientHandle::RecvString()
 {
-	auto data = m_RsaIn.Decrypt(m_clientSocket.RecvBytes());
+	auto data = RecvBytes();
 	data.push_back('\0');
+
 	return (char*)data.data();
 }
 
@@ -86,18 +88,15 @@ bool Web::ClientHandle::ExchangeRsaKeys()
 {
 	try
 	{
-		auto data = m_clientSocket.RecvBytes();
-		data.push_back('\0');
-
-		m_RsaOut = Encryption::RSA(nlohmann::json::parse(data.data()));
+		static const auto rsa = Encryption::RSA(1024);
 
 		nlohmann::json rsaInJsn;
-		rsaInJsn["n"] = m_RsaIn.GetModulus().str();
-		rsaInJsn["e"] = m_RsaIn.GetPublicKey().str();
-		rsaInJsn["d"] = "0";
+		rsaInJsn["n"] = rsa.GetModulus().str();
+		rsaInJsn["e"] = rsa.GetPublicKey().str();
 
 		const auto jsnStr = rsaInJsn.dump();
 		m_clientSocket.SendBytes(jsnStr.data(), jsnStr.size());
+		m_xorKey = rsa.Decrypt(m_clientSocket.RecvBytes());
 
 		return true;
 	}
@@ -107,5 +106,16 @@ bool Web::ClientHandle::ExchangeRsaKeys()
 	}
 
 
+}
+
+std::vector<uint8_t> Web::ClientHandle::RecvBytes()
+{
+	return Encryption::Xor::Decrypt(m_clientSocket.RecvBytes(), m_xorKey);
+}
+
+void Web::ClientHandle::SendBytes(const std::vector<uint8_t>& bytes)
+{
+	const auto encData = Encryption::Xor::Decrypt(bytes, m_xorKey);
+	m_clientSocket.SendBytes(encData.data(), encData.size());
 }
 

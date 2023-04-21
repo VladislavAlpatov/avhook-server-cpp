@@ -9,12 +9,15 @@
 #include "Chat.h"
 #include "ChatMessage.h"
 #include "Config.h"
+#include "ActivationKey.h"
 
 
 #include <boost/algorithm/string.hpp>
 #include <random>
 #include <memory>
 #include <fmt/format.h>
+
+
 uint64_t GeneratePublicId()
 {
     std::random_device rd;
@@ -128,6 +131,6 @@ namespace DBAPI
 
 	ActivationKey DataBase::GetActivationKeyById(uint64_t id)
 	{
-		return ActivationKey();
+		return ActivationKey(id);
 	}
 } // DBAP

@@ -3,15 +3,13 @@
 //
 #include <gtest/gtest.h>
 #include <RSA.h>
-#include <boost/integer/mod_inverse.hpp>
-#include <boost/random.hpp>
-#include <boost/integer.hpp>
+#include <Xor.h>
 
 #include <iostream>
 
 // Generate a random prime number using the Miller-Rabin primality test
 
-TEST(DBAPI, RSA_ValidEncryptionAndDecryption)
+TEST(RSA, ValidEncryptionAndDecryption)
 {
 	using namespace boost::multiprecision;
 	std::string str = "We live in twilight world, and there are no friends at dusk";
@@ -29,4 +27,23 @@ TEST(DBAPI, RSA_ValidEncryptionAndDecryption)
 
 	}
 
+}
+TEST(XOR, ValidEncryptionAndDecryption)
+{
+	std::string str = "We live in twilight world, and there are no friends at dusk";
+
+	std::vector<uint8_t> data = {str.begin(), str.end()};
+
+	for (int i = 0 ; i < 100; i++)
+	{
+		const auto key = Encryption::Xor::GenerateKey(64);
+
+
+		auto enc = Encryption::Xor::Encrypt(data, key);
+		auto dec = Encryption::Xor::Decrypt(enc, key);
+
+
+		EXPECT_TRUE(str == std::string(dec.begin(), dec.end()));
+
+	}
 }

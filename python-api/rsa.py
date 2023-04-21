@@ -20,18 +20,24 @@ class RSA:
             if isprime(random_number):
                 return random_number
 
+    def GetModulusSize(self) -> int:
+        return (self.number_n.bit_length() + 7) // 8
+
+    def GetKeySize(self) -> int:
+        return int(self.GetModulusSize() / 2)
+
     def GenerateKeyPair(self):
         p = self.GeneratePrimeNumber()
         q = self.GeneratePrimeNumber()
 
-        n = p*q
+        n = p * q
 
         phi = (p - 1) * (q - 1)
 
-        e = 6557
+        e = 65537
 
         while gcd(e, phi) != 1:
-            e = random.randint(2, phi-1)
+            e = random.randint(2, phi - 1)
 
         d = mod_inverse(e, phi)
 
@@ -40,22 +46,15 @@ class RSA:
         self.number_d = d
 
     def Encrypt(self, data: bytes):
-        szStep = self.key_size // 8
+        szStep = self.GetKeySize()
 
         encrypted = bytes()
         for i in range(0, len(data), szStep):
-            szSizeOfData = szStep if len(data) - i >= szStep else len(data) - i;
-            val = int.from_bytes(data[i:i+szSizeOfData], byteorder='big')
+            szSizeOfData = szStep if len(data) - i >= szStep else len(data) - i
+            val = int.from_bytes(data[i:i + szSizeOfData], byteorder='big')
             encryptedNumber = pow(val, self.number_e, self.number_n)
-            encrypted += bytes([szSizeOfData]) + encryptedNumber.to_bytes((encryptedNumber.bit_length() + 7) // 8, 'big')
+            szEncNumberSize = int((encryptedNumber.bit_length() + 7) // 8)
+
+            encrypted += bytes([szSizeOfData] + [0 for _ in range(szStep-szEncNumberSize)]) + encryptedNumber.to_bytes(szEncNumberSize, 'big')
 
         return encrypted
-
-
-for _ in range(200):
-    rsa = RSA(128)
-    enc = pow(1337, rsa.number_e, rsa.number_n)
-
-    if (1337 != pow(enc, rsa.number_d, rsa.number_n)):
-        print("failed")
-print("all done ")
