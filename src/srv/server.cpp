@@ -20,7 +20,6 @@ namespace Web
 {
     Server::Server(const std::string &ip, const int port)
     {
-		m_encryptionKeys = Encryption::RSA(1024);
         m_sListen = Network::Socket(AF_INET, SOCK_STREAM, IPPROTO_TCP);
         m_sListen.SetOption(IPPROTO_TCP, TCP_NODELAY, 1);
         m_sListen.Bind(ip, port);

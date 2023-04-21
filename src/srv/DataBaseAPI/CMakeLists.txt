@@ -3,4 +3,5 @@ target_sources(server PRIVATE
         User.cpp
         Chat.cpp
         Config.cpp
-        ChatMessage.cpp)
+        ChatMessage.cpp
+        ActivationKey.cpp)
