@@ -59,7 +59,7 @@ class User:
         self.id = id
 
     def get_name(self) -> str:
-        data = self.connection.send_json_enc({"route": "/user/get/name", "id": self.id})
+        data = self.connection.send_json({"route": "/user/get/name", "id": self.id})
         return data["name"]
 
     def get_status(self) -> str:

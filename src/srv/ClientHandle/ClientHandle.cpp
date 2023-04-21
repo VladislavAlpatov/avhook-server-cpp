@@ -69,9 +69,7 @@ void Web::ClientHandle::SendJson(const nlohmann::json& jsn)
 std::string Web::ClientHandle::RecvString()
 {
 	auto data = RecvBytes();
-	data.push_back('\0');
-
-	return (char*)data.data();
+	return { data.begin(), data.end()} ;
 }
 
 nlohmann::json Web::ClientHandle::RecvJson()
