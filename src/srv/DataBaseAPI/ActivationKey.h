@@ -8,6 +8,7 @@
 
 namespace DBAPI
 {
+	class User;
 	class ActivationKey final : public Object
 	{
 	public:
@@ -15,6 +16,7 @@ namespace DBAPI
 		// GetProduct() const;
 		[[nodiscard]] uint64_t GetkeyData() const;
 		[[nodiscard]] bool IsActivated() const;
+		[[nodiscard]] void ActivateKey(User& user);
 
 	};
 
