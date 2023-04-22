@@ -17,7 +17,7 @@ class Connection:
         self.rsa.number_n = int(jsn["n"])
         self.rsa.number_e = int(jsn["e"])
 
-        self.xor_key = xor.GenerateKey(256)
+        self.xor_key = xor.GenerateKey(64)
         enc_key = self.rsa.Encrypt(self.xor_key)
 
         self.socket.send(len(enc_key).to_bytes(4, byteorder='little'))
@@ -59,7 +59,7 @@ class User:
         self.id = id
 
     def get_name(self) -> str:
-        data = self.connection.send_json({"route": "/user/get/name", "id": self.id})
+        data = self.connection.send_json_enc({"route": "/user/get/name", "id": self.id})
         return data["name"]
 
     def get_status(self) -> str:
