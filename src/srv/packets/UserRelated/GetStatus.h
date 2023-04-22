@@ -12,7 +12,5 @@ namespace Web::Packet::User
     public:
         nlohmann::json ExecutePayload(ClientHandle &clientHandle) override;
         explicit GetStatus(const nlohmann::json &data);
-    private:
-        int m_iUserId = 0;
     };
 } // User

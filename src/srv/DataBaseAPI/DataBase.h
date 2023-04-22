@@ -14,12 +14,15 @@ namespace DBAPI
     class ChatMessage;
     class Config;
 	class ActivationKey;
+	class Subscription;
     class DataBase : public sql::Connection
     {
     public:
         static DataBase* Get();
-        DBAPI::User GetUserById(uint64_t iUserId);
+        User GetUserById(uint64_t iUserId);
+		Subscription GetSubscriptionById(uint64_t iUserId);
         bool        IsUserExist(uint64_t iUserId);
+		bool 		IsSubscriptionExist(uint64_t iSubId);
         bool        IsChatExist(uint64_t iChatId);
         bool        IsPrivateChatLinkTaken(uint64_t link);
         bool        IsChatMessageExist(uint64_t iMessageId);

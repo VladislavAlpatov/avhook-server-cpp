@@ -9,6 +9,8 @@
 #include "Chat.h"
 #include "Config.h"
 #include "exceptions.h"
+#include "Subscription.h"
+
 
 namespace DBAPI
 {
@@ -177,4 +179,9 @@ namespace DBAPI
     {
         SetRights(GetRights() | iRights);
     }
+
+	std::vector<Subscription> User::GetSubscriptions() const
+	{
+		const auto data = DataBase::Get()->Query(fmt::format("SELECT `id` FROM `subscriptions` WHERE `user_id` = {}", m_iID));
+	}
 } // DBAPI

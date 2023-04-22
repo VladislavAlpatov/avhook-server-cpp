@@ -5,7 +5,6 @@
 #include "Subscription.h"
 #include "DataBase.h"
 #include <fmt/format.h>
-#include <boost/algorithm/string.hpp>
 #include <chrono>
 
 
@@ -14,23 +13,6 @@ namespace DBAPI
 	Subscription::Subscription(uint64_t id) : Object(id)
 	{
 
-	}
-
-	std::string Subscription::GetName() const
-	{
-		auto pDataBase = DBAPI::DataBase::Get();
-
-		const auto data = pDataBase->Query(fmt::format("SELECT `name` FROM `products` WHERE `id` = {}", m_iID));
-
-		return data[0][0];
-	}
-
-	void Subscription::SetName(std::string sNewName)
-	{
-		auto pDataBase = DBAPI::DataBase::Get();
-		boost::replace_all(sNewName, "'", "''");
-
-		pDataBase->Query(fmt::format("UPDATE `products` SET `name` = '{}' WHERE `id` = {}",sNewName, m_iID));
 	}
 
 	bool Subscription::IsExpired() const
@@ -43,7 +25,7 @@ namespace DBAPI
 	long Subscription::GetEndDate() const
 	{
 		auto pDataBase = DBAPI::DataBase::Get();
-		const auto data = pDataBase->Query(fmt::format("SELECT `expire_date` WHERE `id` = {}",m_iID));
+		const auto data = pDataBase->Query(fmt::format("SELECT `expire_date` FROM `subscriptions` WHERE `id` = {}",m_iID));
 
 		return std::stol(data[0][0]);
 	}

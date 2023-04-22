@@ -15,6 +15,7 @@ namespace DBAPI
 {
     class Chat;
     class Config;
+	class Subscription;
 
     class User final : public Object, public IJsonExportable
     {
@@ -34,7 +35,7 @@ namespace DBAPI
         [[nodiscard]] std::vector<Chat>        GetChatList()                                       const;
         [[nodiscard]] int                      GetRights()                                         const;
         [[nodiscard]] bool                     HasRightsOf(int iRights)                            const;
-
+		[[nodiscard]] std::vector<Subscription> GetSubscriptions()								   const;
 
         void                                   SetRights(int iRights)                              const;
         void                                   AddRights(int iRights)                              const;

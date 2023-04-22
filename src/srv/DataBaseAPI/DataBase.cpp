@@ -10,6 +10,7 @@
 #include "ChatMessage.h"
 #include "Config.h"
 #include "ActivationKey.h"
+#include "Subscription.h"
 
 
 #include <boost/algorithm/string.hpp>
@@ -132,5 +133,18 @@ namespace DBAPI
 	ActivationKey DataBase::GetActivationKeyById(uint64_t id)
 	{
 		return ActivationKey(id);
+	}
+
+	bool DataBase::IsSubscriptionExist(uint64_t iSubId)
+	{
+		return !Query(fmt::format("SELECT `id` FROM `subscriptions` WHERE `id` = {}", iSubId)).empty();
+	}
+
+	Subscription DataBase::GetSubscriptionById(uint64_t iUserId)
+	{
+		if (!IsSubscriptionExist(iUserId))
+			throw std::runtime_error("Subscription with this id dosent exist!");
+
+		return {iUserId};
 	}
 } // DBAP

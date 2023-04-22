@@ -11,10 +11,9 @@ namespace DBAPI
 
 	class Subscription : public Object
 	{
+		friend class DataBase;
 	public:
-		explicit Subscription(uint64_t id);
-		[[nodiscard]] std::string GetName() const;
-		void SetName(std::string sNewName);
+		Subscription(uint64_t id);
 		[[nodiscard]] bool IsExpired() const;
 		[[nodiscard]] long GetEndDate() const;
 	};
