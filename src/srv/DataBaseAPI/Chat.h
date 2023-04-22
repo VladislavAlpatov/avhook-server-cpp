@@ -20,6 +20,7 @@ namespace DBAPI
     public:
         friend class User;
         friend class DataBase;
+
         Chat() = default;
         void SendMessage(const User& user, std::string text);
 

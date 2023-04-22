@@ -12,6 +12,7 @@
 #include "../packets/UserRelated/SetName.h"
 #include "../packets/UserRelated/SetStatus.h"
 #include "../packets/UserRelated/GetConfigs.h"
+#include "../packets/UserRelated/GetSubscriptions.h"
 
 // Chat
 #include "../packets/ChatRelated/GetName.h"
@@ -49,56 +50,61 @@ static std::map<std::string,  std::function<std::unique_ptr<IPayloadExecutable>(
                 // User related packets
                 // ==================
                 {"/user/get/name",[](const nlohmann::json& data) -> auto
-                { return MutipleDecoration(new User::GetName(data), new RegisteredOnly());}},
+                { return MultipleDecoration(new User::GetName(data), new RegisteredOnly());}},
 
                 {"/user/get/status",[](const nlohmann::json& data) -> auto
-                { return MutipleDecoration(new User::GetStatus(data), new RegisteredOnly());}},
+                { return MultipleDecoration(new User::GetStatus(data), new RegisteredOnly());}},
 
                 {"/user/get/chat_list",[](const nlohmann::json& data) -> auto
-                { return MutipleDecoration(new User::GetChatList(data), new RegisteredOnly());}},
+                { return MultipleDecoration(new User::GetChatList(data), new RegisteredOnly());}},
 
                 {"/user/get/configs",[](const nlohmann::json& data) -> auto
-                { return MutipleDecoration(new User::GetConfigs(data), new RegisteredOnly());}},
+                { return MultipleDecoration(new User::GetConfigs(data), new RegisteredOnly());}},
+
+
+				{"/user/get/subscriptions",[](const nlohmann::json& data) -> auto
+				{ return MultipleDecoration(new User::GetSubscriptions(data), new RegisteredOnly());}},
 
                 {"/user/set/name",[](const nlohmann::json& data) -> auto
-                { return MutipleDecoration(new User::SetName(data), new RegisteredOnly(), new OwnerOnly());}},
+                { return MultipleDecoration(new User::SetName(data), new RegisteredOnly(), new OwnerOnly());}},
 
                 {"/user/set/status",[](const nlohmann::json& data) -> auto
-                { return MutipleDecoration(new User::SetStatus(data), new RegisteredOnly(), new OwnerOnly());}},
+                { return MultipleDecoration(new User::SetStatus(data), new RegisteredOnly(), new OwnerOnly());}},
 
                 // ==================
                 // Chat related packets
                 // ==================
                 {"/chat/get/name",[](const nlohmann::json& data) -> auto
-                { return MutipleDecoration(new Chat::GetName(data), new RegisteredOnly(), new ChatMembersOnly());}},
+                { return MultipleDecoration(new Chat::GetName(data), new RegisteredOnly(), new ChatMembersOnly());}},
 
                 {"/chat/get/invite",[](const nlohmann::json& data) -> auto
-                { return MutipleDecoration(new Chat::GetInvite(data), new RegisteredOnly(), new ChatMembersOnly());}},
+                { return MultipleDecoration(new Chat::GetInvite(data), new RegisteredOnly(), new ChatMembersOnly());}},
 
                 {"/chat/get/history",[](const nlohmann::json& data) -> auto
-                { return MutipleDecoration(new Chat::GetHistory(data), new RegisteredOnly(), new ChatMembersOnly());}},
+                { return MultipleDecoration(new Chat::GetHistory(data), new RegisteredOnly(), new ChatMembersOnly());}},
 
                 {"/chat/send/message",[](const nlohmann::json& data) -> auto
-                { return MutipleDecoration(new Chat::SendMessage(data), new RegisteredOnly(), new ChatMembersOnly());}},
+                { return MultipleDecoration(new Chat::SendMessage(data), new RegisteredOnly(), new ChatMembersOnly());}},
 
                 // ==================
                 // Chat message related packets
                 // ==================
                 {"/chat/message/text",[](const nlohmann::json& data) -> auto
-                { return MutipleDecoration(new ChatMessage::GetText(data), new RegisteredOnly());}},
+                { return MultipleDecoration(new ChatMessage::GetText(data), new RegisteredOnly());}},
 
                 {"/chat/message/owner",[](const nlohmann::json& data) -> auto
-                { return MutipleDecoration(new ChatMessage::GetOwner(data), new RegisteredOnly(),  new ChatMembersOnly());}},
+                { return MultipleDecoration(new ChatMessage::GetOwner(data), new RegisteredOnly(),
+						new ChatMembersOnly());}},
 
                 {"/config/get/data",[](const nlohmann::json& data) -> auto
-                { return MutipleDecoration(new Config::GetData(data), new RegisteredOnly(),  new OwnerOnly());}},
+                { return MultipleDecoration(new Config::GetData(data), new RegisteredOnly(), new OwnerOnly());}},
 
                 // ==================
                 // Misc packets
                 // ==================
                 {"/auth",[](const nlohmann::json& data) -> auto
                 {
-                    return MutipleDecoration(new Misc::Auth(data));
+                    return MultipleDecoration(new Misc::Auth(data));
                 }},
         };
 

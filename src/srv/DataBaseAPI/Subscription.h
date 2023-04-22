@@ -8,14 +8,15 @@
 
 namespace DBAPI
 {
-
-	class Subscription : public Object
+	class Subscription final : public Object
 	{
 		friend class DataBase;
+		friend class User;
 	public:
-		Subscription(uint64_t id);
 		[[nodiscard]] bool IsExpired() const;
 		[[nodiscard]] long GetEndDate() const;
+	private:
+		Subscription(uint64_t id);
 	};
 
 } // DBAPI

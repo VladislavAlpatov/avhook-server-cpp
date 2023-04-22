@@ -6,4 +6,5 @@ target_sources(server PRIVATE
         UserRelated.cpp
         SetStatus.cpp
         GetConfigs.cpp
+        GetSubscriptions.cpp
         )

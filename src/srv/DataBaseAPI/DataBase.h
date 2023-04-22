@@ -15,7 +15,7 @@ namespace DBAPI
     class Config;
 	class ActivationKey;
 	class Subscription;
-    class DataBase : public sql::Connection
+    class DataBase final : public sql::Connection
     {
     public:
         static DataBase* Get();

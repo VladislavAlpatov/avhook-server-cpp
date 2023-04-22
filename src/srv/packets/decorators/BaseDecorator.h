@@ -17,7 +17,7 @@ namespace Web::Packet::Decorator
         nlohmann::json ExecutePayload(ClientHandle &clientHandle) override;
 
         template<class... Args>
-        friend std::unique_ptr<IPayloadExecutable> MutipleDecoration(BasePacket* pPacket, Args... args);
+        friend std::unique_ptr<IPayloadExecutable> MultipleDecoration(BasePacket* pPacket, Args... args);
 
     protected:
         std::unique_ptr<IPayloadExecutable> m_pDecoratedPacket;
@@ -42,7 +42,7 @@ namespace Web::Packet::Decorator
     };
 
     template<class... Args>
-    std::unique_ptr<IPayloadExecutable> MutipleDecoration(BasePacket* pPacket, Args... args)
+    std::unique_ptr<IPayloadExecutable> MultipleDecoration(BasePacket* pPacket, Args... args)
     {
         const std::vector<BaseDecorator*> decorators = {args...};
         auto pDecoratedPacket =  std::unique_ptr<IPayloadExecutable>(pPacket);

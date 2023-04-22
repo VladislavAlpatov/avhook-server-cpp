@@ -11,7 +11,7 @@
 namespace DBAPI
 {
 
-	class Product : public Object
+	class Product final : public Object
 	{
 		friend class DataBase;
 	public:
