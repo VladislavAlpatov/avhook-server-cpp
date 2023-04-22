@@ -16,7 +16,7 @@ namespace DBAPI
 		// GetProduct() const;
 		[[nodiscard]] uint64_t GetkeyData() const;
 		[[nodiscard]] bool IsActivated() const;
-		[[nodiscard]] void ActivateKey(User& user);
+		void ActivateKey(User& user);
 
 	};
 

@@ -15,6 +15,8 @@ namespace DBAPI
 		explicit Subscription(uint64_t id);
 		[[nodiscard]] std::string GetName() const;
 		void SetName(std::string sNewName);
+		[[nodiscard]] bool IsExpired() const;
+		[[nodiscard]] long GetEndDate() const;
 	};
 
 } // DBAPI
