@@ -5,4 +5,5 @@ target_sources(server PRIVATE
         Config.cpp
         ChatMessage.cpp
         ActivationKey.cpp
-        Subscription.cpp)
+        Subscription.cpp
+        Product.cpp)
