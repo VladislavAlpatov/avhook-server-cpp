@@ -106,6 +106,7 @@ static std::map<std::string,  std::function<std::unique_ptr<IPayloadExecutable>(
 				// ==================
 				{"/subscription/get/expire_date",[](const nlohmann::json& data) -> auto
 				{ return MultipleDecoration(new Subscription::GetExpireDate(data), new RegisteredOnly(), new OwnerOnly());}},
+
 				{"/subscription/get/expiration_status",[](const nlohmann::json& data) -> auto
 				{ return MultipleDecoration(new Subscription::CheckExpiration(data), new RegisteredOnly(), new OwnerOnly());}},
                 // ==================
