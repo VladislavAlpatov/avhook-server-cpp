@@ -14,7 +14,10 @@ namespace Web::Packet::Subscription
 	nlohmann::json GetExpireDate::ExecutePayload(ClientHandle& clientHandle)
 	{
 		boost::posix_time::ptime pt = boost::posix_time::from_time_t(m_SubFromPacket.GetEndDate());
+		std::stringstream ss;
 
-		return {{ "expire_date", boost::posix_time::to_simple_string(pt)}};
+		ss.imbue(std::locale(std::locale::classic(), new boost::posix_time::time_facet("%Y-%m-%d %H:%M:%S")));
+		ss << pt;
+		return {{ "expire_date", ss.str()}};
 	}
 }
