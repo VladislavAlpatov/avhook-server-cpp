@@ -140,6 +140,7 @@ class Message:
 
         return User(self.connection, id)
 
+
 class Product:
     def __init__(self, con: Connection, id: int):
         self.connection = con
