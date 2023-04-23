@@ -10,3 +10,7 @@ user = con.get_logged_user()
 
 for sub in user.get_subscriptions():
     print(sub.get_expiration_date())
+
+while True:
+    for prod in con.get_product_list():
+        print(prod.get_name())

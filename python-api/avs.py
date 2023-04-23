@@ -33,6 +33,11 @@ class Connection:
     def get_logged_user(self):
         return self.__user
 
+    def get_product_list(self):
+        data = self.send_json_enc({"route": "/product/get/all"})
+
+        return [Product(self, int(x["id"])) for x in data["products"]]
+
     def send_json(self, jsn: dict) -> dict:
         data = bytes(json.dumps(jsn), 'utf-8')
         self.socket.send(len(data).to_bytes(4, byteorder='little'))
@@ -135,6 +140,14 @@ class Message:
 
         return User(self.connection, id)
 
+class Product:
+    def __init__(self, con: Connection, id: int):
+        self.connection = con
+        self.id = id
+
+    def get_name(self) -> str:
+        data = self.connection.send_json_enc({"route": "/product/get/name", "product_id": self.id})
+        return data["name"]
 
 class Config:
     def __init__(self, con: Connection, id: int):
@@ -142,5 +155,4 @@ class Config:
         self.id = id
 
     def get_data(self) -> str:
-        print(self.connection.send_json_enc({"route": "/config/get/data", "id": self.id}))
         return self.connection.send_json_enc({"route": "/config/get/data", "id": self.id})["data"]

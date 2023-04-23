@@ -1,1 +1,1 @@
-target_sources(server PRIVATE ProductRelated.cpp GetName.cpp)
+target_sources(server PRIVATE ProductRelated.cpp GetName.cpp GetProductList.cpp)

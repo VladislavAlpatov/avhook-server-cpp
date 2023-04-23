@@ -161,4 +161,12 @@ namespace DBAPI
 
 		return {std::stoull(Query(fmt::format("SELECT `id` FROM `products` WHERE `id` = {}", iProductId))[0][0])};
 	}
+
+	std::vector<Product> DataBase::GetProductList()
+	{
+		std::vector<Product> out;
+		for (const auto& row : Query("SELECT `id` FROM `products`"))
+			out.push_back({std::stoull(row[0])});
+		return out;
+	}
 } // DBAP

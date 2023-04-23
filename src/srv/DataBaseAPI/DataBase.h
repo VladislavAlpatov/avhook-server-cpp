@@ -29,6 +29,7 @@ namespace DBAPI
         bool        IsChatMessageExist(uint64_t iMessageId);
 		bool        IsProductExist(uint64_t iProductId);
 		Product		GetProductById(uint64_t iProductId);
+		std::vector<Product> GetProductList();
         Chat        GetChatById(uint64_t iChatId);
         ChatMessage GetChatMessageById(uint64_t id);
         User        GetUserByEmail(std::string sEmail);

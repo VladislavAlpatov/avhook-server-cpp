@@ -33,6 +33,7 @@
 
 // Product
 #include "../packets/ProductRelated/GetName.h"
+#include "../packets/ProductRelated/GetProductList.h"
 
 // Misc
 #include "../packets/Misc/Auth.h"
@@ -120,6 +121,8 @@ static std::map<std::string,  std::function<std::unique_ptr<IPayloadExecutable>(
 				{"/product/get/name",[](const nlohmann::json& data) -> auto
 				{ return MultipleDecoration(new Product::GetName(data));}},
 
+				{"/product/get/all",[](const nlohmann::json& data) -> auto
+				{ return MultipleDecoration(new Product::GetProductList(data));}},
 
                 // ==================
                 // Misc packets
