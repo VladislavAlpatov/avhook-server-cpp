@@ -27,6 +27,8 @@
 // Config
 #include "../packets/ConfigRelated/GetData.h"
 
+// Subscription
+#include "../packets/Subscription/GetExpireDate.h"
 
 // Misc
 #include "../packets/Misc/Auth.h"
@@ -98,6 +100,12 @@ static std::map<std::string,  std::function<std::unique_ptr<IPayloadExecutable>(
 
                 {"/config/get/data",[](const nlohmann::json& data) -> auto
                 { return MultipleDecoration(new Config::GetData(data), new RegisteredOnly(), new OwnerOnly());}},
+
+				// ==================
+				// Subscription packets
+				// ==================
+				{"/subscription/get/expire_date",[](const nlohmann::json& data) -> auto
+				{ return MultipleDecoration(new Subscription::GetExpireDate(data), new RegisteredOnly(), new OwnerOnly());}},
 
                 // ==================
                 // Misc packets

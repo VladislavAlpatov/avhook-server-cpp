@@ -5,7 +5,6 @@
 #pragma once
 #include "UserRelated.h"
 
-
 namespace Web::Packet::User
 {
 	class GetSubscriptions final : public UserRelated

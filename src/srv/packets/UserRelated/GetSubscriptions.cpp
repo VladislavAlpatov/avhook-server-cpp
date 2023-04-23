@@ -16,7 +16,7 @@ namespace Web::Packet::User
 		for (const auto sub : subs)
 			subsJson.push_back({{"id", sub.GetID()}});
 
-		return {"subscriptions", subsJson};
+		return {{"subscriptions", subsJson}};
 	}
 
 	GetSubscriptions::GetSubscriptions(const nlohmann::json& data) : UserRelated(data)

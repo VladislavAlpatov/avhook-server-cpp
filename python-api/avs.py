@@ -69,6 +69,14 @@ class User:
     def set_name(self, name: str) -> None:
         self.connection.send_json_enc({"route": "/user/set/name", "id": self.id, "name": name})
 
+    def test(self):
+        data = self.connection.send_json_enc({"route": "/user/get/subscriptions", "id": self.id})
+        print(data)
+
+    def test2(self):
+        data = self.connection.send_json_enc({"route": "/subscription/get/expire_date", "sub_id": 1})
+        print(data)
+
     def set_status(self, status: str) -> None:
         self.connection.send_json_enc({"route": "/user/set/status", "id": self.id, "status": status})
 

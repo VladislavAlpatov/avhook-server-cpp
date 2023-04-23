@@ -5,9 +5,8 @@
 #include "Subscription.h"
 #include "DataBase.h"
 #include <fmt/format.h>
-#include <chrono>
-
-
+#include <boost/date_time/posix_time/posix_time.hpp>
+#include "User.h"
 namespace DBAPI
 {
 	Subscription::Subscription(uint64_t id) : Object(id)
@@ -17,16 +16,27 @@ namespace DBAPI
 
 	bool Subscription::IsExpired() const
 	{
-		auto currentDate = std::chrono::duration_cast<std::chrono::seconds>(std::chrono::system_clock::now().time_since_epoch()).count();
+		auto currentDate = std::time(nullptr);;
 
-		return currentDate >= GetEndDate();
+		return static_cast<long>(currentDate) >= GetEndDate();
 	}
 
 	long Subscription::GetEndDate() const
 	{
 		auto pDataBase = DBAPI::DataBase::Get();
 		const auto data = pDataBase->Query(fmt::format("SELECT `expire_date` FROM `subscriptions` WHERE `id` = {}",m_iID));
+		boost::posix_time::ptime pt = boost::posix_time::time_from_string(data[0][0]);
+		time_t time = boost::posix_time::to_time_t(pt);
 
-		return std::stol(data[0][0]);
+		return static_cast<long>(time);
 	}
+
+	User Subscription::GetUser()
+	{
+		auto pDataBase = DBAPI::DataBase::Get();
+		const auto data = pDataBase->Query(fmt::format("SELECT `user_id` FROM `subscriptions` WHERE `id` = {}",m_iID));
+
+		return pDataBase->GetUserById(std::stoull(data[0][0]));
+	}
+
 } // DBAPI
