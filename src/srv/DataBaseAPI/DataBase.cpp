@@ -11,6 +11,7 @@
 #include "Config.h"
 #include "ActivationKey.h"
 #include "Subscription.h"
+#include "Product.h"
 
 
 #include <boost/algorithm/string.hpp>
@@ -146,5 +147,18 @@ namespace DBAPI
 			throw std::runtime_error("Subscription with this id dosent exist!");
 
 		return {iUserId};
+	}
+
+	bool DataBase::IsProductExist(uint64_t iProductId)
+	{
+		return !Query(fmt::format("SELECT `id` FROM `products` WHERE `id` = {}", iProductId)).empty();
+	}
+
+	Product DataBase::GetProductById(uint64_t iProductId)
+	{
+		if (!IsProductExist(iProductId))
+			throw std::runtime_error("Subscription with this id dosent exist!");
+
+		return {std::stoull(Query(fmt::format("SELECT `id` FROM `products` WHERE `id` = {}", iProductId))[0][0])};
 	}
 } // DBAP

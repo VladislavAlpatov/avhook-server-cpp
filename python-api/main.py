@@ -8,8 +8,5 @@ con = Connection("192.168.234.128", 7777, "1@mail.ru", "1235")
 
 user = con.get_logged_user()
 
-while True:
-    user.test2()
-
-print(user.get_name())
-print(user.get_status())
+for sub in user.get_subscriptions():
+    print(sub.get_expiration_date())

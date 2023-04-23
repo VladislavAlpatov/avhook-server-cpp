@@ -15,11 +15,12 @@ namespace DBAPI
 	{
 		friend class DataBase;
 	public:
+		Product() = default;
 		[[nodiscard]] std::string GetName() const;
 		void SetName(const std::string& sNewName);
 
 	private:
-		explicit Product(uint64_t id);
+		Product(uint64_t id);
 	};
 
 } // DBAPI

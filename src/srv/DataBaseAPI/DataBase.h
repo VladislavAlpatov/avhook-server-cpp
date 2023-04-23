@@ -15,6 +15,7 @@ namespace DBAPI
     class Config;
 	class ActivationKey;
 	class Subscription;
+	class Product;
     class DataBase final : public sql::Connection
     {
     public:
@@ -26,6 +27,8 @@ namespace DBAPI
         bool        IsChatExist(uint64_t iChatId);
         bool        IsPrivateChatLinkTaken(uint64_t link);
         bool        IsChatMessageExist(uint64_t iMessageId);
+		bool        IsProductExist(uint64_t iProductId);
+		Product		GetProductById(uint64_t iProductId);
         Chat        GetChatById(uint64_t iChatId);
         ChatMessage GetChatMessageById(uint64_t id);
         User        GetUserByEmail(std::string sEmail);

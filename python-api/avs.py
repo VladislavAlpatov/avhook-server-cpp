@@ -69,13 +69,10 @@ class User:
     def set_name(self, name: str) -> None:
         self.connection.send_json_enc({"route": "/user/set/name", "id": self.id, "name": name})
 
-    def test(self):
+    def get_subscriptions(self):
         data = self.connection.send_json_enc({"route": "/user/get/subscriptions", "id": self.id})
-        print(data)
 
-    def test2(self):
-        data = self.connection.send_json_enc({"route": "/subscription/get/expire_date", "sub_id": 1})
-        print(data)
+        return [Subscription(self.connection, x["id"]) for x in data["subscriptions"]]
 
     def set_status(self, status: str) -> None:
         self.connection.send_json_enc({"route": "/user/set/status", "id": self.id, "status": status})
@@ -115,15 +112,25 @@ class Chat:
         self.connection.send_json_enc({"route": "/chat/send/message", "id": self.id, "message": text})
 
 
+class Subscription:
+    def __init__(self, con: Connection, id: int):
+        self.connection = con
+        self.id = id
+
+    def get_expiration_date(self) -> str:
+        data = self.connection.send_json_enc({"route": "/subscription/get/expire_date", "sub_id": self.id})
+        return data["expire_date"]
+
+
 class Message:
     def __init__(self, con: Connection, id: int):
         self.connection = con
         self.id = id
 
-    def get_text(self):
+    def get_text(self) -> str:
         return self.connection.send_json_enc({"route": "/chat/message/text", "id": self.id})['text']
 
-    def get_owner(self):
+    def get_owner(self) -> User:
         id: int = self.connection.send_json_enc({"route": "/chat/message/owner", "id": self.id})['id']
 
         return User(self.connection, id)
@@ -134,6 +141,6 @@ class Config:
         self.connection = con
         self.id = id
 
-    def get_data(self):
+    def get_data(self) -> str:
         print(self.connection.send_json_enc({"route": "/config/get/data", "id": self.id}))
         return self.connection.send_json_enc({"route": "/config/get/data", "id": self.id})["data"]
