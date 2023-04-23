@@ -15,8 +15,8 @@ namespace Web::Packet::Subscription
 	{
 		boost::posix_time::ptime pt = boost::posix_time::from_time_t(m_SubFromPacket.GetEndDate());
 		std::stringstream ss;
-
-		ss.imbue(std::locale(std::locale::classic(), new boost::posix_time::time_facet("%Y-%m-%d %H:%M:%S")));
+		auto timeFacet = std::make_unique<boost::posix_time::time_facet>("%Y-%m-%d %H:%M:%S");
+		ss.imbue(std::locale(std::locale::classic(), timeFacet.get()));
 		ss << pt;
 		return {{ "expire_date", ss.str()}};
 	}
