@@ -5,14 +5,14 @@
 #pragma once
 #include "SubscriptionRelated.h"
 
-
 namespace Web::Packet::Subscription
 {
-	class GetExpireDate final : public Subscription::SubscriptionRelated
+	class CheckExpiration final : public SubscriptionRelated
 	{
 	public:
-		explicit GetExpireDate(const nlohmann::json& data);
+		explicit CheckExpiration(const nlohmann::json& data);
 
 		nlohmann::json ExecutePayload(ClientHandle& clientHandle) override;
 	};
+
 }
