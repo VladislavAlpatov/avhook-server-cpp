@@ -16,9 +16,7 @@ namespace DBAPI
 
 	bool Subscription::IsExpired() const
 	{
-		auto currentDate = std::time(nullptr);;
-
-		return static_cast<long>(currentDate) >= GetEndDate();
+		return std::time(nullptr) >= GetEndDate();
 	}
 
 	long Subscription::GetEndDate() const
