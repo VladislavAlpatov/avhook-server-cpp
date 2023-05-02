@@ -24,19 +24,30 @@ namespace DBAPI
 	long Subscription::GetEndDate() const
 	{
 		auto pDataBase = DBAPI::DataBase::Get();
-		const auto data = pDataBase->Query(fmt::format("SELECT `expire_date` FROM `subscriptions` WHERE `id` = {}",m_iID));
-		boost::posix_time::ptime pt = boost::posix_time::time_from_string(data[0][0]);
-		time_t time = boost::posix_time::to_time_t(pt);
+		const auto data = pDataBase->Query(fmt::format("SELECT `expire_date` FROM `subscriptions` WHERE `id` = {}", m_iID));
+
+		const auto posixTime = boost::posix_time::time_from_string(data[0][0]);
+		time_t time = boost::posix_time::to_time_t(posixTime);
 
 		return static_cast<long>(time);
 	}
 
 	User Subscription::GetUser()
 	{
-		auto pDataBase = DBAPI::DataBase::Get();
-		const auto data = pDataBase->Query(fmt::format("SELECT `user_id` FROM `subscriptions` WHERE `id` = {}",m_iID));
+		return DBAPI::DataBase::Get()->GetUserById(GetUserId());
+	}
 
-		return pDataBase->GetUserById(std::stoull(data[0][0]));
+	uint64_t Subscription::GetUserId() const
+	{
+		auto pDataBase = DBAPI::DataBase::Get();
+		const auto data = pDataBase->Query(fmt::format("SELECT `user_id` FROM `subscriptions` WHERE `id` = {}", m_iID));
+
+		return std::stoull(data[0][0]);
+	}
+
+	std::string Subscription::GetExpireDateAsString() const
+	{
+		return std::string();
 	}
 
 } // DBAPI

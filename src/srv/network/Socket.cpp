@@ -56,7 +56,7 @@ namespace Web::Network
 	std::vector<uint8_t> Socket::RecvBytes() const
     {
         int iSize = 0;
-        ::recv(m_pRawSocket, (char*)&iSize, 4, NULL);
+        ::recv(m_pRawSocket, (char*)&iSize, 4, 0);
 
         if (iSize <= 0 || iSize > MAX_ACCEPTABLE_PACKET_SIZE)
             throw Exception::RecvFailed();
@@ -65,7 +65,7 @@ namespace Web::Network
         int iRecvdBytes = 0;
         while (iRecvdBytes < iSize)
         {
-            const auto tmp = ::recv(m_pRawSocket, (char*)pBuff.data()+iRecvdBytes, iSize-iRecvdBytes, NULL);
+            const auto tmp = ::recv(m_pRawSocket, (char*)pBuff.data()+iRecvdBytes, iSize-iRecvdBytes, 0);
 
             if (!tmp) throw Exception::RecvFailed();
             iRecvdBytes += tmp;

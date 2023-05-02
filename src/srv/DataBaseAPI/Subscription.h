@@ -20,6 +20,8 @@ namespace DBAPI
 		[[nodiscard]] bool IsExpired() const;
 		[[nodiscard]] long GetEndDate() const;
 		[[nodiscard]] User GetUser();
+		[[nodiscard]] uint64_t GetUserId() const;
+		[[nodiscard]] std::string GetExpireDateAsString() const;
 	private:
 		Subscription(uint64_t id);
 	};
