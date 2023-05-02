@@ -140,7 +140,7 @@ namespace Web
             throw std::runtime_error("\"route\" filed seems does not exist");
 
 
-        const std::string route = data["route"];
+        const auto& route = data["route"];
 
         if (!packetRoutMap.contains(route))
             throw Exception::InvalidPacketType();

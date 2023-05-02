@@ -7,6 +7,8 @@
 #include <fmt/format.h>
 #include <boost/date_time/posix_time/posix_time.hpp>
 #include "User.h"
+
+
 namespace DBAPI
 {
 	Subscription::Subscription(uint64_t id) : Object(id)
