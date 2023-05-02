@@ -14,6 +14,6 @@ namespace Web::Packet::Subscription
 
 	nlohmann::json CheckExpiration::ExecutePayload(ClientHandle& clientHandle)
 	{
-		return {{"is_expired", m_SubFromPacket.GetEndDate() <= std::time(nullptr)}};
+		return {{"is_expired", m_SubFromPacket.IsExpired()}};
 	}
 }

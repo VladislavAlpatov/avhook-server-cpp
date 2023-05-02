@@ -32,7 +32,7 @@ namespace DBAPI
 		return static_cast<long>(time);
 	}
 
-	User Subscription::GetUser()
+	User Subscription::GetUser() const
 	{
 		return DBAPI::DataBase::Get()->GetUserById(GetUserId());
 	}
@@ -44,10 +44,4 @@ namespace DBAPI
 
 		return std::stoull(data[0][0]);
 	}
-
-	std::string Subscription::GetExpireDateAsString() const
-	{
-		return std::string();
-	}
-
 } // DBAPI
