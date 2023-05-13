@@ -13,5 +13,7 @@ namespace Web::Packet::Chat
     }
 
     GetName::GetName(const nlohmann::json &data) : ChatRelated(data)
-    {}
+    {
+
+	}
 }

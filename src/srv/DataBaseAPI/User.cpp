@@ -27,7 +27,9 @@ namespace DBAPI
 
     bool User::IsUserNameAcceptable(const std::string &name)
     {
-        if (name.size() > 32)
+		constexpr int iMaxUserNameLength = 32;
+
+        if (name.size() > iMaxUserNameLength)
             return false;
 
 
@@ -63,7 +65,6 @@ namespace DBAPI
         auto pDataBase = DataBase::Get();
 
         boost::replace_all(sStatus, "'", "''");
-        boost::replace_all(sStatus, "\"", "\"\"");
         pDataBase->Query(fmt::format("UPDATE `users` SET `status` = '{}' WHERE `id` = {}",sStatus, m_iID ));
 
     }
@@ -88,8 +89,9 @@ namespace DBAPI
         auto pDataBase = DataBase::Get();
 
         if (!IsUserNameAcceptable(sName))
-            throw std::runtime_error("Username is invalid");
+            throw Exception::UserNameIsInvalid();
 
+		// Prevent SQL injection using string valuability
         boost::replace_all(sName, "'", "''");
 
         pDataBase->Query(fmt::format("UPDATE `users` SET `name` = '{}' WHERE `id` = {}",sName, m_iID));

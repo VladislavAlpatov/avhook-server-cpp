@@ -57,6 +57,15 @@ namespace DBAPI::Exception
             return "User already in chat, impossible to add twice";
         }
     };
+	class UserNameIsInvalid final : public std::exception
+	{
+	public:
+		const char* what() const noexcept override
+		{
+			return "User name is invalid, it should not contain spaces";
+		}
+
+	};
     class ConfigNotFound final : public std::exception
     {
     public:

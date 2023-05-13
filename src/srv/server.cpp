@@ -13,9 +13,11 @@
 #include "observers/OnUserDisconnected.h"
 #include "observers/OnUserAuth.h"
 #include "observers/OnPacket.h"
+
 #include <sys/socket.h>
 #include <netinet/in.h>
 #include <netinet/tcp.h>
+
 namespace Web
 {
     Server::Server(const std::string &ip, const int port)
