@@ -55,6 +55,6 @@ class RSA:
             encryptedNumber = pow(val, self.number_e, self.number_n)
             szEncNumberSize = int((encryptedNumber.bit_length() + 7) // 8)
 
-            encrypted += bytes([szSizeOfData] + [0 for _ in range(szStep-szEncNumberSize)]) + encryptedNumber.to_bytes(szEncNumberSize, 'big')
+            encrypted += bytes([szSizeOfData] + [0 for _ in range(szStep*2-szEncNumberSize)]) + encryptedNumber.to_bytes(szEncNumberSize, 'big')
 
         return encrypted
