@@ -3,9 +3,9 @@
 //
 #pragma once
 #include "../exceptions.h"
-namespace Web::Packet::Decorator::Exception
+namespace web::packet::decorator::Exception
 {
-    class UserNotRegistered final : public Packet::Exception::BasePacketException
+    class UserNotRegistered final : public packet::Exception::BasePacketException
     {
     public:
         const char *what() const noexcept override

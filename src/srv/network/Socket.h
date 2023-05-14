@@ -10,7 +10,7 @@ typedef int SOCKET;
 
 
 
-namespace Web::Network
+namespace web::Network
 {
 
     class Socket

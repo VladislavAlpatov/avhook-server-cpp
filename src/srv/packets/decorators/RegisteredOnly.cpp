@@ -5,7 +5,7 @@
 #include "RegisteredOnly.h"
 #include "exceptions.h"
 
-namespace Web::Packet::Decorator
+namespace web::packet::decorator
 {
 
     nlohmann::json RegisteredOnly::ExecutePayload(ClientHandle& clientHandle)
@@ -20,4 +20,4 @@ namespace Web::Packet::Decorator
     {
 
     }
-} // Decorator
+} // decorator

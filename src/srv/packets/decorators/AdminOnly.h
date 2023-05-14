@@ -5,7 +5,7 @@
 #include "BaseDecorator.h"
 
 
-namespace Web::Packet::Decorator
+namespace web::packet::decorator
 {
     class AdminOnly : public BaseDecorator
     {

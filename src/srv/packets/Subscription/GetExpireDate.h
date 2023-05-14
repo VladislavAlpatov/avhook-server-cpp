@@ -6,9 +6,9 @@
 #include "SubscriptionRelated.h"
 
 
-namespace Web::Packet::Subscription
+namespace web::packet::subscription
 {
-	class GetExpireDate final : public Subscription::SubscriptionRelated
+	class GetExpireDate final : public subscription::SubscriptionRelated
 	{
 	public:
 		explicit GetExpireDate(const nlohmann::json& data);

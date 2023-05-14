@@ -9,7 +9,7 @@
 #include "User.h"
 
 
-namespace DBAPI
+namespace dbapi
 {
 	Subscription::Subscription(uint64_t id) : Object(id)
 	{
@@ -23,7 +23,7 @@ namespace DBAPI
 
 	long Subscription::GetEndDate() const
 	{
-		auto pDataBase = DBAPI::DataBase::Get();
+		auto pDataBase = dbapi::DataBase::Get();
 		const auto data = pDataBase->Query(fmt::format("SELECT `expire_date` FROM `subscriptions` WHERE `id` = {}", m_iID));
 
 		const auto posixTime = boost::posix_time::time_from_string(data[0][0]);
@@ -34,14 +34,14 @@ namespace DBAPI
 
 	User Subscription::GetUser() const
 	{
-		return DBAPI::DataBase::Get()->GetUserById(GetUserId());
+		return dbapi::DataBase::Get()->GetUserById(GetUserId());
 	}
 
 	uint64_t Subscription::GetUserId() const
 	{
-		auto pDataBase = DBAPI::DataBase::Get();
+		auto pDataBase = dbapi::DataBase::Get();
 		const auto data = pDataBase->Query(fmt::format("SELECT `user_id` FROM `subscriptions` WHERE `id` = {}", m_iID));
 
 		return std::stoull(data[0][0]);
 	}
-} // DBAPI
+} // dbapi

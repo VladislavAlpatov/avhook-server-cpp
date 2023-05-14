@@ -5,12 +5,12 @@
 #include "RegisteredOnly.h"
 
 
-namespace Web::Packet::Decorator
+namespace web::packet::decorator
 {
     class PremiumOnly : public RegisteredOnly
     {
     public:
         nlohmann::json ExecutePayload(ClientHandle &clientHandle) override;
     };
-} // Decorator
+} // decorator
 

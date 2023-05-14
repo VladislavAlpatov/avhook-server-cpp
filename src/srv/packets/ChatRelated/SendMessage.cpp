@@ -6,9 +6,9 @@
 #include "../exceptions.h"
 #include "../../ClientHandle/ClientHandle.h"
 
-namespace Web::Packet::Chat
+namespace web::packet::chat
 {
-    nlohmann::json SendMessage::ExecutePayload(Web::ClientHandle &clientHandle)
+    nlohmann::json SendMessage::ExecutePayload(web::ClientHandle &clientHandle)
     {
         m_chatFromPacket.SendMessage(clientHandle.m_dbUser, m_sMessageText);
         return {};

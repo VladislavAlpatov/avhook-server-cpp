@@ -6,7 +6,7 @@
 #include "../../DataBaseAPI/ChatMessage.h"
 
 
-namespace Web::Packet::Chat
+namespace web::packet::chat
 {
     GetHistory::GetHistory(const nlohmann::json &data) : ChatRelated(data)
     {

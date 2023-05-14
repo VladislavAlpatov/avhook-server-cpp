@@ -6,9 +6,9 @@
 #include "../../DataBaseAPI/Config.h"
 
 
-namespace Web::Packet::User
+namespace web::packet::user
 {
-    nlohmann::json GetConfigs::ExecutePayload(Web::ClientHandle &clientHandle)
+    nlohmann::json GetConfigs::ExecutePayload(web::ClientHandle &clientHandle)
     {
         std::vector<nlohmann::json> jsnCfgList;
         auto cfgs = m_pUserFromPacket.GetConfigs();

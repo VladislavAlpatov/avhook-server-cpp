@@ -15,7 +15,7 @@
 
 #include "../exceptions.h"
 
-namespace Web::Packet::Misc
+namespace web::packet::Misc
 {
 
     Auth::Auth(const nlohmann::json &data) : BasePacket(data)
@@ -40,7 +40,7 @@ namespace Web::Packet::Misc
     nlohmann::json Auth::ExecutePayload(ClientHandle &clientHandle)
     {
 
-        auto pDataBase = DBAPI::DataBase::Get();
+        auto pDataBase = dbapi::DataBase::Get();
 
         const auto user = pDataBase->GetUserByEmail(m_sUserEmail);
 

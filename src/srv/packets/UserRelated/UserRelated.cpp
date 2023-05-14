@@ -6,14 +6,14 @@
 
 #include "../exceptions.h"
 
-namespace Web::Packet::User
+namespace web::packet::user
 {
 
     UserRelated::UserRelated(const nlohmann::json &data) : BasePacket(data)
     {
         try
         {
-            auto pDataBase = DBAPI::DataBase::Get();
+            auto pDataBase = dbapi::DataBase::Get();
 
             m_pUserFromPacket = pDataBase->GetUserById(data.at("id"));
         }

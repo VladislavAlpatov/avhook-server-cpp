@@ -8,7 +8,7 @@
 #include "../../DataBaseAPI/DataBase.h"
 #include "../../ClientHandle/ClientHandle.h"
 
-namespace Web::Packet::User
+namespace web::packet::user
 {
     SetName::SetName(const nlohmann::json &data) : UserRelated(data)
     {
@@ -21,7 +21,7 @@ namespace Web::Packet::User
             throw Exception::CorruptedPacket();
         }
     }
-    nlohmann::json SetName::ExecutePayload(Web::ClientHandle &clientHandle)
+    nlohmann::json SetName::ExecutePayload(web::ClientHandle &clientHandle)
     {
 
         m_pUserFromPacket.SetName(m_sNewUserName);

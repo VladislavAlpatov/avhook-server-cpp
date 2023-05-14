@@ -5,7 +5,7 @@
 #pragma once
 #include "SubscriptionRelated.h"
 
-namespace Web::Packet::Subscription
+namespace web::packet::subscription
 {
 	class CheckExpiration final : public SubscriptionRelated
 	{

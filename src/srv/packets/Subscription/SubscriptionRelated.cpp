@@ -5,14 +5,14 @@
 #include "SubscriptionRelated.h"
 #include "../exceptions.h"
 #include "../../DataBaseAPI/DataBase.h"
-namespace Web::Packet::Subscription
+namespace web::packet::subscription
 {
 
 	SubscriptionRelated::SubscriptionRelated(const nlohmann::json& data) : BasePacket(data)
 	{
 		try
 		{
-			m_SubFromPacket = DBAPI::DataBase::Get()->GetSubscriptionById(data.at("sub_id"));
+			m_SubFromPacket = dbapi::DataBase::Get()->GetSubscriptionById(data.at("sub_id"));
 		}
 		catch (...)
 		{
@@ -20,7 +20,7 @@ namespace Web::Packet::Subscription
 		}
 	}
 
-	DBAPI::User SubscriptionRelated::GetUser()
+	dbapi::User SubscriptionRelated::GetUser()
 	{
 		return m_SubFromPacket.GetUser();
 	}

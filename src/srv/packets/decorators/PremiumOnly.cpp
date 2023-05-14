@@ -5,7 +5,7 @@
 #include "PremiumOnly.h"
 
 
-namespace Web::Packet::Decorator
+namespace web::packet::decorator
 {
 
     nlohmann::json PremiumOnly::ExecutePayload(ClientHandle &clientHandle)

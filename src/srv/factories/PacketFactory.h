@@ -5,7 +5,7 @@
 #include "../packets/IPayloadExecutable.h"
 #include <memory>
 
-namespace Web
+namespace web
 {
     class PacketFactory final
     {

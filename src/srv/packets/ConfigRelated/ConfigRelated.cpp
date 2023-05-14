@@ -7,9 +7,9 @@
 #include "../exceptions.h"
 
 
-namespace Web::Packet::Config
+namespace web::packet::config
 {
-    DBAPI::User ConfigRelated::GetUser()
+    dbapi::User ConfigRelated::GetUser()
     {
         return m_configFromPacket.GetOwner();
     }
@@ -18,7 +18,7 @@ namespace Web::Packet::Config
     {
         try
         {
-            m_configFromPacket = DBAPI::DataBase::Get()->GetConfigById(data.at("id"));
+            m_configFromPacket = dbapi::DataBase::Get()->GetConfigById(data.at("id"));
         }
         catch (...)
         {

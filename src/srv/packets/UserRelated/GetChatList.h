@@ -8,7 +8,7 @@
 #include "UserRelated.h"
 
 
-namespace Web::Packet::User
+namespace web::packet::user
 {
     class GetChatList final : public UserRelated
     {

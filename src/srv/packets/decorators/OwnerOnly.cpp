@@ -4,7 +4,7 @@
 
 #include "OwnerOnly.h"
 #include "../interfaces/IUserAccessible.h"
-namespace Web::Packet::Decorator
+namespace web::packet::decorator
 {
 
 
@@ -12,7 +12,7 @@ namespace Web::Packet::Decorator
     {
         auto pPacket = GetOriginalPacket<IUserAccessible>();
 
-        if (pPacket->GetUser() != clientHandle.m_dbUser and !clientHandle.m_dbUser.HasRightsOf(DBAPI::User::Rights::Developer))
+        if (pPacket->GetUser() != clientHandle.m_dbUser and !clientHandle.m_dbUser.HasRightsOf(dbapi::User::Rights::Developer))
             throw std::runtime_error("You cant modify data of other users");
 
 

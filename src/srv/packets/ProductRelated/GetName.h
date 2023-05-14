@@ -5,7 +5,7 @@
 #pragma once
 #include "ProductRelated.h"
 
-namespace Web::Packet::Product
+namespace web::packet::Product
 {
 	class GetName final : public ProductRelated
 	{

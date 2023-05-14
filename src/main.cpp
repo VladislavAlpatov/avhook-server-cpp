@@ -14,7 +14,7 @@ int main()
 #ifdef _DEBUG
 	setbuf(stdout, 0);
 #endif
-	const auto pServer = Web::Server::Get();
+	const auto pServer = web::Server::Get();
 #ifdef _DEBUG
 	pServer->AddObserver(new Observers::OnServerStartup());
     pServer->AddObserver(new Observers::OnUserDisconnected());

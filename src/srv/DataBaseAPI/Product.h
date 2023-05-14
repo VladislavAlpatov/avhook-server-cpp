@@ -8,7 +8,7 @@
 #include <string>
 
 
-namespace DBAPI
+namespace dbapi
 {
 
 	class Product final : public Object
@@ -23,4 +23,4 @@ namespace DBAPI
 		Product(uint64_t id);
 	};
 
-} // DBAPI
+} // dbapi

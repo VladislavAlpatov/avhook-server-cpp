@@ -6,7 +6,7 @@
 #include <nlohmann/json.hpp>
 
 
-namespace DBAPI
+namespace dbapi
 {
 
     class IJsonExportable
@@ -15,4 +15,4 @@ namespace DBAPI
         virtual nlohmann::json ToJson() const = 0;
     };
 
-} // DBAPI
+} // dbapi

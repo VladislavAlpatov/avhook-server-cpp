@@ -7,21 +7,21 @@
 #include "../exceptions.h"
 
 
-namespace Web::Packet::Chat
+namespace web::packet::chat
 {
     ChatRelated::ChatRelated(const nlohmann::json &data) : BasePacket(data)
     {
         try
         {
-            m_chatFromPacket = DBAPI::DataBase::Get()->GetChatById(data["id"]);
+            m_chatFromPacket = dbapi::DataBase::Get()->GetChatById(data["id"]);
         }
         catch (const nlohmann::json::exception& ex )
         {
-            throw Packet::Exception::CorruptedPacket();
+            throw packet::Exception::CorruptedPacket();
         }
     }
 
-    DBAPI::Chat ChatRelated::GetChat()
+    dbapi::Chat ChatRelated::GetChat()
     {
         return m_chatFromPacket;
     }

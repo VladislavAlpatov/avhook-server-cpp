@@ -4,9 +4,9 @@
 
 #include "GetInvite.h"
 
-namespace Web::Packet::Chat
+namespace web::packet::chat
 {
-    nlohmann::json GetInvite::ExecutePayload(Web::ClientHandle &clientHandle)
+    nlohmann::json GetInvite::ExecutePayload(web::ClientHandle &clientHandle)
     {
         return {{"invite",m_chatFromPacket.GetInviteLink()}};
     }

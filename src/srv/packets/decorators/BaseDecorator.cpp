@@ -1,7 +1,7 @@
 #include "BaseDecorator.h"
 
 
-namespace Web::Packet::Decorator
+namespace web::packet::decorator
 {
 
     BaseDecorator::BaseDecorator(std::unique_ptr<IPayloadExecutable> &pPacket)

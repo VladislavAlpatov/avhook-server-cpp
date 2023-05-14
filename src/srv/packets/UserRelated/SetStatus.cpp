@@ -6,7 +6,7 @@
 #include "../exceptions.h"
 #include "../../ClientHandle/ClientHandle.h"
 
-namespace Web::Packet::User
+namespace web::packet::user
 {
 
     SetStatus::SetStatus(const nlohmann::json &data) : UserRelated(data)

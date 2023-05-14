@@ -12,7 +12,7 @@
 #include <fmt/format.h>
 
 
-namespace DBAPI
+namespace dbapi
 {
     Config::Config(uint64_t iId) : Object(iId)
     {
@@ -20,14 +20,14 @@ namespace DBAPI
     }
     void Config::SetData(const nlohmann::json &data)
     {
-        auto pDataBase = DBAPI::DataBase::Get();
+        auto pDataBase = dbapi::DataBase::Get();
         std::string jsnDump = data.dump();
 
         pDataBase->Query(fmt::format("UPDATE `configs` SET `data` = '{}' WHERE `id` = {}", jsnDump, m_iID));
     }
     nlohmann::json Config::GetData() const
     {
-        auto pDataBase = DBAPI::DataBase::Get();
+        auto pDataBase = dbapi::DataBase::Get();
         const auto data = pDataBase->Query(fmt::format("SELECT `data` FROM `configs` WHERE `id` = {}", m_iID));
 
         return nlohmann::json::parse(data[0][0]);
@@ -35,8 +35,8 @@ namespace DBAPI
 
     User Config::GetOwner() const
     {
-        auto pDataBase = DBAPI::DataBase::Get();
+        auto pDataBase = dbapi::DataBase::Get();
         const auto data = pDataBase->Query(fmt::format("SELECT `owner_id` FROM `configs` WHERE `id` = {}", m_iID));
         return {std::stoull(data[0][0])};
     }
-} // DBAPI
+} // dbapi

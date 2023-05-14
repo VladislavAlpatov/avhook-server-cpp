@@ -4,7 +4,7 @@
 
 #pragma once
 #include "ChatMessageRelated.h"
-namespace Web::Packet::ChatMessage
+namespace web::packet::message
 {
     class GetOwner final : public ChatMessageRelated
     {

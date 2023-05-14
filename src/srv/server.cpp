@@ -18,7 +18,7 @@
 #include <netinet/in.h>
 #include <netinet/tcp.h>
 
-namespace Web
+namespace web
 {
     Server::Server(const std::string &ip, const int port)
     {

@@ -6,20 +6,20 @@
 #include "../BasePacket.h"
 #include "../../DataBaseAPI/User.h"
 
-namespace Web::Packet::Decorator
+namespace web::packet::decorator
 {
     class OwnerOnly;
 }
 
-namespace Web::Packet::User
+namespace web::packet::user
 {
     class UserRelated : public BasePacket
     {
-    friend Decorator::OwnerOnly;
+    friend decorator::OwnerOnly;
 
     public:
         explicit UserRelated(const nlohmann::json &data);
     protected:
-        DBAPI::User m_pUserFromPacket;
+        dbapi::User m_pUserFromPacket;
     };
 }

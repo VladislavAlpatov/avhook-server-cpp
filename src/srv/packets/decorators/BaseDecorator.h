@@ -6,7 +6,7 @@
 #include "../../ClientHandle/ClientHandle.h"
 
 #include <memory>
-namespace Web::Packet::Decorator
+namespace web::packet::decorator
 {
     class BaseDecorator : public IPayloadExecutable
     {

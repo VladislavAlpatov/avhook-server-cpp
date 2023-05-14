@@ -6,14 +6,14 @@
 #include "../BasePacket.h"
 #include "../../DataBaseAPI/Product.h"
 
-namespace Web::Packet::Product
+namespace web::packet::Product
 {
 	class ProductRelated : public BasePacket
 	{
 	public:
 		explicit ProductRelated(const nlohmann::json& data);
 	protected:
-		DBAPI::Product m_productFromPacket;
+		dbapi::Product m_productFromPacket;
 	};
 }
 

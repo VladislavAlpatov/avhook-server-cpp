@@ -9,7 +9,7 @@
 #include "network/Socket.h"
 
 
-namespace Web
+namespace web
 {
 	class Server : public ObservableObject
     {

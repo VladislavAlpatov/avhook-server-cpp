@@ -5,7 +5,7 @@
 #include "../BasePacket.h"
 
 
-namespace Web::Packet::Misc
+namespace web::packet::Misc
 {
 
     class Auth final : public BasePacket

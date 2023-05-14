@@ -11,7 +11,7 @@
 #include "IJsonExportable.h"
 
 
-namespace DBAPI
+namespace dbapi
 {
     class Chat;
     class Config;
@@ -69,4 +69,4 @@ namespace DBAPI
         User(uint64_t iUserId);
     };
 
-} // DBAPI
+} // dbapi

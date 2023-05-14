@@ -5,12 +5,12 @@
 #pragma once
 #include "BaseDecorator.h"
 
-namespace DBAPI
+namespace dbapi
 {
     class User;
 }
 
-namespace Web::Packet::Decorator
+namespace web::packet::decorator
 {
     class OwnerOnly final : public BaseDecorator
     {

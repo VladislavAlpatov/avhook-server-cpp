@@ -5,9 +5,9 @@
 #include "GetSubscriptions.h"
 #include "../../DataBaseAPI/Subscription.h"
 
-namespace Web::Packet::User
+namespace web::packet::user
 {
-	nlohmann::json GetSubscriptions::ExecutePayload(Web::ClientHandle& clientHandle)
+	nlohmann::json GetSubscriptions::ExecutePayload(web::ClientHandle& clientHandle)
 	{
 		std::vector<nlohmann::json> subsJson;
 		const auto subs = m_pUserFromPacket.GetSubscriptions();

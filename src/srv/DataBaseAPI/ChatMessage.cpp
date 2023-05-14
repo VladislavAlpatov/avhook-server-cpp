@@ -11,7 +11,7 @@
 #include <boost/algorithm/string.hpp>
 
 
-DBAPI::User DBAPI::ChatMessage::GetOwner() const
+dbapi::User dbapi::ChatMessage::GetOwner() const
 {
     const auto pDataBase = DataBase::Get();
     auto data = pDataBase->Query(fmt::format("SELECT `owner_id` FROM `chats-messages` WHERE `id` = {}", m_iID));
@@ -19,7 +19,7 @@ DBAPI::User DBAPI::ChatMessage::GetOwner() const
     return pDataBase->GetUserById(std::stoull(data[0][0]));
 }
 
-DBAPI::Chat DBAPI::ChatMessage::GetChat() const
+dbapi::Chat dbapi::ChatMessage::GetChat() const
 {
     const auto pDataBase = DataBase::Get();
     auto data = pDataBase->Query(fmt::format("SELECT `chat_id` FROM `chats-messages` WHERE `id` = {}", m_iID));
@@ -27,14 +27,14 @@ DBAPI::Chat DBAPI::ChatMessage::GetChat() const
     return pDataBase->GetChatById(std::stoull(data[0][0]));
 }
 
-std::string DBAPI::ChatMessage::GetText() const
+std::string dbapi::ChatMessage::GetText() const
 {
     const auto pDataBase = DataBase::Get();
     const auto data = pDataBase->Query(fmt::format("SELECT `text` FROM `chats-messages` WHERE `id` = {}", m_iID));
     return data[0][0];
 }
 
-void DBAPI::ChatMessage::SetText(std::string text)
+void dbapi::ChatMessage::SetText(std::string text)
 {
     const auto pDataBase = DataBase::Get();
 
@@ -42,7 +42,7 @@ void DBAPI::ChatMessage::SetText(std::string text)
     pDataBase->Query(fmt::format("UPDATE `chats-messages` SET `text` = '{}' FROM  WHERE `id` = {}",text, m_iID));
 }
 
-DBAPI::ChatMessage::ChatMessage(uint64_t id) : Object(id)
+dbapi::ChatMessage::ChatMessage(uint64_t id) : Object(id)
 {
 
 }

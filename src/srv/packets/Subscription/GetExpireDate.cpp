@@ -5,7 +5,7 @@
 #include "GetExpireDate.h"
 #include <boost/date_time/posix_time/posix_time.hpp>
 
-namespace Web::Packet::Subscription
+namespace web::packet::subscription
 {
 	GetExpireDate::GetExpireDate(const nlohmann::json& data) : SubscriptionRelated(data)
 	{

@@ -5,11 +5,11 @@
 #include "ChatMembersOnly.h"
 #include "../ChatRelated/ChatRelated.h"
 
-namespace Web::Packet::Decorator
+namespace web::packet::decorator
 {
-    nlohmann::json ChatMembersOnly::ExecutePayload(Web::ClientHandle &clientHandle)
+    nlohmann::json ChatMembersOnly::ExecutePayload(web::ClientHandle &clientHandle)
     {
-        using namespace Web::Packet::Chat;
+        using namespace web::packet::chat;
 
         const auto pPacket = GetOriginalPacket<IChatAccessible>();
 

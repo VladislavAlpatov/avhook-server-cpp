@@ -5,7 +5,7 @@
 #include "GetData.h"
 
 
-namespace Web::Packet::Config
+namespace web::packet::config
 {
     GetData::GetData(const nlohmann::json &data) : ConfigRelated(data)
     {

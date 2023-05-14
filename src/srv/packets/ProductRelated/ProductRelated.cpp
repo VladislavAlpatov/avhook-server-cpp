@@ -6,13 +6,13 @@
 #include "../exceptions.h"
 #include "../../DataBaseAPI/DataBase.h"
 
-namespace Web::Packet::Product
+namespace web::packet::Product
 {
 	ProductRelated::ProductRelated(const nlohmann::json& data) : BasePacket(data)
 	{
 		try
 		{
-			m_productFromPacket = DBAPI::DataBase::Get()->GetProductById(data["product_id"]);
+			m_productFromPacket = dbapi::DataBase::Get()->GetProductById(data["product_id"]);
 		}
 		catch (...)
 		{

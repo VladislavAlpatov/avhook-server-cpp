@@ -5,9 +5,9 @@
 #pragma once
 #include "../../DataBaseAPI/Chat.h"
 
-// Inherit Web::IPayloadExecutable to resolve calling of wrong virtual method
+// Inherit web::IPayloadExecutable to resolve calling of wrong virtual method
 class IChatAccessible
 {
 public:
-    virtual DBAPI::Chat GetChat() = 0;
+    virtual dbapi::Chat GetChat() = 0;
 };

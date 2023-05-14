@@ -3,7 +3,7 @@
 //
 
 #include "GetName.h"
-namespace Web::Packet::Product
+namespace web::packet::Product
 {
 	GetName::GetName(const nlohmann::json& data) : ProductRelated(data)
 	{

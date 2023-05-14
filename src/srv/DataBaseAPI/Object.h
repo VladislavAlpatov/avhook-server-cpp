@@ -7,7 +7,7 @@
 
 #define INVALID_DATABASE_OBJECT_ID 0
 
-namespace DBAPI
+namespace dbapi
 {
     class Object
     {

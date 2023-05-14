@@ -9,7 +9,7 @@
 #include "../../lib/crypto/RSA.h"
 
 
-void Web::ClientHandle::Listen()
+void web::ClientHandle::Listen()
 {
 	if (!ExchangeRsaKeys())
 		return;
@@ -36,12 +36,12 @@ void Web::ClientHandle::Listen()
     }
 }
 
-Web::ClientHandle::~ClientHandle()
+web::ClientHandle::~ClientHandle()
 {
     m_clientSocket.Close();
 }
 
-void Web::ClientHandle::OnPacket(const std::unique_ptr<IPayloadExecutable>& pPacket)
+void web::ClientHandle::OnPacket(const std::unique_ptr<IPayloadExecutable>& pPacket)
 {
 	NotifyObserver<Observers::OnPacket>();
 	auto jsn = pPacket->ExecutePayload(*this);
@@ -50,43 +50,43 @@ void Web::ClientHandle::OnPacket(const std::unique_ptr<IPayloadExecutable>& pPac
     SendJson(jsn);
 }
 
-Web::ClientHandle::ClientHandle(Network::Socket soc)
+web::ClientHandle::ClientHandle(Network::Socket soc)
 {
 	m_clientSocket = soc;
 }
 
-void Web::ClientHandle::SendString(const std::string& str)
+void web::ClientHandle::SendString(const std::string& str)
 {
 	std::vector<uint8_t> data(str.begin(), str.end());
 	SendBytes(data);
 }
 
-void Web::ClientHandle::SendJson(const nlohmann::json& jsn)
+void web::ClientHandle::SendJson(const nlohmann::json& jsn)
 {
 	SendString(jsn.dump());
 }
 
-std::string Web::ClientHandle::RecvString()
+std::string web::ClientHandle::RecvString()
 {
 	auto data = RecvBytes();
 	return { data.begin(), data.end()} ;
 }
 
-nlohmann::json Web::ClientHandle::RecvJson()
+nlohmann::json web::ClientHandle::RecvJson()
 {
 	return nlohmann::json::parse(RecvString());
 }
 
-std::unique_ptr<Web::IPayloadExecutable> Web::ClientHandle::RecvPacket()
+std::unique_ptr<web::IPayloadExecutable> web::ClientHandle::RecvPacket()
 {
 	return PacketFactory::Create(RecvJson());
 }
 
-bool Web::ClientHandle::ExchangeRsaKeys()
+bool web::ClientHandle::ExchangeRsaKeys()
 {
 	try
 	{
-		static const auto rsa = Encryption::RSA(1024);
+		static const auto rsa = encryption::RSA(1024);
 
 		nlohmann::json rsaInJsn;
 		rsaInJsn["n"] = rsa.GetModulus().str();
@@ -106,14 +106,14 @@ bool Web::ClientHandle::ExchangeRsaKeys()
 
 }
 
-std::vector<uint8_t> Web::ClientHandle::RecvBytes()
+std::vector<uint8_t> web::ClientHandle::RecvBytes()
 {
-	return Encryption::Xor::Decrypt(m_clientSocket.RecvBytes(), m_xorKey);
+	return encryption::xorenc::Decrypt(m_clientSocket.RecvBytes(), m_xorKey);
 }
 
-void Web::ClientHandle::SendBytes(const std::vector<uint8_t>& bytes)
+void web::ClientHandle::SendBytes(const std::vector<uint8_t>& bytes)
 {
-	const auto encData = Encryption::Xor::Decrypt(bytes, m_xorKey);
+	const auto encData = encryption::xorenc::Decrypt(bytes, m_xorKey);
 	m_clientSocket.SendBytes(encData.data(), encData.size());
 }
 

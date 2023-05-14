@@ -11,7 +11,7 @@
 #include "IJsonExportable.h"
 
 
-namespace DBAPI
+namespace dbapi
 {
     class User;
     class ChatMessage;

@@ -7,13 +7,13 @@
 #include "../../DataBaseAPI/Product.h"
 
 
-namespace Web::Packet::Product
+namespace web::packet::Product
 {
-	nlohmann::json GetProductList::ExecutePayload(Web::ClientHandle& clientHandle)
+	nlohmann::json GetProductList::ExecutePayload(web::ClientHandle& clientHandle)
 	{
 		std::vector<nlohmann::json> out;
 
-		for (const auto& product : DBAPI::DataBase::Get()->GetProductList())
+		for (const auto& product : dbapi::DataBase::Get()->GetProductList())
 			out.push_back({{"id", product.GetID()}});
 
 		return {{"products", out}};

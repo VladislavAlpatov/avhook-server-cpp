@@ -6,7 +6,7 @@
 #include "Object.h"
 
 
-namespace DBAPI
+namespace dbapi
 {
 	class User;
 	class ActivationKey final : public Object

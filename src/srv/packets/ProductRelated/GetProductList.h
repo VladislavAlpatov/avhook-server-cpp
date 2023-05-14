@@ -6,7 +6,7 @@
 #include "../BasePacket.h"
 
 
-namespace Web::Packet::Product
+namespace web::packet::Product
 {
 	class GetProductList final : public BasePacket
 	{

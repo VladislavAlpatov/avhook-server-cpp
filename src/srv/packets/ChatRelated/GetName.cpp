@@ -5,9 +5,9 @@
 #include "GetName.h"
 #include "../../ClientHandle/ClientHandle.h"
 
-namespace Web::Packet::Chat
+namespace web::packet::chat
 {
-    nlohmann::json GetName::ExecutePayload(Web::ClientHandle &clientHandle)
+    nlohmann::json GetName::ExecutePayload(web::ClientHandle &clientHandle)
     {
         return {{"name", m_chatFromPacket.GetName()}};
     }

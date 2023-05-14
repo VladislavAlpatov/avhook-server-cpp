@@ -7,7 +7,7 @@
 #include "../../ClientHandle/ClientHandle.h"
 
 
-namespace Web::Packet::Decorator
+namespace web::packet::decorator
 {
     class RegisteredOnly : public BaseDecorator
     {
@@ -16,4 +16,4 @@ namespace Web::Packet::Decorator
         RegisteredOnly() =  default;
         nlohmann::json ExecutePayload(ClientHandle &clientHandle) override;
     };
-} // Decorator
+} // decorator

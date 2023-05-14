@@ -5,7 +5,7 @@
 #include "UserRelated.h"
 
 
-namespace Web::Packet::User
+namespace web::packet::user
 {
     class GetStatus final : public UserRelated
     {

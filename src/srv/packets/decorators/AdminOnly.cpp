@@ -4,11 +4,11 @@
 
 #include "AdminOnly.h"
 
-namespace Web::Packet::Decorator
+namespace web::packet::decorator
 {
-    nlohmann::json AdminOnly::ExecutePayload(Web::ClientHandle &clientHandle)
+    nlohmann::json AdminOnly::ExecutePayload(web::ClientHandle &clientHandle)
     {
-        using DBAPI::User;
+        using dbapi::User;
 
 
         if (!clientHandle.m_dbUser.HasRightsOf(User::Rights::Admin))

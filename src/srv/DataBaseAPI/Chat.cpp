@@ -13,7 +13,7 @@
 #include "ChatMessage.h"
 #include "User.h"
 
-namespace DBAPI
+namespace dbapi
 {
     bool Chat::IsUserInChat(const User &user) const
     {

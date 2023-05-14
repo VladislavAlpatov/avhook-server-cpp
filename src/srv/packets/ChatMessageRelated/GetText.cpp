@@ -3,7 +3,7 @@
 //
 
 #include "GetText.h"
-namespace Web::Packet::ChatMessage
+namespace web::packet::message
 {
     GetText::GetText(const nlohmann::json &data) : ChatMessageRelated(data)
     {

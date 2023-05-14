@@ -7,7 +7,7 @@
 #include "../../DataBaseAPI/User.h"
 #include "../../DataBaseAPI/Chat.h"
 
-namespace Web::Packet::ChatMessage
+namespace web::packet::message
 {
     GetOwner::GetOwner(const nlohmann::json &data) : ChatMessageRelated(data)
     {

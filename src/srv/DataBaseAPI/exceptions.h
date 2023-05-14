@@ -7,7 +7,7 @@
 
 
 
-namespace DBAPI::Exception
+namespace dbapi::Exception
 {
     class UserNotFound final : public std::exception
     {
@@ -22,7 +22,7 @@ namespace DBAPI::Exception
     public:
         const char *what() const noexcept override
         {
-            return "Chat not found";
+            return "chat not found";
         }
     };
     class ChatMessageIsNotValid final : public std::exception

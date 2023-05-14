@@ -7,7 +7,7 @@
 
 #include <string>
 
-namespace DBAPI
+namespace dbapi
 {
     class User;
     class Chat;

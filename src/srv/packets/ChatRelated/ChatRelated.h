@@ -7,22 +7,22 @@
 #include "../../DataBaseAPI/Chat.h"
 #include "../interfaces/IChatAccessible.h"
 
-namespace Web::Packet::Decorator
+namespace web::packet::decorator
 {
     class ChatMembersOnly;
 }
 
-namespace Web::Packet::Chat
+namespace web::packet::chat
 {
     class ChatRelated : public BasePacket, public IChatAccessible
     {
-        friend Web::Packet::Decorator::ChatMembersOnly;
+        friend web::packet::decorator::ChatMembersOnly;
     public:
         explicit ChatRelated(const nlohmann::json &data);
 
-        DBAPI::Chat GetChat() override;
+        dbapi::Chat GetChat() override;
 
     protected:
-        DBAPI::Chat m_chatFromPacket;
+        dbapi::Chat m_chatFromPacket;
     };
 }

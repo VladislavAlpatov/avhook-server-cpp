@@ -5,7 +5,7 @@
 #include "CheckExpiration.h"
 
 
-namespace Web::Packet::Subscription
+namespace web::packet::subscription
 {
 	CheckExpiration::CheckExpiration(const nlohmann::json& data) : SubscriptionRelated(data)
 	{

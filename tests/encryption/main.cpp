@@ -18,7 +18,7 @@ TEST(RSA, ValidEncryptionAndDecryption)
 
 	for (int i = 0 ; i < 200; i++)
 	{
-		auto rsa = Encryption::RSA(256);
+		auto rsa = encryption::RSA(256);
 		auto enc = rsa.Encrypt(data);
 		auto dec = rsa.Decrypt(enc);
 
@@ -36,11 +36,11 @@ TEST(XOR, ValidEncryptionAndDecryption)
 
 	for (int i = 0 ; i < 100; i++)
 	{
-		const auto key = Encryption::Xor::GenerateKey(64);
+		const auto key = encryption::xorenc::GenerateKey(64);
 
 
-		auto enc = Encryption::Xor::Encrypt(data, key);
-		auto dec = Encryption::Xor::Decrypt(enc, key);
+		auto enc = encryption::xorenc::Encrypt(data, key);
+		auto dec = encryption::xorenc::Decrypt(enc, key);
 
 
 		EXPECT_TRUE(str == std::string(dec.begin(), dec.end()));

@@ -4,7 +4,7 @@
 
 #include "GetStatus.h"
 
-namespace Web::Packet::User
+namespace web::packet::user
 {
 
     nlohmann::json GetStatus::ExecutePayload(ClientHandle &clientHandle)

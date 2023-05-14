@@ -9,11 +9,11 @@
 #define USER_ID_FOR_TESTS 1
 
 
-DBAPI::DataBase* pDataBase = nullptr;
+dbapi::DataBase* pDataBase = nullptr;
 
 TEST(DBAPI, SingletonInitialization)
 {
-    pDataBase = DBAPI::DataBase::Get();
+    pDataBase = dbapi::DataBase::Get();
 
     EXPECT_TRUE(pDataBase != nullptr);
 }

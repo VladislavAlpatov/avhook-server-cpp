@@ -4,9 +4,9 @@
 #pragma once
 #include <nlohmann/json.hpp>
 #include "IPayloadExecutable.h"
-namespace Web {class ClientHandle;}
+namespace web {class ClientHandle;}
 
-namespace Web::Packet
+namespace web::packet
 {
 
     class BasePacket : public IPayloadExecutable

@@ -7,7 +7,7 @@
 #include <nlohmann/json.hpp>
 
 
-namespace DBAPI
+namespace dbapi
 {
     class User;
     class Config final : public Object
@@ -21,4 +21,4 @@ namespace DBAPI
 
     };
 
-} // DBAPI
+} // dbapi

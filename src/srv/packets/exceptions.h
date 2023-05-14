@@ -4,7 +4,7 @@
 #pragma once
 #include <stdexcept>
 
-namespace Web::Packet::Exception
+namespace web::packet::Exception
 {
     class BasePacketException : public std::exception
     {
@@ -62,7 +62,7 @@ namespace Web::Packet::Exception
     public:
         const char *what() const noexcept override
         {
-            return "Chat with this id does not exist";
+            return "chat with this id does not exist";
         }
     };
     class UserNotRegistered final : public BasePacketException

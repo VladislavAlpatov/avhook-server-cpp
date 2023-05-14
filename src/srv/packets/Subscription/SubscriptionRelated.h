@@ -7,16 +7,16 @@
 #include "../../DataBaseAPI/Subscription.h"
 #include "../interfaces/IUserAccessible.h"
 
-namespace Web::Packet::Subscription
+namespace web::packet::subscription
 {
 	class SubscriptionRelated : public BasePacket, public IUserAccessible
 	{
 	public:
 		explicit SubscriptionRelated(const nlohmann::json& data);
 
-		DBAPI::User GetUser() override;
+		dbapi::User GetUser() override;
 
 	protected:
-		DBAPI::Subscription m_SubFromPacket;
+		dbapi::Subscription m_SubFromPacket;
 	};
 }

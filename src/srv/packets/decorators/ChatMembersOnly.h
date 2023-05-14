@@ -6,7 +6,7 @@
 #include "BaseDecorator.h"
 
 
-namespace Web::Packet::Decorator
+namespace web::packet::decorator
 {
     class ChatMembersOnly final : public BaseDecorator
     {

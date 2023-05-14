@@ -7,7 +7,7 @@
 #include <fmt/format.h>
 
 
-namespace DBAPI
+namespace dbapi
 {
 	Product::Product(uint64_t id) : Object(id)
 	{
@@ -24,4 +24,4 @@ namespace DBAPI
 
 		return data[0][0];
 	}
-} // DBAPI
+} // dbapi

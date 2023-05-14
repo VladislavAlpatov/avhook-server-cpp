@@ -6,7 +6,7 @@
 #include "ChatRelated.h"
 
 
-namespace Web::Packet::Chat
+namespace web::packet::chat
 {
     class GetHistory final : public ChatRelated
     {

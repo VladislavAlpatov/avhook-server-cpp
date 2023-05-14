@@ -7,7 +7,7 @@
 #include "../../ClientHandle/ClientHandle.h"
 
 
-namespace Web::Packet::User
+namespace web::packet::user
 {
     nlohmann::json GetChatList::ExecutePayload(ClientHandle &clientHandle)
     {

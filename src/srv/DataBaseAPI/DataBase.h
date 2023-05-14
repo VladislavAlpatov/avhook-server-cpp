@@ -7,7 +7,7 @@
 #include "../../lib/sqlite/connection.h"
 
 
-namespace DBAPI
+namespace dbapi
 {
     class User;
     class Chat;
@@ -42,4 +42,4 @@ namespace DBAPI
         DataBase(const std::string& sPath);
     };
 
-} // DBAPI
+} // dbapi

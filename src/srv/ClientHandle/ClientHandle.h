@@ -10,7 +10,7 @@
 
 #include <memory>
 
-namespace Web
+namespace web
 {
 	class ClientHandle final : public ObservableObject
 	{
@@ -20,7 +20,7 @@ namespace Web
 		void Listen();
 		~ClientHandle() override;
         Network::Socket m_clientSocket;
-		DBAPI::User m_dbUser;
+		dbapi::User m_dbUser;
 		void OnPacket(const std::unique_ptr<IPayloadExecutable>& pPacket);
 	private:
 		std::vector<uint8_t> m_xorKey;

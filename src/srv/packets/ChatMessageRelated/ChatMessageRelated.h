@@ -7,17 +7,17 @@
 #include "../../DataBaseAPI/ChatMessage.h"
 #include "../interfaces/IChatAccessible.h"
 
-namespace Web::Packet::ChatMessage
+namespace web::packet::message
 {
     class ChatMessageRelated : public BasePacket, public IChatAccessible
     {
     public:
-        DBAPI::Chat GetChat() override;
+        dbapi::Chat GetChat() override;
 
         explicit ChatMessageRelated(const nlohmann::json &data);
 
     protected:
-        DBAPI::ChatMessage m_messageFromPacket;
+        dbapi::ChatMessage m_messageFromPacket;
     };
 
 }

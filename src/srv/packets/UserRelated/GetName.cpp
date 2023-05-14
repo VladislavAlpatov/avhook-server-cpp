@@ -7,7 +7,7 @@
 
 #include "../../DataBaseAPI/DataBase.h"
 
-namespace Web::Packet::User
+namespace web::packet::user
 {
     nlohmann::json GetName::ExecutePayload(ClientHandle &clientHandle)
     {

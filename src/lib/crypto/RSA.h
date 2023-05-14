@@ -6,7 +6,7 @@
 
 #include <boost/multiprecision/cpp_int.hpp>
 
-namespace Encryption
+namespace encryption
 {
 	class RSA
 	{
@@ -60,4 +60,4 @@ namespace Encryption
 	public:
 		[[nodiscard]] const char* what() const _GLIBCXX_TXN_SAFE_DYN _GLIBCXX_NOTHROW override;
 	};
-} // Encryption
+} // encryption

@@ -9,7 +9,7 @@
 
 #define MAX_ACCEPTABLE_PACKET_SIZE 10485760
 
-namespace Web::Network
+namespace web::Network
 {
 
     [[maybe_unused]] SOCKET Socket::GetRawSocket() const

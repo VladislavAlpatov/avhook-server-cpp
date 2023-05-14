@@ -21,7 +21,7 @@ inline size_t GetCppIntSize(const cpp_int& number)
 }
 
 
-namespace Encryption
+namespace encryption
 {
 	std::vector<uint8_t> RSA::Encrypt(const std::vector<uint8_t>& data) const
 	{
@@ -133,6 +133,7 @@ namespace Encryption
 		if (encData.size() % szEncryptedChunkSize)
 			return false;
 
+		// check encrypted chunks if their size less than modulus and not 0
 		for (size_t i = 0; i < encData.size(); i += szEncryptedChunkSize)
 			if (!encData[i] or encData[i] > szModulusSize)
 				return false;

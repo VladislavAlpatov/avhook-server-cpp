@@ -5,7 +5,7 @@
 #pragma once
 #include "UserRelated.h"
 
-namespace Web::Packet::User
+namespace web::packet::user
 {
     class SetStatus final : public UserRelated
     {

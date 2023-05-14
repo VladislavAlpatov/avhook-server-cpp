@@ -12,7 +12,7 @@
 #include "Subscription.h"
 
 
-namespace DBAPI
+namespace dbapi
 {
     User::User(uint64_t iUserId) : Object(iUserId)
     {
@@ -193,4 +193,4 @@ namespace DBAPI
 
 		return out;
 	}
-} // DBAPI
+} // dbapi

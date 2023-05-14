@@ -6,7 +6,7 @@
 #include "Object.h"
 #include <string>
 
-namespace DBAPI
+namespace dbapi
 {
 	class User;
 	class Subscription final : public Object
@@ -25,4 +25,4 @@ namespace DBAPI
 		Subscription(uint64_t id);
 	};
 
-} // DBAPI
+} // dbapi

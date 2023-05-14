@@ -8,15 +8,15 @@
 #include "../../DataBaseAPI/Config.h"
 
 
-namespace Web::Packet::Config
+namespace web::packet::config
 {
     class ConfigRelated : public BasePacket, public IUserAccessible
     {
     public:
         ConfigRelated(const nlohmann::json &data);
-        DBAPI::User GetUser() override;
+        dbapi::User GetUser() override;
     protected:
-        DBAPI::Config m_configFromPacket;
+        dbapi::Config m_configFromPacket;
     };
 
 }

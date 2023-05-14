@@ -6,7 +6,7 @@
 #include <boost/range/adaptor/reversed.hpp>
 #include <boost/random.hpp>
 
-namespace Encryption::Xor
+namespace encryption::xorenc
 {
 	std::vector<uint8_t> Encrypt(std::vector<uint8_t> data,const std::vector<uint8_t>& key )
     {

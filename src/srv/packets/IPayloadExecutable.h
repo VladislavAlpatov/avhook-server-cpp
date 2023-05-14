@@ -5,7 +5,7 @@
 #pragma once
 #include <nlohmann/json.hpp>
 
-namespace Web
+namespace web
 {
     class ClientHandle;
     class IPayloadExecutable

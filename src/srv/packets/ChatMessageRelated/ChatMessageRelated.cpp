@@ -7,7 +7,7 @@
 #include "../exceptions.h"
 
 
-namespace Web::Packet::ChatMessage
+namespace web::packet::message
 {
     ChatMessageRelated::ChatMessageRelated(const nlohmann::json &data) : BasePacket(data)
     {
@@ -20,10 +20,10 @@ namespace Web::Packet::ChatMessage
         {
             throw Exception::CorruptedPacket();
         }
-        m_messageFromPacket = DBAPI::DataBase::Get()->GetChatMessageById(iChatId);
+        m_messageFromPacket = dbapi::DataBase::Get()->GetChatMessageById(iChatId);
     }
 
-    DBAPI::Chat ChatMessageRelated::GetChat()
+    dbapi::Chat ChatMessageRelated::GetChat()
     {
         return m_messageFromPacket.GetChat();
     }

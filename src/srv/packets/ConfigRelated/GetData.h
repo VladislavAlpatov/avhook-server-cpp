@@ -6,7 +6,7 @@
 
 #include "ConfigRelated.h"
 
-namespace Web::Packet::Config
+namespace web::packet::config
 {
     class GetData final : public ConfigRelated
     {

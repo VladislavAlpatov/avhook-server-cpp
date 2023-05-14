@@ -6,7 +6,7 @@
 
 
 
-namespace Web::Exception
+namespace web::Exception
     {
     class InvalidPacketType final : public std::exception
     {

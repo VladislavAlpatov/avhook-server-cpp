@@ -6,7 +6,7 @@
 
 #include "ChatMessageRelated.h"
 
-namespace Web::Packet::ChatMessage
+namespace web::packet::message
 {
     class GetText final : public ChatMessageRelated
     {

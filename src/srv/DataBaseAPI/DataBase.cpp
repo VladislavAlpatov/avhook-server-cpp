@@ -29,9 +29,9 @@ uint64_t GeneratePublicId()
     return uni(rng);
 }
 
-namespace DBAPI
+namespace dbapi
 {
-    DBAPI::User DataBase::GetUserById(uint64_t iUserId)
+    dbapi::User DataBase::GetUserById(uint64_t iUserId)
     {
         if (!IsUserExist(iUserId))
             throw Exception::UserNotFound();
@@ -144,7 +144,7 @@ namespace DBAPI
 	Subscription DataBase::GetSubscriptionById(uint64_t iUserId)
 	{
 		if (!IsSubscriptionExist(iUserId))
-			throw std::runtime_error("Subscription with this id dosent exist!");
+			throw std::runtime_error("subscription with this id dosent exist!");
 
 		return {iUserId};
 	}
@@ -157,7 +157,7 @@ namespace DBAPI
 	Product DataBase::GetProductById(uint64_t iProductId)
 	{
 		if (!IsProductExist(iProductId))
-			throw std::runtime_error("Subscription with this id dosent exist!");
+			throw std::runtime_error("subscription with this id dosent exist!");
 
 		return {std::stoull(Query(fmt::format("SELECT `id` FROM `products` WHERE `id` = {}", iProductId))[0][0])};
 	}
