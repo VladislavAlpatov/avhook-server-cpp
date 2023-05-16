@@ -37,7 +37,7 @@ namespace web::Network
         }
 
     private:
-        // Use std::shared_ptr to close socket automatically after it become useless
+        // User std::shared_ptr to close socket automatically after it become useless
         SOCKET m_pRawSocket;
     };
 

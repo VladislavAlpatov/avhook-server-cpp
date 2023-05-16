@@ -17850,7 +17850,7 @@ char* to_chars(char* first, const char* last, FloatType value)
     static_cast<void>(last); // maybe unused - fix warning
     JSON_ASSERT(std::isfinite(value));
 
-    // Use signbit(value) instead of (value < 0) since signbit works for -0.
+    // User signbit(value) instead of (value < 0) since signbit works for -0.
     if (std::signbit(value))
     {
         value = -value;
@@ -17887,7 +17887,7 @@ char* to_chars(char* first, const char* last, FloatType value)
 
     // Format the buffer like printf("%.*g", prec, value)
     constexpr int kMinExp = -4;
-    // Use digits10 here to increase compatibility with version 2.
+    // User digits10 here to increase compatibility with version 2.
     constexpr int kMaxExp = std::numeric_limits<FloatType>::digits10;
 
     JSON_ASSERT(last - first >= kMaxExp + 2);

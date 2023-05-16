@@ -85,7 +85,7 @@ namespace encryption
 
 	cpp_int RSA::GeneratePrimeNumber(size_t szBits) const
 	{
-		static mt19937 gen(time(0));
+		static mt19937 gen(time(nullptr));
 		static uniform_int_distribution<cpp_int> dist(cpp_int(1) << (szBits - 1), (cpp_int(1) << szBits) - 1);
 		cpp_int p;
 		do
@@ -168,26 +168,26 @@ namespace encryption
 
 	const char* RSAInitializeError::what() const noexcept
 	{
-		return "Failed to create RSA class";
+		return "[RSA Encryption Module] Failed to create RSA class";
 	}
 
 	const char* RSADecryptionError::what() const noexcept
 	{
-		return "RSA decryption error";
+		return "[RSA Encryption Module] RSA decryption error";
 	}
 
 	const char* RSAInvalidPrivateKey::what() const noexcept
 	{
-		return "RSA private key value is invalid";
+		return "[RSA Encryption Module] RSA private key value is invalid";
 	}
 
 	const char* RSAInvalidPublicKey::what() const noexcept
 	{
-		return "RSA public key value is invalid";
+		return "[RSA Encryption Module] RSA public key value is invalid";
 	}
 
 	const char* RSAInvalidModulus::what() const noexcept
 	{
-		return "RSA modulus key value is invalid";
+		return "[RSA Encryption Module] RSA modulus key value is invalid";
 	}
 }
