@@ -1,6 +1,6 @@
 #include <exception>
 
-namespace web::Network::Exception
+namespace web::network::Exception
 {
     class RecvFailed final : public std::exception
     {
@@ -10,7 +10,7 @@ namespace web::Network::Exception
         }
 
     };
-    class SocketAcceptionFaild final : public std::exception
+    class SocketAcceptionFailed final : public std::exception
     {
         [[nodiscard]] const char* what() const noexcept override
         {

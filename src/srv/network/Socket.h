@@ -10,7 +10,7 @@ typedef int SOCKET;
 
 
 
-namespace web::Network
+namespace web::network
 {
 
     class Socket
@@ -41,4 +41,4 @@ namespace web::Network
         SOCKET m_pRawSocket;
     };
 
-} // Network
+} // network

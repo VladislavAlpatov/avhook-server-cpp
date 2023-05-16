@@ -20,7 +20,7 @@ void web::ClientHandle::Listen()
         {
             OnPacket(RecvPacket());
         }
-        catch (const Network::Exception::RecvFailed& ex)
+        catch (const network::Exception::RecvFailed& ex)
         {
             return;
         }
@@ -50,7 +50,7 @@ void web::ClientHandle::OnPacket(const std::unique_ptr<IPayloadExecutable>& pPac
     SendJson(jsn);
 }
 
-web::ClientHandle::ClientHandle(Network::Socket soc)
+web::ClientHandle::ClientHandle(network::Socket soc)
 {
 	m_clientSocket = soc;
 }
@@ -108,12 +108,12 @@ bool web::ClientHandle::ExchangeRsaKeys()
 
 std::vector<uint8_t> web::ClientHandle::RecvBytes()
 {
-	return encryption::xorenc::Decrypt(m_clientSocket.RecvBytes(), m_xorKey);
+	return encryption::xor_enc::Decrypt(m_clientSocket.RecvBytes(), m_xorKey);
 }
 
 void web::ClientHandle::SendBytes(const std::vector<uint8_t>& bytes)
 {
-	const auto encData = encryption::xorenc::Decrypt(bytes, m_xorKey);
+	const auto encData = encryption::xor_enc::Decrypt(bytes, m_xorKey);
 	m_clientSocket.SendBytes(encData.data(), encData.size());
 }
 

@@ -9,7 +9,7 @@
 
 #define MAX_ACCEPTABLE_PACKET_SIZE 10485760
 
-namespace web::Network
+namespace web::network
 {
 
     [[maybe_unused]] SOCKET Socket::GetRawSocket() const
@@ -38,7 +38,7 @@ namespace web::Network
 
         auto connectionSocket = accept(m_pRawSocket, NULL, NULL);
 
-        if (!connectionSocket) throw Exception::SocketAcceptionFaild();
+        if (!connectionSocket) throw Exception::SocketAcceptionFailed();
 
         return connectionSocket;
     }

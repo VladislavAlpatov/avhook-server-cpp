@@ -3,7 +3,7 @@
 //
 
 #include "ChatMembersOnly.h"
-#include "../ChatRelated/ChatRelated.h"
+#include "../chat/ChatRelated.h"
 
 namespace web::packet::decorator
 {

@@ -22,6 +22,6 @@ namespace web
         int m_iConnectedCount = 0;
         bool m_bAllowListen = true;
         Server(const std::string &ip, int port);
-        Network::Socket m_sListen;
+        network::Socket m_sListen;
     };
 }

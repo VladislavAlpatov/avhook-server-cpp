@@ -15,11 +15,11 @@ namespace web
 	class ClientHandle final : public ObservableObject
 	{
 	public:
-		ClientHandle(Network::Socket soc);
+		ClientHandle(network::Socket soc);
 
 		void Listen();
 		~ClientHandle() override;
-        Network::Socket m_clientSocket;
+        network::Socket m_clientSocket;
 		dbapi::User m_dbUser;
 		void OnPacket(const std::unique_ptr<IPayloadExecutable>& pPacket);
 	private:

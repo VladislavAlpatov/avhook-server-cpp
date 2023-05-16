@@ -36,11 +36,11 @@ TEST(XOR, ValidEncryptionAndDecryption)
 
 	for (int i = 0 ; i < 100; i++)
 	{
-		const auto key = encryption::xorenc::GenerateKey(64);
+		const auto key = encryption::xor_enc::GenerateKey(64);
 
 
-		auto enc = encryption::xorenc::Encrypt(data, key);
-		auto dec = encryption::xorenc::Decrypt(enc, key);
+		auto enc = encryption::xor_enc::Encrypt(data, key);
+		auto dec = encryption::xor_enc::Decrypt(enc, key);
 
 
 		EXPECT_TRUE(str == std::string(dec.begin(), dec.end()));

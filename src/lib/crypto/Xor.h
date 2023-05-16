@@ -6,7 +6,7 @@
 #include <vector>
 #include <cstdint>
 
-namespace encryption::xorenc
+namespace encryption::xor_enc
 {
 	[[nodiscard]] std::vector<uint8_t> Encrypt(std::vector<uint8_t> data,const std::vector<uint8_t>& key );
 	[[nodiscard]] std::vector<uint8_t> Decrypt(std::vector<uint8_t> data,const std::vector<uint8_t>& key );

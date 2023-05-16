@@ -6,26 +6,26 @@
 #include "PacketFactory.h"
 
 // User
-#include "../packets/UserRelated/GetName.h"
-#include "../packets/UserRelated/GetStatus.h"
-#include "../packets/UserRelated/GetChatList.h"
-#include "../packets/UserRelated/SetName.h"
-#include "../packets/UserRelated/SetStatus.h"
-#include "../packets/UserRelated/GetConfigs.h"
-#include "../packets/UserRelated/GetSubscriptions.h"
+#include "../packets/User/GetName.h"
+#include "../packets/User/GetStatus.h"
+#include "../packets/User/GetChatList.h"
+#include "../packets/User/SetName.h"
+#include "../packets/User/SetStatus.h"
+#include "../packets/User/GetConfigs.h"
+#include "../packets/User/GetSubscriptions.h"
 
 // chat
-#include "../packets/ChatRelated/GetName.h"
-#include "../packets/ChatRelated/SendMessage.h"
-#include "../packets/ChatRelated/GetInvite.h"
-#include "../packets/ChatRelated/GetHistory.h"
+#include "../packets/chat/GetName.h"
+#include "../packets/chat/SendMessage.h"
+#include "../packets/chat/GetInvite.h"
+#include "../packets/chat/GetHistory.h"
 
 // chat message
 #include "../packets/ChatMessageRelated/GetText.h"
 #include "../packets/ChatMessageRelated/GetOwner.h"
 
 // config
-#include "../packets/ConfigRelated/GetData.h"
+#include "../packets/config/GetData.h"
 
 // subscription
 #include "../packets/Subscription/GetExpireDate.h"

@@ -1,6 +1,7 @@
 from aiogram import *
 from avs import *
 
+
 class RangeNumberInLineButton(types.InlineKeyboardMarkup):
     def __init__(self, numbers):
         super().__init__()
@@ -32,7 +33,6 @@ class ImperiumBot(Bot):
 
         @self.__dp.message_handler(commands=['products'])
         async def products(message: types.Message):
-
             await message.answer("Fetching product list...")
 
             for product in self.con.get_product_list():
@@ -41,8 +41,6 @@ class ImperiumBot(Bot):
         @self.__dp.message_handler(commands=["status"])
         async def status(message: types.Message):
             await message.answer(self.con.get_logged_user().get_status())
-
-
 
         executor.start_polling(self.__dp, skip_updates=True)
 
