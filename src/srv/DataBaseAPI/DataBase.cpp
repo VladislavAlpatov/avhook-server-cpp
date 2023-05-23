@@ -19,6 +19,7 @@
 #include <memory>
 #include <fmt/format.h>
 #include <fstream>
+#include "../utils/GetConfigFile.h"
 
 
 uint64_t GeneratePublicId()
@@ -28,14 +29,6 @@ uint64_t GeneratePublicId()
     std::uniform_int_distribution<uint64_t> uni(0,UINT64_MAX);
 
     return uni(rng);
-}
-
-nlohmann::json GetConfigFile()
-{
-    auto configFile = std::fstream("config.json", std::ios::in);
-    std::string configFileText(std::istreambuf_iterator<char>(configFile), {});
-
-    return nlohmann::json::parse(configFileText);
 }
 
 namespace dbapi
@@ -55,7 +48,7 @@ namespace dbapi
         if (pDataBase)
             return pDataBase.get();
 
-        pDataBase = std::unique_ptr<DataBase>(new DataBase(GetConfigFile().at("database_path")));
+        pDataBase = std::unique_ptr<DataBase>(new DataBase(utils::GetConfigFile().at("database_path")));
 
         return pDataBase.get();
     }

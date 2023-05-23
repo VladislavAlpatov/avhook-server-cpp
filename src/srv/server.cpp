@@ -16,9 +16,14 @@
 
 #include "DataBaseAPI/DataBase.h"
 
+#include "utils/GetConfigFile.h"
+
+
 #include <sys/socket.h>
 #include <netinet/in.h>
 #include <netinet/tcp.h>
+
+
 
 namespace web
 {
@@ -37,7 +42,7 @@ namespace web
     {
         static std::unique_ptr<Server> pServer;
         if (!pServer)
-            pServer = std::unique_ptr<Server>(new Server("0.0.0.0", 7777));
+            pServer = std::unique_ptr<Server>(new Server("0.0.0.0", utils::GetConfigFile().at("port")));
 
         return pServer.get();
     }

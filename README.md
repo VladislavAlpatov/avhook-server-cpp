@@ -18,7 +18,7 @@ We recommend that you review this section carefully before using our server, and
 # Building
 This section contains information on how to build and compile our server project, including any dependencies or prerequisites you may need to install. We've provided step-by-step instructions to help you get up and running quickly.
 At the moment, you can build a project under Linux.
-### Installing addition libraries
+
 Note: nlohmann-json is already installed int (srv/lib/nlohmann-json), if you 
 want to update it, just replace all files in nlohmann-json folder.
 1) `sh /scripts/auto-dependency-install.sh`
@@ -28,3 +28,23 @@ Before we start, make sure you have CMake installed on your development machine.
 To build this project, we'll be using a `CMakeLists.txt` file to define project settings, dependencies, and build targets. This file is used by CMake to generate build artifacts, such as makefiles, which are used to build the project.
 
 In the following sections, we'll walk you through the steps required to build this project on your platform using CMake. If you encounter any issues or have questions, don't hesitate to reach out to our support team.
+To build project just run a sh script
+1) `sh /scripts/build-server-rel` - will build server for release.
+2) `sh /scripts/build-server-dbg`- will build server for debug (no compiler optimization, logging observers are turned on).
+
+### Running
+After building got to `out/Release` or `out/Debug` folder and create file with name
+`config.json` and paste this:
+1)  Creating config file
+    ```json
+    {
+      "database_path" : "/paste/path/to/database/here",
+      "port": 7777
+    }
+    ```
+    Replace `"/paste/path/to/database/here"` with your own database path.
+
+    You also can change listening port if you want to.
+2) Executing server binary
+    Run `./server` command in terminal.  If you see `[LOG] Server online` it means you did it!
+
