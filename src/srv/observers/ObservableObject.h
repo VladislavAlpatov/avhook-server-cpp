@@ -9,15 +9,15 @@
 
 class ObservableObject
 {
-	friend Observers::IBaseObserver;
+	friend observers::IBaseObserver;
 public:
-	void AddObserver(Observers::IBaseObserver* pObserver)
+	void AddObserver(observers::IBaseObserver* pObserver)
 	{
 		m_Observers.emplace_back(pObserver);
 	}
 	virtual ~ObservableObject() = default;
 protected:
-	std::list<std::shared_ptr<Observers::IBaseObserver>> m_Observers;
+	std::list<std::shared_ptr<observers::IBaseObserver>> m_Observers;
 
 	template<typename ObserverType>
 	void NotifyObserver() const

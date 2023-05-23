@@ -43,7 +43,7 @@ web::ClientHandle::~ClientHandle()
 
 void web::ClientHandle::OnPacket(const std::unique_ptr<IPayloadExecutable>& pPacket)
 {
-	NotifyObserver<Observers::OnPacket>();
+	NotifyObserver<observers::OnPacket>();
 	auto jsn = pPacket->ExecutePayload(*this);
 	jsn["success"] = true;
 

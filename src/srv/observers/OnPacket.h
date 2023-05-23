@@ -5,7 +5,7 @@
 #include "IBaseObserver.h"
 
 
-namespace Observers
+namespace observers
 {
 
 	class OnPacket final : public IBaseObserver
@@ -14,4 +14,4 @@ namespace Observers
 		void HandleEvent(const ObservableObject *pContext) override;
 	};
 
-} // Observers
+} // observers

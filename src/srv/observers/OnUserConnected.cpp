@@ -5,10 +5,10 @@
 #include <cstdio>
 #include <any>
 
-namespace Observers
+namespace observers
 {
 	void OnUserConnected::HandleEvent(const ObservableObject *pContext)
 	{
 		printf("[LOG] Connected new user\n");
 	}
-} // Observers
+} // observers

@@ -6,10 +6,10 @@
 #include <cstdio>
 #include <any>
 
-namespace Observers
+namespace observers
 {
 	void OnServerStartup::HandleEvent(const ObservableObject *pContext)
 	{
 		printf("[LOG] Server online, listening...\n");
 	}
-} // Observers
+} // observers

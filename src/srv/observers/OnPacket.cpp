@@ -6,7 +6,7 @@
 #include "../DataBaseAPI/DataBase.h"
 #include "../DataBaseAPI/User.h"
 
-namespace Observers
+namespace observers
 {
 	void OnPacket::HandleEvent(const ObservableObject *pContext)
 	{
@@ -24,4 +24,4 @@ namespace Observers
                pClientContext->m_dbUser.GetName().c_str(),
                pClientContext->m_dbUser.GetID());
 	}
-} // Observers
+} // observers

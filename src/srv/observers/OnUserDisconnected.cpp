@@ -5,7 +5,7 @@
 #include "OnUserDisconnected.h"
 #include <cstdio>
 
-namespace Observers
+namespace observers
 {
 	void OnUserDisconnected::HandleEvent(const ObservableObject *pContext)
 	{

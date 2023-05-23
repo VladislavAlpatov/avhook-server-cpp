@@ -7,7 +7,7 @@
 #include "IBaseObserver.h"
 #include "ObservableObject.h"
 
-namespace Observers
+namespace observers
 {
 
 	class OnUserDisconnected final : public IBaseObserver

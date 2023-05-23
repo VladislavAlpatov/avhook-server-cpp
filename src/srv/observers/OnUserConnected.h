@@ -7,7 +7,7 @@
 #include "IBaseObserver.h"
 #include "ObservableObject.h"
 
-namespace Observers
+namespace observers
 {
 
 	class OnUserConnected final : public IBaseObserver
@@ -16,4 +16,4 @@ namespace Observers
 		void HandleEvent(const ObservableObject *pContext) override;
 	};
 
-} // Observers
+} // observers

@@ -38,7 +38,7 @@ namespace web
 
     void Server::Listen()
     {
-		NotifyObserver<Observers::OnServerStartup>();
+		NotifyObserver<observers::OnServerStartup>();
 
 
         while (m_bAllowListen)
@@ -47,7 +47,7 @@ namespace web
             auto connectionSocket = m_sListen.Listen();
             connectionSocket.SetOption(IPPROTO_TCP, TCP_NODELAY, 1);
 
-            NotifyObserver<Observers::OnUserConnected>();
+            NotifyObserver<observers::OnUserConnected>();
             m_iConnectedCount++;
 
 			std::thread([this](const network::Socket& soc)
@@ -55,12 +55,12 @@ namespace web
 				auto clientHandle = ClientHandle(soc);
 
 #ifdef _DEBUG
-				clientHandle.AddObserver(new Observers::OnUserAuth());
-				clientHandle.AddObserver(new Observers::OnPacket());
+				clientHandle.AddObserver(new observers::OnUserAuth());
+				clientHandle.AddObserver(new observers::OnPacket());
 #endif
 
                 clientHandle.Listen();
-                NotifyObserver<Observers::OnUserDisconnected>();
+                NotifyObserver<observers::OnUserDisconnected>();
                 m_iConnectedCount--;
 
 			}, std::move(connectionSocket)).detach();

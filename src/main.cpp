@@ -14,9 +14,9 @@ int main()
 #endif
 	const auto pServer = web::Server::Get();
 #ifdef _DEBUG
-	pServer->AddObserver(new Observers::OnServerStartup());
-    pServer->AddObserver(new Observers::OnUserDisconnected());
-    pServer->AddObserver(new Observers::OnUserConnected());
+	pServer->AddObserver(new observers::OnServerStartup());
+    pServer->AddObserver(new observers::OnUserDisconnected());
+    pServer->AddObserver(new observers::OnUserConnected());
 #endif
 	pServer->Listen();
 }

@@ -9,7 +9,7 @@
 #include <fmt/format.h>
 
 
-namespace Observers
+namespace observers
 {
 	void OnUserAuth::HandleEvent(const ObservableObject *pContext)
 	{
@@ -22,4 +22,4 @@ namespace Observers
                pClientContext->m_dbUser.GetID());
 
 	}
-} // Observers
+} // observers

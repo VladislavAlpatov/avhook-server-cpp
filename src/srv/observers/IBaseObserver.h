@@ -5,7 +5,7 @@
 
 class ObservableObject;
 
-namespace Observers
+namespace observers
 {
 	class IBaseObserver
 	{
