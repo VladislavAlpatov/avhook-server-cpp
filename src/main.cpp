@@ -5,8 +5,6 @@
 #include "srv/observers/OnServerStartup.h"
 #include "srv/observers/OnUserConnected.h"
 #include "srv/observers/OnUserDisconnected.h"
-#include <openssl/rsa.h>
-#include "lib/crypto/RSA.h"
 
 
 int main()
