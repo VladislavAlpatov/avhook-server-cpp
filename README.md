@@ -33,7 +33,7 @@ To build project just run a sh script
 2) `sh /scripts/build-server-dbg`- will build server for debug (no compiler optimization, logging observers are turned on).
 
 ### Running
-After building got to `out/Release` or `out/Debug` folder and create file with name
+After building go to `out/Release` or `out/Debug` folder and create file with name
 `config.json` and paste this:
 1)  Creating config file
     ```json
