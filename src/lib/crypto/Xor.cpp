@@ -26,7 +26,7 @@ namespace encryption::xor_enc
 		return data;
 	}
 
-	std::vector<uint8_t> GenerateKey(size_t byteLength)
+	std::vector<uint8_t> GenerateKey(std::size_t byteLength)
 	{
 		std::vector<uint8_t> key;
 		key.reserve(byteLength);

@@ -133,7 +133,7 @@ namespace dbapi
 
 	ActivationKey DataBase::GetActivationKeyById(uint64_t id)
 	{
-		return ActivationKey(id);
+		return {id};
 	}
 
 	bool DataBase::IsSubscriptionExist(uint64_t iSubId)

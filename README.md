@@ -21,9 +21,10 @@ At the moment, you can build a project under Linux.
 ### Installing addition libraries
 Note: nlohmann-json is already installed int (srv/lib/nlohmann-json), if you 
 want to update it, just replace all files in nlohmann-json folder.
-1) `sudo apt install libsqlite3-dev`
-2) `sudo apt install libboost-all-dev`
-3) `sudo apt install libfmt-dev`
-4) `sudo apt install libssl-dev`
+1) `sh /scripts/auto-dependency-install.sh`
 ### CMake
-soon...
+Before we start, make sure you have CMake installed on your development machine. You can download it from the official website or install it using a package manager on your operating system.
+
+To build this project, we'll be using a `CMakeLists.txt` file to define project settings, dependencies, and build targets. This file is used by CMake to generate build artifacts, such as makefiles, which are used to build the project.
+
+In the following sections, we'll walk you through the steps required to build this project on your platform using CMake. If you encounter any issues or have questions, don't hesitate to reach out to our support team.

@@ -16,6 +16,7 @@ namespace dbapi
 	class ActivationKey;
 	class Subscription;
 	class Product;
+
     class DataBase final : public sql::Connection
     {
     public:

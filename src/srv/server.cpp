@@ -14,6 +14,8 @@
 #include "observers/OnUserAuth.h"
 #include "observers/OnPacket.h"
 
+#include "DataBaseAPI/DataBase.h"
+
 #include <sys/socket.h>
 #include <netinet/in.h>
 #include <netinet/tcp.h>
@@ -25,6 +27,10 @@ namespace web
         m_sListen = network::Socket(AF_INET, SOCK_STREAM, IPPROTO_TCP);
         m_sListen.SetOption(IPPROTO_TCP, TCP_NODELAY, 1);
         m_sListen.Bind(ip, port);
+
+        // Initialize database by calling Get function
+        // at first time
+        dbapi::DataBase::Get();
     }
 
     Server *Server::Get()

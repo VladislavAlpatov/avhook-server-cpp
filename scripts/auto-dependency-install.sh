@@ -1,4 +1,3 @@
-sudo apt install libsqlite3-dev
-sudo apt install libboost-all-dev
-sudo apt install libfmt-dev
-sudo apt install libgtest-dev
+sudo apt update -y
+sudo apt upgrade -y
+sudo apt install -y libsqlite3-dev libboost-all-dev libfmt-dev libgtest-dev cmake clang ninja-build
