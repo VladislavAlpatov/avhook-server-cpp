@@ -102,10 +102,10 @@ namespace dbapi
 
     bool Chat::HasUser(const User &user) const
     {
-        for (const auto& chatMember : GetMembers())
-            if (user == chatMember)
-                return true;
-        return false;
+        const auto members = GetMembers();
+        return std::any_of(members.begin(), members.end(), [&](const User& usr) -> bool {return usr == user;});
+
+
     }
 
     std::vector<ChatMessage> Chat::GetHistory() const

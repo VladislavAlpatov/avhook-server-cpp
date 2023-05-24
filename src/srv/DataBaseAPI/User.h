@@ -26,19 +26,19 @@ namespace dbapi
 
     public:
         User() = default;
-        [[nodiscard]] std::string              GetName()                                           const;
-        [[nodiscard]] std::string              GetStatus()                                         const;
-        [[nodiscard]] int                      GetType()                                           const;
-        [[nodiscard]] std::string              GetPassword()                                       const;
-        [[nodiscard]] std::string              GetEmail()                                          const;
-        [[nodiscard]] std::vector<Config>      GetConfigs()                                        const;
-        [[nodiscard]] std::vector<Chat>        GetChatList()                                       const;
-        [[nodiscard]] int                      GetRights()                                         const;
-        [[nodiscard]] bool                     HasRightsOf(int iRights)                            const;
-		[[nodiscard]] std::vector<Subscription> GetSubscriptions()								   const;
+        [[nodiscard]] std::string               GetName()                                           const;
+        [[nodiscard]] std::string               GetStatus()                                         const;
+        [[nodiscard]] int                       GetType()                                           const;
+        [[nodiscard]] std::string               GetPassword()                                       const;
+        [[nodiscard]] std::string               GetEmail()                                          const;
+        [[nodiscard]] std::vector<Config>       GetConfigs()                                        const;
+        [[nodiscard]] std::vector<Chat>         GetChatList()                                       const;
+        [[nodiscard]] int                       GetRights()                                         const;
+        [[nodiscard]] bool                      HasRightsOf(int iRights)                            const;
+		[[nodiscard]] std::vector<Subscription> GetSubscriptions()								    const;
 
-        void                                   SetRights(int iRights)                              const;
-        void                                   AddRights(int iRights)                              const;
+        void                                   SetRights(int iRights)                               const;
+        void                                   AddRights(int iRights)                               const;
 
         [[nodiscard]] static bool              IsUserNameAcceptable(const std::string& name);
         [[nodiscard]] bool                     IsValid() const {return m_iID != INVALID_DATABASE_OBJECT_ID;};
