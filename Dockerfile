@@ -1,11 +1,17 @@
 FROM ubuntu:23.04
 
 ADD . /app
+ADD ./etc /app/out/Release/server
 
-RUN chmod 777 /app/scripts/auto-dependency-install.sh
-RUN chmod 777 /app/scripts/build-server-rel.sh
+RUN apt update -y
+RUN apt upgrade -y
+RUN apt install -y libsqlite3-dev libboost-all-dev libfmt-dev libgtest-dev cmake clang ninja-build
 
-RUN /app/scripts/auto-dependency-install.sh
-RUN /app/scripts/build-server-rel.sh
+WORKDIR /app
 
-ENTRYPOINT ["/app/out/Release/server"]
+RUN cmake --preset x64-release -S .
+RUN cmake --build cmake-build/build/x64-release --target server -j 6
+
+EXPOSE 7777
+
+CMD ["/app/out/Release/server"]
