@@ -38,6 +38,11 @@ class Connection:
 
         return [Product(self, int(x["id"])) for x in data["products"]]
 
+    def find_users_by_name(self, name: str):
+        data = self.send_json_enc({"route": "/find/user/by/name", "name": name})
+
+        return [User(self, user_id) for user_id in data["users_ids"]]
+
     def send_json(self, jsn: dict) -> dict:
         data = bytes(json.dumps(jsn), 'utf-8')
         self.socket.send(len(data).to_bytes(4, byteorder='little'))
@@ -136,6 +141,11 @@ class Subscription:
 
         return Product(self.connection, data["product_id"])
 
+    def is_expired(self):
+        data = self.connection.send_json_enc({"route": "/subscription/get/expiration_status", "sub_id": self.id})
+
+        return data["is_expired"]
+
 
 class Message:
     def __init__(self, con: Connection, id: int):
@@ -159,6 +169,7 @@ class Product:
     def get_name(self) -> str:
         data = self.connection.send_json_enc({"route": "/product/get/name", "product_id": self.id})
         return data["name"]
+
 
 class Config:
     def __init__(self, con: Connection, id: int):

@@ -185,6 +185,10 @@ namespace dbapi
 	std::vector<Subscription> User::GetSubscriptions() const
 	{
 		const auto data = DataBase::Get()->Query(fmt::format("SELECT `id` FROM `subscriptions` WHERE `user_id` = {}", m_iID));
+
+        if (data.empty())
+            return {};
+
 		std::vector<Subscription> out;
 		out.reserve(data[0].size());
 

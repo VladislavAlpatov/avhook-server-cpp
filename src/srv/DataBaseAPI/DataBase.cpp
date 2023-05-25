@@ -175,4 +175,22 @@ namespace dbapi
 			out.push_back({std::stoull(row[0])});
 		return out;
 	}
+
+    std::vector<User> DataBase::GetUsersByName(std::string sName)
+    {
+        boost::replace_all(sName,"'", "''");
+
+        const auto data = Query(fmt::format("SELECT `id` FROM `users` WHERE `name` = '{}'", sName));
+
+        if (data.empty())
+            return {};
+
+        std::vector<User> users;
+        users.reserve(data.size());
+
+        for (const auto& strId : data.front())
+            users.push_back({std::stoull(strId)});
+
+        return users;
+    }
 } // DBAP

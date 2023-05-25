@@ -11,11 +11,10 @@
 
 #include "../../ClientHandle/ClientHandle.h"
 #include "../../DataBaseAPI/DataBase.h"
-#include "../../DataBaseAPI/User.h"
 
 #include "../exceptions.h"
 
-namespace web::packet::Misc
+namespace web::packet::misc
 {
 
     Auth::Auth(const nlohmann::json &data) : BasePacket(data)

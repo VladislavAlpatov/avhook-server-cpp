@@ -34,6 +34,7 @@ namespace dbapi
         Chat        GetChatById(uint64_t iChatId);
         ChatMessage GetChatMessageById(uint64_t id);
         User        GetUserByEmail(std::string sEmail);
+        std::vector<User> GetUsersByName(std::string sName);
         Config      GetConfigById(uint64_t id);
 		ActivationKey GetActivationKeyById(uint64_t id);
         bool        IsConfigExist(uint64_t id);

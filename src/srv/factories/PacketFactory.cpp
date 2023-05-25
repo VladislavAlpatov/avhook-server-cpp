@@ -36,8 +36,9 @@
 #include "../packets/ProductRelated/GetName.h"
 #include "../packets/ProductRelated/GetProductList.h"
 
-// Misc
+// misc
 #include "../packets/Misc/Auth.h"
+#include "../packets/Misc/FindUserByName.h"
 
 #include "../packets/decorators/RegisteredOnly.h"
 #include "../packets/decorators/OwnerOnly.h"
@@ -47,7 +48,6 @@
 #include <functional>
 
 #include "../exceptions.h"
-
 using namespace web;
 using namespace web::packet;
 using namespace web::packet::decorator;
@@ -129,10 +129,13 @@ static std::map<std::string,  std::function<std::unique_ptr<IPayloadExecutable>(
 				{ return MultipleDecoration(new Product::GetProductList(data));}},
 
                 // ==================
-                // Misc packets
+                // misc packets
                 // ==================
                 {"/auth",[](const nlohmann::json& data) -> auto
-                {return MultipleDecoration(new Misc::Auth(data));}},
+                {return MultipleDecoration(new misc::Auth(data));}},
+
+                {"/find/user/by/name",[](const nlohmann::json& data) -> auto
+                {return MultipleDecoration(new misc::FindUserByName(data), new RegisteredOnly());}},
         };
 
 namespace web
