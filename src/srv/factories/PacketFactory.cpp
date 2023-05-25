@@ -30,6 +30,7 @@
 // subscription
 #include "../packets/Subscription/GetExpireDate.h"
 #include "../packets/Subscription/CheckExpiration.h"
+#include "../packets/Subscription/GetProduct.h"
 
 // Product
 #include "../packets/ProductRelated/GetName.h"
@@ -114,6 +115,9 @@ static std::map<std::string,  std::function<std::unique_ptr<IPayloadExecutable>(
 
 				{"/subscription/get/expiration_status",[](const nlohmann::json& data) -> auto
 				{ return MultipleDecoration(new subscription::CheckExpiration(data), new RegisteredOnly(), new OwnerOnly());}},
+
+                {"/subscription/get/product",[](const nlohmann::json& data) -> auto
+                { return MultipleDecoration(new subscription::GetProduct(data), new RegisteredOnly(), new OwnerOnly());}},
 
 				// ==================
 				// Product packets

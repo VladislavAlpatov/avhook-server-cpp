@@ -22,4 +22,9 @@ namespace web::packet::user
             throw Exception::CorruptedPacket();
         }
     }
+
+    dbapi::User UserRelated::GetUser()
+    {
+        return m_pUserFromPacket;
+    }
 }

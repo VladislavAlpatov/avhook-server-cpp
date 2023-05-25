@@ -4,3 +4,8 @@ services:
     build: .
     ports:
       - "7777:7777"
+    volumes:
+      - ./etc:/etc
+    environment:
+      DATABASE_PATH: /etc/database.db
+      PORT: 7777

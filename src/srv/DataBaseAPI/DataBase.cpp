@@ -47,9 +47,11 @@ namespace dbapi
 
         if (pDataBase)
             return pDataBase.get();
-
-        pDataBase = std::unique_ptr<DataBase>(new DataBase(utils::GetConfigFile().at("database_path")));
-
+#ifndef  _DEBUG
+        pDataBase = std::unique_ptr<DataBase>(new DataBase(std::getenv("DATABASE_PATH")));
+#else
+        pDataBase = std::unique_ptr<DataBase>(new DataBase("../../etc/database.db"));
+#endif
         return pDataBase.get();
     }
 

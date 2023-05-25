@@ -4,6 +4,8 @@
 
 #pragma once
 #include "UserRelated.h"
+#include "../interfaces/IUserAccessible.h"
+
 
 namespace web::packet::user
 {

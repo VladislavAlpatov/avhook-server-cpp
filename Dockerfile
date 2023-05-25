@@ -1,7 +1,6 @@
 FROM ubuntu:23.04
 
 ADD . /app
-ADD ./etc /app/out/Release/server
 
 RUN apt update -y
 RUN apt upgrade -y
@@ -12,6 +11,4 @@ WORKDIR /app
 RUN cmake --preset x64-release -S .
 RUN cmake --build cmake-build/build/x64-release --target server -j 6
 
-EXPOSE 7777
-
-CMD ["/app/out/Release/server"]
+ENTRYPOINT ["/app/out/Release/server"]

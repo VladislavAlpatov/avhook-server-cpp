@@ -13,7 +13,7 @@ namespace web::packet::decorator
     public:
         explicit BaseDecorator(std::unique_ptr<IPayloadExecutable> &pPacket);
         BaseDecorator() = default;
-        virtual ~BaseDecorator() = default;
+        ~BaseDecorator() override = default;
         nlohmann::json ExecutePayload(ClientHandle &clientHandle) override;
 
         template<class... Args>
@@ -34,7 +34,7 @@ namespace web::packet::decorator
                     return dynamic_cast<Type*>(pPrevObj);
 
                 if (dynamic_cast<BaseDecorator*>(pPrevObj) == nullptr)
-                    throw std::runtime_error("not found packet");
+                    throw std::runtime_error("[Decorator Error] not found packet");
 
                 pPrevObj = dynamic_cast<BaseDecorator*>(pPrevObj)->m_pDecoratedPacket.get();
             }
