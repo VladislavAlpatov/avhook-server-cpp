@@ -12,4 +12,4 @@ print(user.get_name())
 print(user.get_status())
 
 for sub in user.get_subscriptions():
-    print(f'{sub.get_expiration_date()}')
+    print(f'{sub.get_product().get_name()} {sub.get_expiration_date()}')

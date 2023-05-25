@@ -55,7 +55,12 @@ class Connection:
         self.socket.send(len(data).to_bytes(4, byteorder='little'))
 
         self.socket.sendall(data)
-        return json.loads(xor.Encrypt(list(self.recv_bytes()), self.xor_key).decode('utf-8'))
+        recv_data = json.loads(xor.Encrypt(list(self.recv_bytes()), self.xor_key).decode('utf-8'))
+
+        if not recv_data["success"]:
+            raise Exception(recv_data["error_code"])
+
+        return recv_data
 
 
 class User:
@@ -125,6 +130,11 @@ class Subscription:
     def get_expiration_date(self) -> str:
         data = self.connection.send_json_enc({"route": "/subscription/get/expire_date", "sub_id": self.id})
         return data["expire_date"]
+
+    def get_product(self):
+        data = self.connection.send_json_enc({"route": "/subscription/get/product", "sub_id": self.id})
+
+        return Product(self.connection, data["product_id"])
 
 
 class Message:
